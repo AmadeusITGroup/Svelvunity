@@ -1,0 +1,65 @@
+:root {
+	--amadeus-color-darkblue: #004485;
+	--amadeus-color-blue: #005eb8;
+	--amadeus-color-lightblue: #00a9e0;
+	--amadeus-color-paleblue: #f4f9fb;
+	--amadeus-color-easternblue: #1a7ead;
+	--amadeus-color-white: #ffffff;
+	--amadeus-color-darkergrey: #37373d;
+	--amadeus-color-darkgrey: #666666;
+	--amadeus-color-grey: #9a9a9a;
+	--amadeus-color-lightgrey: #b2b2b2;
+	--amadeus-color-lightergrey: #e8e8e8;
+	--amadeus-color-purple: #6f2b8d;
+	--amadeus-color-red: #c60000;
+	--amadeus-color-lightred: #fcf2f2;
+	--amadeus-color-cherry: #ce0058;
+	--amadeus-color-deeporange: #e95326;
+	--amadeus-color-orange: #f7a827;
+	--amadeus-color-lightorange: #fffbf4;
+	--amadeus-color-yellow: #feeb3d;
+	--amadeus-color-green: #008540;
+	--amadeus-color-lightgreen: #f2f9f5;
+	--amadeus-color-black: #000000;
+	--amadeus-color-gray-900: #1a1a1a;
+	--amadeus-color-gray-800: #333333;
+	--amadeus-color-gray-700: #4d4d4d;
+	--amadeus-color-gray-600: #666666;
+	--amadeus-color-gray-500: #808080;
+	--amadeus-color-gray-400: #999999;
+	--amadeus-color-gray-300: #b3b3b3;
+	--amadeus-color-gray-200: #cccccc;
+	--amadeus-color-gray-100: #c6c6c6;
+	--amadeus-color-gray-50: #f2f2f2;
+}
+
+@font-face {
+	font-family: 'Amadeus-Light';
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src: url('/fonts/Amadeus-Light.woff2');
+}
+
+@font-face {
+	font-family: 'Amadeus-Thin';
+	font-style: normal;
+	font-weight: 100;
+	font-display: swap;
+	src: url('/fonts/Amadeus-Thin.woff2');
+}
+
+@font-face {
+	font-family: 'Amadeus-Regular';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('/fonts/Amadeus-Regular.woff2');
+}
+
+body,
+html {
+	font-family: 'Source Sans Pro', 'Calibri', sans-serif;
+	font-size: 16px;
+	height: 100%;
+}

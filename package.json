@@ -1,0 +1,78 @@
+{
+	"name": "svelvunity",
+	"version": "0.0.1",
+	"type": "module",
+	"license":"MIT",
+	"licenseUrl":"https://github.com/AmadeusITGroup/Svelvunity/blob/main/LICENSE",
+	"scripts": {
+		"dev": "svelte-kit sync && vite dev",
+		"build": "svelte-kit sync && vite build && npm run package && rm dist/assets/images/svelvunity-logo.png",
+		"preview": "vite preview",
+		"package": "svelte-kit sync && svelte-package && publint",
+		"prepublishOnly": "npm run package",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin prettier-plugin-svelte . --check . && eslint .",
+		"format": "prettier --plugin prettier-plugin-svelte . --write .",
+		"test": "vitest",
+		"coverage": "vitest run --coverage"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"peerDependencies": {
+		"svelte": "^4.2.13"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "3.3.1",
+		"@sveltejs/kit": "2.8.0",
+		"@sveltejs/package": "2.3.7",
+		"@sveltejs/vite-plugin-svelte": "^3.1.0",
+		"@testing-library/jest-dom": "^6.4.2",
+		"@testing-library/svelte": "4.2.3",
+		"@testing-library/user-event": "14.5.2",
+		"@typescript-eslint/eslint-plugin": "7.18.0",
+		"@typescript-eslint/parser": "7.18.0",
+		"@vitest/coverage-v8": "^1.5.0",
+		"@vitest/ui": "^1.5.0",
+		"autoprefixer": "^10.4.19",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "2.46.0",
+		"jsdom": "^24.0.0",
+		"postcss": "^8.4.38",
+		"postcss-import": "^16.1.0",
+		"postcss-nesting": "^12.1.1",
+		"prettier": "^3.2.5",
+		"prettier-plugin-svelte": "^3.2.2",
+		"publint": "^0.2.7",
+		"svelte": "^4.2.13",
+		"svelte-check": "^3.6.9",
+		"tailwindcss": "^3.4.3",
+		"tslib": "^2.6.2",
+		"typescript": "^5.4.5",
+		"vite": "^5.2.8",
+		"vitest": "^1.5.0"
+	},
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"dependencies": {
+		"@playpilot/svelte-htm": "^1.0.1",
+		"@floating-ui/dom": "^1.6.3",
+		"tailwind-merge": "^2.2.2",
+		"htm": "^3.1.1"
+	},
+	"overrides": {
+		"@sveltejs/kit": {
+			"cookie": "^0.7.2"
+		}
+	}
+}

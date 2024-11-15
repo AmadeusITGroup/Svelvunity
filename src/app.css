@@ -1,0 +1,133 @@
+/* Write your global styles here, in PostCSS syntax */
+@import url('./css/custom.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media screen and (min-width: 1350px) {
+	html {
+		margin-left: calc(100vw - 100%);
+		margin-right: 0;
+	}
+}
+.am-c-loading {
+	animation: rotation 1s infinite linear;
+}
+
+.am-c-error-message_nothing-found {
+	border-width: 1px;
+	border-color: rgb(198 126 126);
+	width: 100%;
+	color: rgb(198 75 75);
+	font-size: 1rem;
+	padding: 0.5rem 1rem;
+	border-radius: 2px;
+	background-color: rgb(255 246 246);
+	box-shadow: 0 3px 8px 0 rgb(198 126 126 / 83%);
+	text-align: center;
+}
+
+.am-c-search__loading_background {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	background-color: rgba(255, 255, 255, 0.95);
+	position: absolute;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.am-c-input {
+	min-width: 240px;
+	appearance: none;
+	position: relative;
+	display: block;
+	width: 100%;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	border-width: 1px;
+	border-color: rgb(209 213 219);
+	color: rgb(17 24 39);
+	margin-bottom: 1rem;
+	border-radius: 0.175rem;
+}
+:focus {
+	outline: none;
+	border-color: #005eb8;
+	z-index: 10;
+	border-width: 1px;
+}
+::placeholder {
+	font-style: italic;
+	color: #a0aec0;
+}
+
+.am-c-input--on-error {
+	@apply border-red-500;
+}
+
+.am-c-input--no-margin {
+	@apply mb-0;
+}
+
+.am-c-input--auto-min-width {
+	min-width: auto;
+}
+
+.am-c-input--less-padding {
+	@apply px-2 py-1;
+}
+
+.am-c-input--no-padding-right {
+	padding-right: 0;
+}
+
+.am-c-app-card {
+	@apply flex flex-col border border-amadeusgray300 dark:border-white rounded overflow-hidden bg-white dark:bg-amadeusgray700;
+}
+
+.am-c-app-card--container {
+	@apply flex border-b border-amadeusgray300 dark:border-white bg-white dark:bg-amadeusgray500;
+}
+
+.am-c-app-card-cell {
+	@apply text-ellipsis overflow-hidden whitespace-nowrap p-2 px-4 w-1/2;
+}
+
+.am-c-app-card-cell--header {
+	@apply border-r border-amadeusgray300 dark:border-white bg-amadeusgray50 dark:bg-amadeusgray700 font-bold;
+}
+
+.am-c-table-header {
+	@apply flex border border-amadeusgray300 dark:border-white border-b-0 bg-amadeusgray50 dark:bg-amadeusgray700 rounded-t p-2 px-4;
+}
+
+.am-c-table-row {
+	@apply flex border border-amadeusgray300 dark:border-white border-b-0 bg-white dark:bg-amadeusgray500 p-2 px-4;
+}
+
+.am-c-table-row:last-child {
+	@apply border-b;
+}
+
+.am-c-table-cell {
+	@apply w-1/3 text-ellipsis overflow-hidden whitespace-normal mx-2;
+}
+
+.highlighting:hover {
+	@apply bg-amadeuslightblue dark:bg-amadeusdarkblue;
+}
