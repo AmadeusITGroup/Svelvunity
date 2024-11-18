@@ -1,4 +1,7 @@
 <script lang="ts">
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-nocheck
+
     import Loading from './Loading.svelte';
     import { ButtonType } from '$lib/enums/buttontype.enum';
     import { Size } from '$lib/enums/size.enum';

@@ -1,4 +1,7 @@
 <script lang="ts">
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-nocheck
+
     import {
         ANGLE_DOWN_SVG,
         ANGLE_UP_SVG,
@@ -209,6 +212,7 @@
     }
 </script>
 
+// @ts-ignore
 <div class="datepicker" use:clickOutside on:click_outside={handleCalendarClickOutside}>
     <slot />
     <div

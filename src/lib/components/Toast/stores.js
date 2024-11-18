@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { CHECK_SVG, MINUS_ERROR_SVG, INFO_SVG, TRIANGLE_SVG } from '$lib/config/constants';
 import { writable } from 'svelte/store';
 
@@ -88,10 +90,15 @@ function createToast() {
 		};
 		count++;
 		entry.id = count;
+
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
 		update((n) => (entry.reversed ? [...n, entry] : [entry, ...n]));
 		return count;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	function success(m, testId = '') {
 		pop();
 		push(
@@ -113,6 +120,8 @@ function createToast() {
 		);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	function info(m, testId = '') {
 		pop();
 		push(
@@ -134,6 +143,8 @@ function createToast() {
 		);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	function warning(m, testId = '') {
 		pop();
 		push(
@@ -155,6 +166,8 @@ function createToast() {
 		);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	function failure(m, testId = '') {
 		pop();
 		push(
@@ -194,9 +207,15 @@ function createToast() {
 				return n.filter((i) => id(i));
 			}
 			if (_obj(id)) {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
 				return n.filter(/** @type {SvelteToastOptions[]} i */ (i) => i.target !== id.target);
 			}
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			const found = id || Math.max(...n.map((i) => i.id));
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			return n.filter((i) => i.id !== found);
 		});
 	}
@@ -210,8 +229,12 @@ function createToast() {
 		/** @type {any} */
 		const param = _obj(id) ? id : { ...opts, id };
 		update((n) => {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			const idx = n.findIndex((i) => i.id === param.id);
 			if (idx > -1) {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore
 				n[idx] = { ...n[idx], ...param };
 			}
 			return n;

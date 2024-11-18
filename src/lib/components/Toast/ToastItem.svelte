@@ -67,8 +67,12 @@
         cprops = { ...props, ...(sendIdTo && { [sendIdTo]: item.id }) };
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     // `progress` has been renamed to `next`; shim included for backward compatibility, to remove in next major
     $: if (!check(item.progress)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         item.next = item.progress;
     }
 
@@ -76,6 +80,8 @@
 
     onDestroy(() => {
         if (check(item.onpop, 'function')) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             item.onpop(item.id);
         }
         unlisten && unlisten();

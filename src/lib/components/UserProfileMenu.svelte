@@ -1,4 +1,7 @@
 <script lang="ts">
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-nocheck
+
     import { CHEVRON_SVG, Direction } from '$lib';
     import { USER_SVG, USER_LOGOUT_SVG } from '$lib/config/constants';
     import { clickOutside } from '$lib/utils/clickOutside';

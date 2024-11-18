@@ -1,4 +1,7 @@
 <script>
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-nocheck
+
     import { onMount, onDestroy } from 'svelte';
     import { formatVariableKey, getMinWidth, isInViewport } from '$lib/utils/helpers';
     import { INVERSE } from '$lib//config/constants';

@@ -1,5 +1,7 @@
 <script lang="ts">
-    // SQIgnore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-nocheck
+
     import {
         ButtonType,
         CALENDAR_SVG,

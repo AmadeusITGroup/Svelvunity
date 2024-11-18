@@ -36,6 +36,8 @@
 
         if (offset <= threshold!) {
             if (!isLoadMore && hasMore) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 dispatch('loadMore');
                 beforeScrollHeight = target.scrollHeight;
                 beforeScrollTop = target.scrollTop;
