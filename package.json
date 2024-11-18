@@ -2,8 +2,8 @@
 	"name": "svelvunity",
 	"version": "0.0.1",
 	"type": "module",
-	"license":"MIT",
-	"licenseUrl":"https://github.com/AmadeusITGroup/Svelvunity/blob/main/LICENSE",
+	"license": "MIT",
+	"licenseUrl": "https://github.com/AmadeusITGroup/Svelvunity/blob/main/LICENSE",
 	"scripts": {
 		"dev": "svelte-kit sync && vite dev",
 		"build": "svelte-kit sync && vite build && npm run package && rm dist/assets/images/svelvunity-logo.png",
