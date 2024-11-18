@@ -4,6 +4,10 @@
   <img src="src/lib/assets/images/svelvunity-logo.png" alt="svelte-logo" width="140px" height="140px"/>
 </p>
 
+[![npm](https://img.shields.io/npm/v/svelvunity)](https://www.npmjs.com/package/svelvunity)
+![build](https://github.com/AmadeusITGroup/Svelvunity/workflows/ci/badge.svg)
+[![codecov](https://codecov.io/gh/AmadeusITGroup/Svelvunity/branch/master/graph/badge.svg)](https://codecov.io/gh/AmadeusITGroup/Svelvunity)
+
 ## Introduction
 
 Welcome to Svelvunity, a [Svelte](https://svelte.dev/) library designed to provide developers with reusable components and utilities to accelerate the development of Svelte applications.
@@ -29,7 +33,7 @@ Svelvunity is a library of Svelte web components designed to streamline your dev
 To start using Svelvunity in your project, install Svelvunity by running the following command in your project directory:
 
 ```bash
-npm install @svelvunity
+npm install svelvunity
 ```
 
 For comprehensive information on each component and how to use it, see the [Documentation](https://mehtapcavdar.github.io/svelvunity/).
@@ -40,7 +44,7 @@ Import the components you need and start using them in your Svelte application:
 
 ```typescript
 <script>
-  import { Datepicker } from '@svelvunity';
+  import { Datepicker } from 'svelvunity';
 </script>
 
 <Datepicker />

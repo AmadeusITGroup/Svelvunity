@@ -1,10 +1,24 @@
 {
-	"name": "@amadeus-it-group/svelvunity",
+	"name": "svelvunity",
 	"description": "Reusable components and utilities svelte library.",
 	"version": "0.0.1",
 	"bugs": "https://github.com/AmadeusITGroup/Svelvunity/issues",
 	"license": "MIT",
 	"type": "module",
+	"keywords": [
+		"accordion",
+		"datepicker",
+		"components",
+		"pagination",
+		"popover",
+		"reusable",
+		"slider",
+		"svelte",
+		"tabs",
+		"tailwindcss",
+		"toast",
+		"tooltip"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/AmadeusITGroup/Svelvunity.git"
