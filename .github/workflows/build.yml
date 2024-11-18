@@ -42,7 +42,7 @@ jobs:
 
       - if: inputs.version != ''
         run: |
-          node scripts/setVersion.js "${{ inputs.version }}"
+          npm version "${{ inputs.version }}" --no-git-tag-version
           npm run build
           git commit -a -m "v${{ inputs.version }}"
           git tag v${{ inputs.version }}
