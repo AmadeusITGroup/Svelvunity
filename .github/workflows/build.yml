@@ -26,27 +26,18 @@ jobs:
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - run: npm run build
-      - run: npm run check
       - run: npm run format
       - run: npm run lint -- --quiet
+      - run: npm run check
       - run: npm run test
       - run: npm run coverage
-
       - uses: codecov/codecov-action@v4
         with:
           files: coverage/lcov.info
           flags: unit
           disable_search: true
           use_oidc: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork) }}
-
-      - if: inputs.version != ''
-        run: |
-          npm version "${{ inputs.version }}" --no-git-tag-version
-          npm run build
-          git commit -a -m "v${{ inputs.version }}"
-          git tag v${{ inputs.version }}
-          git push origin v${{ inputs.version }}
+      - run: npm run build
 
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
