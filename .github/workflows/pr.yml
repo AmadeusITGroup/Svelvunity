@@ -1,0 +1,10 @@
+name: pr
+on:
+  pull_request:
+    branches: [main, release/**]
+
+jobs:
+  build:
+    uses: './.github/workflows/build.yml'
+  validate-os:
+    uses: './.github/workflows/validate-os.yml'

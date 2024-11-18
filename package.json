@@ -1,21 +1,17 @@
 {
 	"name": "svelvunity",
-	"version": "0.0.1",
-	"type": "module",
+	"description": "Reusable components and utilities svelte library.",
+	"version": "0.0.0",
+	"bugs": "https://github.com/AmadeusITGroup/Svelvunity/issues",
 	"license": "MIT",
-	"licenseUrl": "https://github.com/AmadeusITGroup/Svelvunity/blob/main/LICENSE",
-	"scripts": {
-		"dev": "svelte-kit sync && vite dev",
-		"build": "svelte-kit sync && vite build && npm run package && rm dist/assets/images/svelvunity-logo.png",
-		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
-		"prepublishOnly": "npm run package",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --plugin prettier-plugin-svelte . --check . && eslint .",
-		"format": "prettier --plugin prettier-plugin-svelte . --write .",
-		"test": "vitest",
-		"coverage": "vitest run --coverage"
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AmadeusITGroup/Svelvunity.git"
+	},
+	"engines": {
+		"npm": "^10.9.0",
+		"node": "^22.11.0"
 	},
 	"exports": {
 		".": {
@@ -28,8 +24,11 @@
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*"
 	],
-	"peerDependencies": {
-		"svelte": "^4.2.13"
+	"dependencies": {
+		"@playpilot/svelte-htm": "^1.0.1",
+		"@floating-ui/dom": "^1.6.3",
+		"tailwind-merge": "^2.2.2",
+		"htm": "^3.1.1"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "3.3.1",
@@ -62,17 +61,27 @@
 		"vite": "^5.2.8",
 		"vitest": "^1.5.0"
 	},
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"dependencies": {
-		"@playpilot/svelte-htm": "^1.0.1",
-		"@floating-ui/dom": "^1.6.3",
-		"tailwind-merge": "^2.2.2",
-		"htm": "^3.1.1"
-	},
 	"overrides": {
 		"@sveltejs/kit": {
 			"cookie": "^0.7.2"
 		}
-	}
+	},
+	"peerDependencies": {
+		"svelte": "^4.2.13"
+	},
+	"scripts": {
+		"dev": "svelte-kit sync && vite dev",
+		"build": "svelte-kit sync && vite build && npm run package && rm dist/assets/images/svelvunity-logo.png",
+		"preview": "vite preview",
+		"package": "svelte-kit sync && svelte-package && publint",
+		"prepublishOnly": "npm run package",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin prettier-plugin-svelte . --check . && eslint .",
+		"format": "prettier --plugin prettier-plugin-svelte . --write .",
+		"test": "vitest",
+		"coverage": "vitest run --coverage"
+	},
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts"
 }
