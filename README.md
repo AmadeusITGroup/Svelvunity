@@ -28,7 +28,7 @@ Svelvunity is a library of Svelte web components designed to streamline your dev
 To start using Svelvunity in your project, install Svelvunity by running the following command in your project directory:
 
 ```bash
-npm install svelvunity
+npm install @amadeus-it-group/svelvunity
 ```
 
 For comprehensive information on each component and how to use it, see the [Documentation](https://mehtapcavdar.github.io/svelvunity/).
