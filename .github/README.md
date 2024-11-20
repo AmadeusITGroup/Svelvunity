@@ -1,5 +1,10 @@
 <h1 align="center">Svelvunity - Where apps get alive</h1>
 
+<p align="center">
+  <img src="src/lib/assets/images/svelvunity-logo.png" alt="svelte-logo" width="140px" height="140px"/>
+</p>
+
+[![npm](https://img.shields.io/npm/v/svelvunity)](https://www.npmjs.com/package/svelvunity)
 ![build](https://github.com/AmadeusITGroup/Svelvunity/workflows/ci/badge.svg)
 [![codecov](https://codecov.io/gh/AmadeusITGroup/Svelvunity/branch/main/graph/badge.svg)](https://codecov.io/gh/AmadeusITGroup/Svelvunity)
 
@@ -47,8 +52,8 @@ Import the components you need and start using them in your Svelte application:
 
 ## Contributing
 
-We welcome contributions! Please read our [Contribution Guidelines](./CONTRIBUTING.md) to get started.
+We welcome contributions! Please read our [Contribution Guidelines](../CONTRIBUTING.md) to get started.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.

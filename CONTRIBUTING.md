@@ -36,7 +36,7 @@ Ensure your changes pass all tests. If you add new features, please include test
 
 ### Documentation
 
-Update the documentation to reflect your changes. This includes the [README](./README.md) file and any other relevant documentation files.
+Update the documentation to reflect your changes. This includes the [README](./.github/README.md) file and any other relevant documentation files.
 
 ## Project Overview
 
