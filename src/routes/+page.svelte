@@ -19,6 +19,7 @@
     import '../app.css';
 
     import AccordionItem from '$lib/components/AccordionItem.svelte';
+    import ProgressBar from '$lib/components/ProgressBar.svelte';
     import Button from '$lib/components/Button.svelte';
     import Checkbox from '$lib/components/Checkbox.svelte';
     import Datepicker from '$lib/components/Datepicker.svelte';

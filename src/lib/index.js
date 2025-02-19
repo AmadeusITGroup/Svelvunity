@@ -1,4 +1,5 @@
 export { default as AccordionItem } from './components/AccordionItem.svelte';
+export { default as ProgressBar } from './components/ProgressBar.svelte';
 export { default as Button } from './components/Button.svelte';
 export { default as Checkbox } from './components/Checkbox.svelte';
 export { default as Datepicker } from './components/Datepicker.svelte';
