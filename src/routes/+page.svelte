@@ -569,7 +569,7 @@
             <div slot="button"><span>ProgressBar</span></div>
             <div slot="body">
                 <ProgressBar bind:progressValue={progress} />
-                <Button label={'Click me to increase 50%'} clickLogic={() => progress = 50} />
+                <Button label={'Click me to increase 50%'} clickLogic={() => (progress = 50)} />
             </div>
         </AccordionItem>
         <AccordionItem>
