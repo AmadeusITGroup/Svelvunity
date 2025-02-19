@@ -19,7 +19,6 @@
     import '../app.css';
 
     import AccordionItem from '$lib/components/AccordionItem.svelte';
-    import ProgressBar from '$lib/components/ProgressBar.svelte';
     import Button from '$lib/components/Button.svelte';
     import Checkbox from '$lib/components/Checkbox.svelte';
     import Datepicker from '$lib/components/Datepicker.svelte';
@@ -29,6 +28,7 @@
     import Input from '$lib/components/Input.svelte';
     import Loading from '$lib/components/Loading.svelte';
     import Pagination from '$lib/components/Pagination.svelte';
+    import ProgressBar from '$lib/components/ProgressBar.svelte';
     import Popover from '$lib/components/Popover.svelte';
     import RadioInput from '$lib/components/RadioInput.svelte';
     import Select from '$lib/components/Select.svelte';
@@ -38,6 +38,7 @@
     import UserProfileMenu from '$lib/components/UserProfileMenu.svelte';
     import { formatDate } from '$lib/utils/date';
     import InlineEdit from '$lib/components/InlineEdit.svelte';
+    let progress = 30;
 
     const PLUS_CIRCLE_SVG =
         'M384 250v12c0 6.6-5.4 12-12 12h-98v98c0 6.6-5.4 12-12 12h-12c-6.6 0-12-5.4-12-12v-98h-98c-6.6 0-12-5.4-12-12v-12c0-6.6 5.4-12 12-12h98v-98c0-6.6 5.4-12 12-12h12c6.6 0 12 5.4 12 12v98h98c6.6 0 12 5.4 12 12zm120 6c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-32 0c0-119.9-97.3-216-216-216-119.9 0-216 97.3-216 216 0 119.9 97.3 216 216 216 119.9 0 216-97.3 216-216z';
@@ -564,7 +565,13 @@
                 />
             </div>
         </AccordionItem>
-
+        <AccordionItem>
+            <div slot="button"><span>ProgressBar</span></div>
+            <div slot="body">
+                <ProgressBar bind:progressValue={progress} />
+                <Button label={'Click me to increase 50%'} clickLogic={() => progress = 50} />
+            </div>
+        </AccordionItem>
         <AccordionItem>
             <div slot="button"><span>Popover component</span></div>
             <div slot="body">
