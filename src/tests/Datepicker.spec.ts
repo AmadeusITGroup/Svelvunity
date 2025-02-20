@@ -31,14 +31,16 @@ describe('Datepicker Component', () => {
         prevButton.click();
     });
     test('should select a date when clicked', () => {
-        render(Datepicker);
-        const dateElement = screen.getByText('30');
+        const selectedDate =  new Date();
+        render(Datepicker, { props: { selectedDate } });
+        const dateElement = screen.getByText(selectedDate.getDay().toString());
         dateElement.click();
         expect(dateElement).toBeTruthy();
     });
     test('should select a date when mouse is entered', () => {
-        render(Datepicker);
-        const dateElement = screen.getByText('30') as HTMLButtonElement;
+        const selectedDate =  new Date();
+        render(Datepicker, { props: { selectedDate } });
+        const dateElement = screen.getByText(selectedDate.getDay().toString());
         fireEvent.mouseEnter(dateElement);
         expect(dateElement).not.toBeDisabled();
     });
