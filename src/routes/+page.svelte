@@ -568,7 +568,7 @@
             <div slot="button"><span>ProgressBar</span></div>
             <div slot="body" class="container app-progressbar">
                 <div
-                    style="--pg-app-width: 50%; --pg-value-bg-color: #ff0000; --pg-badge-bg-color:  #13a045; --pg-bar-bg-color:  #dbde50"
+                    style="--pg-app-width: 50%; --pg-value-bg-color: #ffcc00; --pg-badge-bg-color:  #ffcc00; --pg-bar-bg-color:  #B2B2B2"
                 >
                     <ProgressBar progressValue={70} />
                 </div>
