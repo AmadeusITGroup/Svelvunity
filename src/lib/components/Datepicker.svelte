@@ -212,7 +212,6 @@
     }
 </script>
 
-// @ts-ignore
 <div class="datepicker" use:clickOutside on:click_outside={handleCalendarClickOutside}>
     <slot />
     <div
