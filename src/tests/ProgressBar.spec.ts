@@ -30,6 +30,7 @@ describe('ProgressBar Component', () => {
         expect(badge).not.toBeNull();
         expect(badge.style.left).toBe('40%');
     });
+    
     test.each([
         { progressValue: -10, expected: '0' },
         { progressValue: 0, expected: '0' },
