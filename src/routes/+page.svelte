@@ -38,8 +38,7 @@
     import UserProfileMenu from '$lib/components/UserProfileMenu.svelte';
     import { formatDate } from '$lib/utils/date';
     import InlineEdit from '$lib/components/InlineEdit.svelte';
-    let progress = 30;
-
+    let progress = 50;
     const PLUS_CIRCLE_SVG =
         'M384 250v12c0 6.6-5.4 12-12 12h-98v98c0 6.6-5.4 12-12 12h-12c-6.6 0-12-5.4-12-12v-98h-98c-6.6 0-12-5.4-12-12v-12c0-6.6 5.4-12 12-12h98v-98c0-6.6 5.4-12 12-12h12c6.6 0 12 5.4 12 12v98h98c6.6 0 12 5.4 12 12zm120 6c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-32 0c0-119.9-97.3-216-216-216-119.9 0-216 97.3-216 216 0 119.9 97.3 216 216 216 119.9 0 216-97.3 216-216z';
 
@@ -567,9 +566,15 @@
         </AccordionItem>
         <AccordionItem>
             <div slot="button"><span>ProgressBar</span></div>
-            <div slot="body">
+            <div slot="body" class="container app-progressbar">
+                <div
+                    style="--pg-app-width: 50%; --pg-value-bg-color: #ff0000; --pg-badge-bg-color:  #13a045; --pg-bar-bg-color:  #dbde50"
+                >
+                    <ProgressBar progressValue={70} />
+                </div>
+
                 <ProgressBar bind:progressValue={progress} />
-                <Button label={'Click me to increase 50%'} clickLogic={() => (progress = 50)} />
+                <Button label={'increase 80%'} clickLogic={() => (progress = 80)} />
             </div>
         </AccordionItem>
         <AccordionItem>
