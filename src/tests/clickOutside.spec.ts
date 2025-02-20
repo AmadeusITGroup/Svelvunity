@@ -1,7 +1,7 @@
 import { vi, type Mock } from 'vitest';
 describe('clickOutside', () => {
 	let node: HTMLDivElement | null;
-	let mockDispatchEvent: Mock<any, any> | null;
+	let mockDispatchEvent: Mock<any> | null;
 	beforeEach(() => {
 		node = document.createElement('div');
 		mockDispatchEvent = vi.fn();
