@@ -10,7 +10,7 @@ export default defineConfig({
 		exclude: ['dist/**', '**/node_modules/**'],
 		coverage: {
 			reporter: ['text', 'lcov'],
-			exclude: ['**config.**', '**.eslintrc.**', '**/src/routes/**', '.svelte-kit/**']
+			exclude: ['**config.**', '**.eslintrc.**', '**/src/routes/**', '.svelte-kit/**', 'dist/**']
 		}
 	}
 });
