@@ -5,10 +5,19 @@
 <app-progressbar>
     <div class=" container app-progressbar pt-5">
         <div class="progress-bar">
-            <progress value={progressValue < 0 ? 0 : progressValue} max="100"> </progress>
+            <progress
+                value={progressValue < 0 ? 0 : progressValue > 100 ? 100 : progressValue}
+                max="100"
+            >
+            </progress>
         </div>
-        <span class="badge" style=" left:{Math.round(progressValue < 0 ? 0 : progressValue)}%;  ">
-            {Math.round(progressValue < 0 ? 0 : progressValue)}%
+        <span
+            class="badge"
+            style=" left:{Math.round(
+                progressValue < 0 ? 0 : progressValue > 100 ? 100 : progressValue
+            )}%;  "
+        >
+            {Math.round(progressValue < 0 ? 0 : progressValue > 100 ? 100 : progressValue)}%
         </span>
     </div>
 </app-progressbar>

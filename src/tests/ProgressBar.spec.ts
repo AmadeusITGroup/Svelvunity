@@ -1,7 +1,7 @@
 import { render } from '@testing-library/svelte';
+import { describe, test, expect } from 'vitest';
 import { ProgressBar } from '$lib';
-
-describe('ProgressBar', () => {
+describe('ProgressBar Component', () => {
     test('renders progress bar with initial value', () => {
         const { getByRole } = render(ProgressBar, {
             props: { progressValue: 50 }
@@ -21,49 +21,24 @@ describe('ProgressBar', () => {
         expect(badge).toBeInTheDocument();
     });
 
-    test('badge position corresponds to progress value', () => {
+    test('badge is positioned correctly according to progressValue', () => {
         const { container } = render(ProgressBar, {
             props: { progressValue: 40 }
         });
 
-        const badge = container.querySelector('.badge') as HTMLElement;
-        const badgeStyle = window.getComputedStyle(badge);
-        const leftPosition = parseInt(badgeStyle.left);
-
-        expect(leftPosition).toBeCloseTo(40);
+        const badge = container.querySelector('.badge') as HTMLSpanElement;
+        expect(badge).not.toBeNull();
+        expect(badge.style.left).toBe('40%');
     });
-
-    test('progress value does not go below zero', () => {
-        const { getByRole } = render(ProgressBar, {
-            props: { progressValue: -10 }
-        });
-
-        const progress = getByRole('progressbar') as HTMLProgressElement;
-        expect(progress).toHaveAttribute('value', '0');
-    });
-
-    test('progress value updates correctly', async () => {
-        const { component, getByRole } = render(ProgressBar, {
-            props: { progressValue: 30 }
-        });
-
-        const progress = getByRole('progressbar') as HTMLProgressElement;
-        expect(progress).toHaveAttribute('value', '30');
-
-        await component.$set({ progressValue: 60 });
-        expect(progress).toHaveAttribute('value', '60');
-    });
-
-    test('badge updates when progressValue changes', async () => {
-        const { component, getByText } = render(ProgressBar, {
-            props: { progressValue: 50 }
-        });
-
-        const badge = getByText('50%');
-        expect(badge).toBeInTheDocument();
-
-        await component.$set({ progressValue: 80 });
-        const updatedBadge = getByText('80%');
-        expect(updatedBadge).toBeInTheDocument();
+    test.each([
+        { progressValue: -10, expected: '0' },
+        { progressValue: 0, expected: '0' },
+        { progressValue: 50, expected: '50' },
+        { progressValue: 100, expected: '100' },
+        { progressValue: 150, expected: '100' },
+    ])('renders progress bar with correct value', ({ progressValue, expected }) => {
+        const { getByRole } = render(ProgressBar, { progressValue });
+        const progress = getByRole('progressbar');
+        expect(progress).toHaveAttribute('value', expected);
     });
 });

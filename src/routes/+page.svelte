@@ -574,7 +574,7 @@
                 </div>
 
                 <ProgressBar bind:progressValue={progress} />
-                <Button label={'increase 80%'} clickLogic={() => (progress = 80)} />
+                <Button label={'increase 100%'} clickLogic={() => (progress = 180)} />
             </div>
         </AccordionItem>
         <AccordionItem>
