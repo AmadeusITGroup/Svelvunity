@@ -1,5 +1,7 @@
 export enum ButtonType {
 	Primary,
 	OutlinePrimary,
-	Transparent
+	Transparent,
+	PrimaryDanger,
+	OutlinePrimaryDanger
 }
