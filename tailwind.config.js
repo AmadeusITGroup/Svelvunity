@@ -27,6 +27,7 @@ const config = {
 				amadeusgrey: 'var(--amadeus-color-grey)',
 				amadeuspurple: 'var(--amadeus-color-purple)',
 				amadeusred: 'var(--amadeus-color-red)',
+				amadeusred800: 'var(--amadeus-color-red-800)',
 				amadeuslightred: 'var(--amadeus-color-lightred)',
 				amadeuscherry: 'var(--amadeus-color-cherry)',
 				amadeusdeeporange: 'var(--amadeus-color-deeporange)',
