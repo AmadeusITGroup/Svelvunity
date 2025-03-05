@@ -100,13 +100,13 @@ describe('Button Component', () => {
 	});
 	test('should render a button with outline-primary-danger prop', async () => {
 		buttonProps.type = ButtonType.OutlinePrimaryDanger;
-		buttonProps.buttonSize = Size.Large;
+		buttonProps.buttonSize = Size.XLarge;
 		render(Button, { props: buttonProps });
 
 		expect(screen.getByText(buttonProps.label)).toBeInTheDocument();
 		expect(screen.getByText(buttonProps.label)).toBeDisabled();
 		expect(screen.getByText(buttonProps.label)).toHaveClass(
-			'test-class am-c-df_btn am-c-df_btn-outline-primary-danger am-c-df_btn__lg'
+			'test-class am-c-df_btn am-c-df_btn-outline-primary-danger am-c-df_btn__xl'
 		);
 		expect(screen.getByText(buttonProps.label)).toHaveAttribute(
 			'data-cy-id',

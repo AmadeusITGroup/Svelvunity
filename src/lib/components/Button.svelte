@@ -237,7 +237,7 @@
         @apply text-amadeusgray300;
     }
     .am-c-df_btn-primary-danger {
-        @apply text-amadeuswhite bg-amadeusblue border-amadeusblue;
+        @apply text-amadeuswhite bg-amadeusred border-amadeusred;
     }
 
     .am-c-df_btn-primary-danger:not(:disabled):not(.disabled).active:focus,
@@ -248,7 +248,7 @@
     .am-c-df_btn-primary-danger:not(:disabled):not(.disabled).active,
     .am-c-df_btn-primary-danger:not(:disabled):not(.disabled):active {
         border-color: var(--amadeus-color-red);
-        @apply text-amadeuswhite bg-amadeusdarkblue;
+        @apply text-amadeuswhite bg-amadeusred800;
     }
 
     .am-c-df_btn-primary-danger:hover {
@@ -262,7 +262,7 @@
         background-color: var(--amadeus-color-red);
         outline: 0;
         box-shadow: 0 0 0 0.2rem rgb(198 0 0/ 50%);
-        @apply text-amadeuswhite border-amadeusdarkblue;
+        @apply text-amadeuswhite border-amadeusred;
     }
 
     .am-c-df_btn-primary-danger.disabled,
@@ -277,12 +277,12 @@
     }
 
     .am-c-df_btn-outline-primary-danger:not(:disabled):not(.disabled).active:focus,
-    .am-c-df_btn-outline-primary:not(:disabled):not(.disabled):active:focus {
+    .am-c-df_btn-outline-primary-danger:not(:disabled):not(.disabled):active:focus {
         box-shadow: 0 0 0 0.2rem rgb(198 0 0 / 50%);
     }
 
     .am-c-df_btn-outline-primary-danger:not(:disabled):not(.disabled).active,
-    .am-c-df_btn-outline-primary:not(:disabled):not(.disabled):active {
+    .am-c-df_btn-outline-primary-danger:not(:disabled):not(.disabled):active {
         background-color: var(--amadeus-color-gray-50);
         @apply text-amadeusred border-amadeusred;
     }
@@ -292,11 +292,12 @@
     }
 
     .am-c-df_btn-outline-primary-danger.focus,
-    .am-c-df_btn-outline-primary:focus {
+    .am-c-df_btn-outline-primary-danger:focus {
         box-shadow: 0 0 0 0.2rem rgb(198 0 0 / 50%);
+        @apply border-amadeusred;
     }
     .am-c-df_btn-outline-primary-danger:hover {
-        @apply text-amadeuswhite bg-amadeusred border-amadeusred;
+        @apply text-amadeusred bg-amadeusred border-amadeusred;
     }
 
     .am-c-df_btn-outline-primary-danger.disabled,

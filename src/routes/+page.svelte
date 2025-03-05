@@ -156,10 +156,10 @@
                 />
 
                 <Button
-                    label={'Failure'}
+                    label={'Done'}
                     additionalClasses="text-white"
                     buttonSize={Size.Large}
-                    clickLogic={() => toast.failure('Sorry failed!')}
+                    clickLogic={() => toast.success('It is done')}
                 />
 
                 <Button
@@ -167,6 +167,19 @@
                     type={ButtonType.OutlinePrimary}
                     buttonSize={Size.XLarge}
                     clickLogic={() => toast.info('For your information')}
+                />
+                <Button
+                    label={'Failure'}
+                    type={ButtonType.PrimaryDanger}
+                    additionalClasses="text-white"
+                    buttonSize={Size.Large}
+                    clickLogic={() => toast.failure('Sorry failed!')}
+                />
+                <Button
+                    label={'Error'}
+                    type={ButtonType.OutlinePrimaryDanger}
+                    buttonSize={Size.small}
+                    clickLogic={() => toast.failure('Sorry there is an error!')}
                 />
             </div>
         </AccordionItem>
