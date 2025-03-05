@@ -74,6 +74,7 @@
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2.5' fill='%23b3b3b3'/%3e%3c/svg%3e");
         border-color: var(--amadeus-color-gray-300) !important;
     }
+    
     input[type='radio']:disabled {
         background-color: #e6e6e6 !important;
         border-color: var(--amadeus-color-gray-300) !important;
