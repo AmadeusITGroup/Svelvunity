@@ -1,17 +1,25 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { onMount, onDestroy } from 'svelte';
     import { tweened } from 'svelte/motion';
     import { linear } from 'svelte/easing';
     import { toast } from './stores';
 
-    /** @type {import('./stores').SvelteToastOptions} */
-    export let item;
+    
+    /**
+     * @typedef {Object} Props
+     * @property {import('./stores').SvelteToastOptions} item
+     */
+
+    /** @type {Props} */
+    let { item = $bindable() } = $props();
 
     /** @type {any} */
-    let next = item.initial;
-    let prev = next;
-    let paused = false;
-    let cprops = {};
+    let next = $state(item.initial);
+    let prev = $state(next);
+    let paused = $state(false);
+    let cprops = $state({});
     /** @type {any} */
     let unlisten;
 
@@ -55,26 +63,32 @@
         handler();
     }
 
-    $: if (next !== item.next) {
-        next = item.next;
-        prev = $progress;
-        paused = false;
-        progress.set(next).then(autoclose);
-    }
+    run(() => {
+        if (next !== item.next) {
+            next = item.next;
+            prev = $progress;
+            paused = false;
+            progress.set(next).then(autoclose);
+        }
+    });
 
-    $: if (item.component) {
-        const { props = {}, sendIdTo } = item.component;
-        cprops = { ...props, ...(sendIdTo && { [sendIdTo]: item.id }) };
-    }
+    run(() => {
+        if (item.component) {
+            const { props = {}, sendIdTo } = item.component;
+            cprops = { ...props, ...(sendIdTo && { [sendIdTo]: item.id }) };
+        }
+    });
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     // `progress` has been renamed to `next`; shim included for backward compatibility, to remove in next major
-    $: if (!check(item.progress)) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        item.next = item.progress;
-    }
+    run(() => {
+        if (!check(item.progress)) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            item.next = item.progress;
+        }
+    });
 
     onMount(listen);
 
@@ -93,14 +107,14 @@
     class:pe={item.pausable}
     role="button"
     tabindex="0"
-    on:mouseenter={() => {
+    onmouseenter={() => {
         if (item.pausable) pause();
     }}
-    on:mouseleave={resume}
+    onmouseleave={resume}
 >
     <div role="status" class="_toastMsg" class:pe={item.component}>
         {#if item.component}
-            <svelte:component this={item.component.src} {...cprops} />
+            <item.component.src {...cprops} />
         {:else}
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html item.msg}
@@ -111,13 +125,13 @@
             class="_toastBtn pe"
             role="button"
             tabindex="0"
-            on:click={close}
-            on:keydown={(e) => {
+            onclick={close}
+            onkeydown={(e) => {
                 if (e instanceof KeyboardEvent && ['Enter', ' '].includes(e.key)) close();
             }}
         ></div>
     {/if}
-    <progress class="_toastBar" value={$progress} />
+    <progress class="_toastBar" value={$progress}></progress>
 </div>
 
 <style>

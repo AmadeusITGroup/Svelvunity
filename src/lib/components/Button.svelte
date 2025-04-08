@@ -7,14 +7,27 @@
     import { Size } from '$lib/enums/size.enum';
     import { TEST_IDS } from '$lib/enums/testconstants.enum';
 
-    export let clickLogic: null | ((...args: any) => any) = null;
-    export let label = '';
-    export let isDisabled = false;
-    export let additionalClasses = '';
-    export let type: ButtonType = ButtonType.Primary;
-    export let buttonSize: Size = Size.Unset;
-    export let testingId = `${TEST_IDS.ButtonId}-${label}`;
-    export let loading = false;
+    interface Props {
+        clickLogic?: null | ((...args: any) => any);
+        label?: string;
+        isDisabled?: boolean;
+        additionalClasses?: string;
+        type?: ButtonType;
+        buttonSize?: Size;
+        testingId?: any;
+        loading?: boolean;
+    }
+
+    let {
+        clickLogic = null,
+        label = '',
+        isDisabled = false,
+        additionalClasses = '',
+        type = ButtonType.Primary,
+        buttonSize = Size.Unset,
+        testingId = `${TEST_IDS.ButtonId}-${label}`,
+        loading = false
+    }: Props = $props();
 
     function getButtonSize(size: Size): string {
         switch (size) {
@@ -45,7 +58,7 @@
 
 <button
     data-cy-id={testingId}
-    on:click={(e) => clickLogic && clickLogic(e)}
+    onclick={(e) => clickLogic && clickLogic(e)}
     class="
         {type === ButtonType.Primary ? 'am-c-df_btn am-c-df_btn-primary' : ''}
         {type === ButtonType.OutlinePrimary ? 'am-c-df_btn am-c-df_btn-outline-primary' : ''}

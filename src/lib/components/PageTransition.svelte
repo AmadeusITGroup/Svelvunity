@@ -1,7 +1,12 @@
 <!-- PageTransition.svelte -->
-<script>
+<script lang="ts">
     import { fly } from 'svelte/transition';
-    export let url = '';
+    interface Props {
+        url?: string;
+        children?: import('svelte').Snippet;
+    }
+
+    let { url = '', children }: Props = $props();
     const pageTransitionDuration = 500;
 </script>
 
@@ -10,6 +15,6 @@
         in:fly|global={{ y: -5, duration: pageTransitionDuration, delay: pageTransitionDuration }}
         out:fly|global={{ y: 5, duration: pageTransitionDuration }}
     >
-        <slot />
+        {@render children?.()}
     </div>
 {/key}

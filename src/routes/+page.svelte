@@ -1,3 +1,5 @@
+<!-- @migration-task Error while migrating Svelte code: `<tr>` cannot be a child of `<table>`. `<table>` only allows these children: `<caption>`, `<colgroup>`, `<tbody>`, `<thead>`, `<tfoot>`, `<style>`, `<script>`, `<template>`. The browser will 'repair' the HTML (by moving, removing, or inserting elements) which breaks Svelte's assumptions about the structure of your components.
+https://svelte.dev/e/node_invalid_placement -->
 <script lang="ts">
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-nocheck
@@ -439,15 +441,10 @@
                             }}
                         />
                     </div>
-                    <table>
-                        <tr>
-                            <th>Age</th>
-                        </tr>
-
-                        {#each filteredItems as item}
-                            <tr> <td>{item}</td></tr>
-                        {/each}
-                    </table>
+                    <div>Age</div>
+                    {#each filteredItems as item}
+                        <br /> {item}
+                    {/each}
                     <InfiniteScroll
                         window={false}
                         hasMore={filteredItems.length < infiniteScrollItems.length}

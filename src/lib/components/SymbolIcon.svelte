@@ -1,14 +1,27 @@
 <script lang="ts">
     import { Direction } from '$lib/enums/direction.enum';
 
-    export let iconSVG: string;
-    export let viewBox = '0 0 448 512';
-    export let height = 22;
-    export let width = 22;
-    export let fill = '#005eb8';
-    export let direction: Direction = Direction.Up;
-    export let classes = '';
-    export let testId = '';
+    interface Props {
+        iconSVG: string;
+        viewBox?: string;
+        height?: number;
+        width?: number;
+        fill?: string;
+        direction?: Direction;
+        classes?: string;
+        testId?: string;
+    }
+
+    let {
+        iconSVG,
+        viewBox = '0 0 448 512',
+        height = 22,
+        width = 22,
+        fill = '#005eb8',
+        direction = Direction.Up,
+        classes = '',
+        testId = ''
+    }: Props = $props();
 
     function getIconDirection(direction: Direction): string {
         switch (direction) {

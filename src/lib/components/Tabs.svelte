@@ -1,6 +1,10 @@
 <script lang="ts">
-    export let items: any[] = [];
-    export let activeTabValue = 1;
+    interface Props {
+        items?: any[];
+        activeTabValue?: number;
+    }
+
+    let { items = [], activeTabValue = $bindable(1) }: Props = $props();
 
     const handleClick = (tabValue: number) => () => (activeTabValue = tabValue);
 </script>
@@ -8,14 +12,14 @@
 <ul class="tabs">
     {#each items as item}
         <li class="item {activeTabValue === item.value ? 'active active-item' : ''}">
-            <button on:click={handleClick(item.value)} aria-label={item.label}>{item.label}</button>
+            <button onclick={handleClick(item.value)} aria-label={item.label}>{item.label}</button>
         </li>
     {/each}
 </ul>
 {#each items as item}
     {#if activeTabValue == item.value}
         <div class="box">
-            <svelte:component this={item.component} />
+            <item.component />
         </div>
     {/if}
 {/each}

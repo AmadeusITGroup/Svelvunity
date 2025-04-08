@@ -1,5 +1,9 @@
 <script lang="ts">
-    export let progressValue = 0;
+    interface Props {
+        progressValue?: number;
+    }
+
+    let { progressValue = 0 }: Props = $props();
 </script>
 
 <app-progressbar>
