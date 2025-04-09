@@ -1,4 +1,3 @@
-<!-- @migration-task Error while migrating Svelte code: $$props is used together with named props in a way that cannot be automatically migrated. -->
 <script lang="ts">
     import type { ComputePositionReturn, Middleware, Placement, Side } from '@floating-ui/dom';
     import * as dom from '@floating-ui/dom';

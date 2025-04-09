@@ -1,9 +1,3 @@
-<!-- @migration-task Error while migrating Svelte code: Cannot split a chunk that has already been edited (28:16 – "on:click={(e) => {
-            if ($$slots.body && showBody) {
-                handleClick();
-                clickLogic ? clickLogic(e) : null;
-            }
-        }}") -->
 <script lang="ts">
     import { CHEVRON_SVG } from '$lib/config/constants';
     import { Direction } from '$lib/enums/direction.enum';
@@ -57,7 +51,7 @@
                 />
             </div>
         {:else if !(showBody && $$slots.body) && fillEmptyChevronSpace}
-            <div class="accordion-button-chevron-space-filler" />
+            <div> class="accordion-button-chevron-space-filler" </div>
         {/if}
         <slot name="button" />
     </div>
