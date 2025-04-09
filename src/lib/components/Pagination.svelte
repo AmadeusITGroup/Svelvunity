@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import {
         BACKFORWARD_STEP_SVG,
         CHEVRON_LEFT_SVG,
@@ -7,31 +9,48 @@
     } from '$lib/config/constants';
     import SymbolIcon from './SymbolIcon.svelte';
 
-    export let rows: any = [];
-    export let perPage = 20;
-    export let trimmedRows;
-    export let paginationTestId = '';
-    export let prevPageBtnTestId = '';
-    export let nextPageBtnTestId = '';
-    export let firstPageBtnTestId = '';
-    export let lastPageBtnTestId = '';
-    export let currPageTestId = '';
-    export let totalPagesTestId = '';
+    interface Props {
+        rows?: any;
+        perPage?: number;
+        paginationTestId?: string;
+        prevPageBtnTestId?: string;
+        nextPageBtnTestId?: string;
+        firstPageBtnTestId?: string;
+        lastPageBtnTestId?: string;
+        currPageTestId?: string;
+        totalPagesTestId?: string;
+    }
 
-    $: totalRows = rows.length;
-    $: currentPage = 0;
-    $: totalPages = Math.ceil(totalRows / perPage);
-    $: start = currentPage * perPage;
-    $: end = currentPage === totalPages - 1 ? totalRows - 1 : start + perPage - 1;
+    let {
+        rows = [],
+        perPage = 20,
+        paginationTestId = '',
+        prevPageBtnTestId = '',
+        nextPageBtnTestId = '',
+        firstPageBtnTestId = '',
+        lastPageBtnTestId = '',
+        currPageTestId = '',
+        totalPagesTestId = ''
+    }: Props = $props();
 
-    $: trimmedRows = rows.slice(start, end + 1);
+    let totalRows = $derived(rows.length);
+    let currentPage = $state(0);
+    
+    let totalPages = $derived(Math.ceil(totalRows / perPage));
+    let start = $derived(currentPage * perPage);
+    let end = $derived(currentPage === totalPages - 1 ? totalRows - 1 : start + perPage - 1);
 
-    $: totalRows, (currentPage = 0);
-    $: currentPage, start, end;
+    let trimmedRows = $derived(rows.slice(start, end + 1));
+
+    run(() => {
+        currentPage = 0;
+    });
+    // Removed unused line
 
     function setCurrentPage(newPage: number) {
         currentPage = newPage;
     }
+
 </script>
 
 {#if totalRows && totalRows > perPage}
@@ -42,10 +61,10 @@
             tabindex="0"
             class:disabled={currentPage === 0}
             aria-disabled={currentPage === 0}
-            on:click={() => {
+            onclick={() => {
                 setCurrentPage(0);
             }}
-            on:keypress={(e) => {
+            onkeypress={(e) => {
                 if (e.key === 'Enter') setCurrentPage(0);
             }}
             data-cy-id={firstPageBtnTestId}
@@ -64,10 +83,10 @@
             tabindex="0"
             class:disabled={currentPage === 0}
             aria-disabled={currentPage === 0}
-            on:click={() => {
+            onclick={() => {
                 if (currentPage !== 0) setCurrentPage(currentPage - 1);
             }}
-            on:keypress={(e) => {
+            onkeypress={(e) => {
                 if (e.key === 'Enter' && currentPage !== 0) setCurrentPage(currentPage - 1);
             }}
             data-cy-id={prevPageBtnTestId}
@@ -90,10 +109,10 @@
             class:disabled={currentPage === totalPages - 1}
             aria-disabled={currentPage === totalPages - 1}
             tabindex="0"
-            on:click={() => {
+            onclick={() => {
                 if (currentPage !== totalPages - 1) setCurrentPage(currentPage + 1);
             }}
-            on:keypress={(e) => {
+            onkeypress={(e) => {
                 if (e.key === 'Enter' && currentPage !== totalPages - 1) {
                     setCurrentPage(currentPage + 1);
                 }
@@ -114,10 +133,10 @@
             class:disabled={currentPage === totalPages - 1}
             aria-disabled={currentPage === totalPages - 1}
             tabindex="0"
-            on:click={() => {
+            onclick={() => {
                 setCurrentPage(totalPages - 1);
             }}
-            on:keypress={(e) => {
+            onkeypress={(e) => {
                 if (e.key === 'Enter') {
                     setCurrentPage(totalPages - 1);
                 }
