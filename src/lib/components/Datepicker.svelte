@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-nocheck
 
@@ -18,37 +20,62 @@
     } from '../utils/date';
     import Icon from './Icon.svelte';
     import SymbolIcon from './SymbolIcon.svelte';
-    export let selectedDate: any = null;
-    export let today = new Date();
-    export let defaultYear = today.getFullYear();
-    export let defaultMonth = today.getMonth();
-    export let isOpen = false;
-    export let align = 'left';
-    export let disabledDates: string[] = [];
-    export let enabledDates: string[] = [];
-    export let alwaysShow = false;
-    export let disableDatesBefore: string | null = null;
-    export let disableDatesAfter: string | null = null;
-    export let dowLabels = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
-    export let showYears = false;
-    export let monthLabels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ];
-    export let testId = '';
-    export let classes = '';
-    export let ariaLabelPreviousYear = '';
-    export let ariaLabelNextYear = '';
+    interface Props {
+        selectedDate?: any;
+        today?: any;
+        defaultYear?: any;
+        defaultMonth?: any;
+        isOpen?: boolean;
+        align?: string;
+        disabledDates?: string[];
+        enabledDates?: string[];
+        alwaysShow?: boolean;
+        disableDatesBefore?: string | null;
+        disableDatesAfter?: string | null;
+        dowLabels?: any;
+        showYears?: boolean;
+        monthLabels?: any;
+        testId?: string;
+        classes?: string;
+        ariaLabelPreviousYear?: string;
+        ariaLabelNextYear?: string;
+        children?: import('svelte').Snippet;
+    }
+
+    let {
+        selectedDate = $bindable(null),
+        today = new Date(),
+        defaultYear = today.getFullYear(),
+        defaultMonth = today.getMonth(),
+        isOpen = $bindable(false),
+        align = 'left',
+        disabledDates = [],
+        enabledDates = [],
+        alwaysShow = false,
+        disableDatesBefore = null,
+        disableDatesAfter = null,
+        dowLabels = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'],
+        showYears = false,
+        monthLabels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ],
+        testId = '',
+        classes = '',
+        ariaLabelPreviousYear = '',
+        ariaLabelNextYear = '',
+        children
+    }: Props = $props();
     let tempEndDate: any;
     let prevSelectedDate: any;
     let prevEndDate: any;
@@ -63,8 +90,8 @@
         }
         isOpen = false;
     };
-    let selectedDateYear = Number(defaultYear);
-    let selectedDateMonth = Number(defaultMonth);
+    let selectedDateYear = $state(Number(defaultYear));
+    let selectedDateMonth = $state(Number(defaultMonth));
     const updateCalendars = () => {
         selectedDateCalendar = selectedDateCalendar;
     };
@@ -179,41 +206,53 @@
             return;
         }
     };
-    $: selectedDate = selectedDate ? getTimestamp(selectedDate) : null;
-    $: if (selectedDate) {
-        updateCalendars();
-    }
-    $: todayMonth = today && today.getMonth();
-    $: todayDay = today && today.getDate();
-    $: todayYear = today && today.getFullYear();
-    $: prev = calendarize(new Date(selectedDateYear, selectedDateMonth - 1), 1);
-    $: selectedDateCalendar = calendarize(new Date(selectedDateYear, selectedDateMonth), 1);
-    $: next = calendarize(new Date(selectedDateYear, selectedDateMonth + 1), 1);
-    $: disabled = getDatesFromArray(disabledDates);
-    $: enabled = getDatesFromArray(enabledDates);
-    $: if (!selectedDate) {
-        selectedDateYear = Number(defaultYear);
-        selectedDateMonth = Number(defaultMonth);
-    }
-    $: if (
-        (selectedDate && tempEndDate !== null) ||
-        !isOpen ||
-        disableDatesBefore ||
-        disableDatesAfter
-    ) {
-        updateCalendars();
-    }
-    $: if (isOpen) {
-        if (selectedDate) {
-            const date = new Date(selectedDate);
-            selectedDateYear = date.getFullYear();
-            selectedDateMonth = date.getMonth();
+    let selectedTimestamp: number | null = null;
+
+    $effect(() => {
+        selectedTimestamp = selectedDate ? getTimestamp(selectedDate) : null;
+        if (selectedTimestamp) {
+            updateCalendars();
         }
-    }
+    });
+    let todayMonth = $derived(today && today.getMonth());
+    let todayDay = $derived(today && today.getDate());
+    let todayYear = $derived(today && today.getFullYear());
+    let prev = $derived(calendarize(new Date(selectedDateYear, selectedDateMonth - 1), 1));
+    let selectedDateCalendar = $derived(
+        calendarize(new Date(selectedDateYear, selectedDateMonth), 1)
+    );
+    let next = $derived(calendarize(new Date(selectedDateYear, selectedDateMonth + 1), 1));
+    let disabled = $derived(getDatesFromArray(disabledDates));
+    let enabled = $derived(getDatesFromArray(enabledDates));
+    run(() => {
+        if (!selectedDate) {
+            selectedDateYear = Number(defaultYear);
+            selectedDateMonth = Number(defaultMonth);
+        }
+    });
+    run(() => {
+        if (
+            (selectedDate && tempEndDate !== null) ||
+            !isOpen ||
+            disableDatesBefore ||
+            disableDatesAfter
+        ) {
+            updateCalendars();
+        }
+    });
+    run(() => {
+        if (isOpen) {
+            if (selectedDate) {
+                const date = new Date(selectedDate);
+                selectedDateYear = date.getFullYear();
+                selectedDateMonth = date.getMonth();
+            }
+        }
+    });
 </script>
 
-<div class="datepicker" use:clickOutside on:click_outside={handleCalendarClickOutside}>
-    <slot />
+<div class="datepicker" use:clickOutside onclick_outside={handleCalendarClickOutside}>
+    {@render children?.()}
     <div
         class="calendar-card {classes}"
         class:right={align === 'right'}
@@ -226,10 +265,10 @@
                     class="icon-previous-month"
                     href={null}
                     tabindex="0"
-                    on:click={() => {
+                    onclick={() => {
                         goToPreviousMonth();
                     }}
-                    on:keydown={(e) => {
+                    onkeydown={(e) => {
                         if (e.key === 'Enter') {
                             goToPreviousMonth();
                         }
@@ -270,10 +309,10 @@
                     class="icon-next-month"
                     href={null}
                     tabindex="0"
-                    on:click={() => {
+                    onclick={() => {
                         goToNextMonth();
                     }}
-                    on:keydown={(e) => {
+                    onkeydown={(e) => {
                         if (e.key === 'Enter') {
                             goToNextMonth();
                         }
@@ -337,9 +376,9 @@
                                         selectedDateYear
                                     )}
                                     tabindex="0"
-                                    on:mouseenter={(e) => handleMouseEnter(e)}
-                                    on:mouseleave={handleMouseLeave}
-                                    on:click={(e) =>
+                                    onmouseenter={(e) => handleMouseEnter(e)}
+                                    onmouseleave={handleMouseLeave}
+                                    onclick={(e) =>
                                         handleDateClick(
                                             e,
                                             selectedDateCalendar[weekIndex][dayIndex],
