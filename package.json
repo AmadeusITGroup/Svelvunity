@@ -1,7 +1,7 @@
 {
 	"name": "@amadeus-it-group/svelvunity",
 	"description": "Reusable components and utilities svelte library.",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"bugs": "https://github.com/AmadeusITGroup/Svelvunity/issues",
 	"license": "MIT",
 	"type": "module",
