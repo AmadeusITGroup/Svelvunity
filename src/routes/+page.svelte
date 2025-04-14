@@ -448,7 +448,7 @@
                         window={false}
                         hasMore={filteredItems.length < infiniteScrollItems.length}
                         threshold={100}
-                        on:loadMore={() => {
+                        loadMore={() => {
                             filteredItems = [...filteredItems, ...infiniteScrollItems.splice(4)];
                         }}
                     />

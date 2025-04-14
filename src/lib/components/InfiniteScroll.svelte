@@ -1,7 +1,5 @@
 <script lang="ts">
-    import { run } from 'svelte/legacy';
-
-    import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
 
     interface Props {
         threshold?: number | undefined;
@@ -10,6 +8,7 @@
         hasMore?: boolean | undefined;
         reverse?: boolean | undefined;
         window?: boolean | undefined;
+        loadMore: Function | never;
     }
 
     let {
@@ -18,13 +17,14 @@
         elementScroll = null,
         hasMore = true,
         reverse = false,
-        window = false
+        window = false,
+        loadMore = () => {}
     }: Props = $props();
 
     let isLoadMore = $state(false);
-    let component: HTMLElement = $state();
-    let beforeScrollHeight: number = $state();
-    let beforeScrollTop: number = $state();
+    let component: HTMLElement | undefined = $state();
+    let beforeScrollHeight: number = $state(0);
+    let beforeScrollTop: number = $state(0);
     let element: any | null = $state();
 
     const onScroll = (e: Event) => {
@@ -64,7 +64,7 @@
         } else if (elementScroll) {
             element = elementScroll;
         } else {
-            element = component.parentNode;
+            element = component?.parentNode;
         }
     });
 
@@ -74,7 +74,7 @@
             element.removeEventListener('resize', onScroll);
         }
     });
-    run(() => {
+    $effect(() => {
         if (element) {
             if (reverse) {
                 element.scrollTop = element.scrollHeight;
@@ -83,7 +83,7 @@
             element.addEventListener('resize', onScroll);
         }
     });
-    run(() => {
+    $effect(() => {
         if (reverse && isLoadMore) {
             element.scrollTop = element.scrollHeight - beforeScrollHeight + beforeScrollTop;
         }

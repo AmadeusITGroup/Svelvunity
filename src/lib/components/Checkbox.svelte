@@ -8,7 +8,7 @@
         inputValue: boolean;
         required?: boolean;
         isDisabled?: boolean;
-        onInputChanges: any;
+        onInputChanges: Function;
         testId: string;
     }
 
@@ -21,7 +21,7 @@
         inputValue = $bindable(),
         required = false,
         isDisabled = false,
-        onInputChanges,
+        onInputChanges = () => {},
         testId
     }: Props = $props();
 </script>

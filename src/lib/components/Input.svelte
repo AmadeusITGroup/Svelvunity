@@ -23,9 +23,9 @@
         resizableTextarea?: boolean;
         showError?: boolean;
         testId?: string;
-        onInput: any;
-        onInputChanges: any;
-        onInputBlur: any;
+        onInput: Function;
+        onInputChanges: Function;
+        onInputBlur: Function;
     }
 
     let {
@@ -49,9 +49,9 @@
         resizableTextarea = true,
         showError = true,
         testId = '',
-        onInput,
-        onInputChanges,
-        onInputBlur
+        onInput = () => {},
+        onInputChanges = () => {},
+        onInputBlur = () => {}
     }: Props = $props();
     const isTypeNumber: boolean = type === InputTypes.Number;
 
@@ -94,7 +94,7 @@
                     {classesForInput}"
                 bind:value={inputValue}
                 onblur={(event) => {
-                    onInputBlur (event);
+                    onInputBlur(event);
                     isTypeNumber ? handleNumbers() : null;
                 }}
                 oninput={(event) => onInput(event)}
@@ -120,14 +120,14 @@
                     {inputError ? 'svelvunity-input--field-error-border' : ''} 
                     {classesForInput}"
                 bind:value={inputValue}
-                onblur={(event) => onInputBlur (event)}
-                oninput={(event) => onInput (event)}
-                onchange={(event) => onInputChanges (event)}
+                onblur={(event) => onInputBlur(event)}
+                oninput={(event) => onInput(event)}
+                onchange={(event) => onInputChanges(event)}
                 {placeholder}
                 name={inputName}
                 id={inputName}
                 autocomplete="off"
-></textarea>
+            ></textarea>
         {/if}
     </div>
     {#if showError || inputError}
