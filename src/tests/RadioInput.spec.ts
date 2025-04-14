@@ -15,7 +15,8 @@ describe('RadioInput Component', () => {
 		classesForInputLabel: 'test-class-for-input-label',
 		classesForLabel: 'test-class-for-label',
 		testId: 'test-radio-input',
-		selectedOption: 'option1'
+		selectedOption: 'option1',
+		optionSelected: () => { }
 	};
 
 	test('should render the radio inputs and labels', () => {

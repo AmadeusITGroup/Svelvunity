@@ -37,9 +37,8 @@
         optionSelected
     }: Props = $props();
 
-
     run(() => {
-        selectedOption, dispatch('optionSelected', selectedOption);
+        optionSelected(selectedOption);
     });
 </script>
 
@@ -67,7 +66,7 @@
                 disabled={isDisabled}
                 required={isRequired}
                 bind:group={selectedOption}
-                onblur={() => optionSelected (selectedOption)}
+                onblur={() => optionSelected(selectedOption)}
                 data-cy-id={`${testId}-${index}-input`}
             />
 

@@ -29,10 +29,10 @@
         testIdNonEditing?: string;
         testIdInput?: string;
         testIdError?: string;
-        InputChanges: any;
-        Input: any;
-        Submit: any;
-        Restore: any;
+        InputChanges?: any;
+        Input?: any;
+        Submit?: any;
+        Restore?: any;
     }
 
     let {
@@ -61,7 +61,7 @@
         testIdNonEditing = '',
         testIdInput = '',
         testIdError = '',
-        InputChanges,
+        InputChanges= '',
         Input,
         Submit,
         Restore
