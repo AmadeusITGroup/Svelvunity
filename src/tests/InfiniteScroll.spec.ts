@@ -1,5 +1,5 @@
 import { InfiniteScroll } from '$lib';
-import { render, fireEvent } from '@testing-library/svelte';
+import { render, fireEvent } from '@testing-library/svelte/svelte5';
 import { vi } from 'vitest';
 
 describe('InfiniteScroll Component', () => {

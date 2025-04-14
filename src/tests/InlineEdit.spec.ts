@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/svelte';
+import { render, fireEvent } from '@testing-library/svelte/svelte5';
 import { describe, expect } from 'vitest';
 import InlineEdit from '../lib/components/InlineEdit.svelte';
 

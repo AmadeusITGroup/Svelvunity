@@ -1,5 +1,5 @@
 import { Loading } from '$lib';
-import { render, screen, waitFor } from '@testing-library/svelte';
+import { render, screen, waitFor } from '@testing-library/svelte/svelte5';
 
 describe('Loading Component', () => {
 	const loadingProps = {

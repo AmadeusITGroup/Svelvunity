@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
+import { render, screen, fireEvent, waitFor } from '@testing-library/svelte/svelte5';
 import { tick } from 'svelte';
 
 import { InputTypes } from '../lib/enums/inputtypes.enum';

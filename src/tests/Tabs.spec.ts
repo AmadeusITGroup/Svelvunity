@@ -1,5 +1,5 @@
 import { Button, Tabs } from '$lib';
-import { render, screen, fireEvent } from '@testing-library/svelte';
+import { render, screen, fireEvent } from '@testing-library/svelte/svelte5';
 
 describe('Tabs Component', () => {
 	const items = [

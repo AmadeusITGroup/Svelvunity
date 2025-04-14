@@ -1,5 +1,5 @@
 import { ErrorPage } from '$lib';
-import { render, screen } from '@testing-library/svelte';
+import { render, screen } from '@testing-library/svelte/svelte5';
 
 describe('ErrorPage Component', () => {
 	test('should render an error page with all props', async () => {

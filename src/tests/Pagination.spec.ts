@@ -1,5 +1,5 @@
 import { Pagination } from '$lib';
-import { render, fireEvent } from '@testing-library/svelte';
+import { render, fireEvent } from '@testing-library/svelte/svelte5';
 
 describe('Pagination Component', () => {
 	let values: unknown;

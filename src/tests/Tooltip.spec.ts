@@ -1,5 +1,5 @@
 import { Tooltip } from '$lib';
-import { render, screen, fireEvent } from '@testing-library/svelte';
+import { render, screen, fireEvent } from '@testing-library/svelte/svelte5';
 import html from '@playpilot/svelte-htm';
 
 describe('Tooltip Component', () => {

@@ -1,5 +1,5 @@
 
-import { fireEvent, render, screen } from '@testing-library/svelte';
+import { fireEvent, render, screen } from '@testing-library/svelte/svelte5';
 import Datepicker from '../lib/components/Datepicker.svelte';
 describe('Datepicker Component', () => {
     test('should render the component', () => {

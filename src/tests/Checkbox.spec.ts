@@ -1,5 +1,5 @@
 import { Checkbox } from '$lib';
-import { render, fireEvent, screen } from '@testing-library/svelte';
+import { render, fireEvent, screen } from '@testing-library/svelte/svelte5';
 
 import { tick } from 'svelte';
 

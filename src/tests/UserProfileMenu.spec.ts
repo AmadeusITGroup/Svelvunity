@@ -1,5 +1,5 @@
 import { UserProfileMenu } from '$lib';
-import { fireEvent, render } from '@testing-library/svelte';
+import { fireEvent, render } from '@testing-library/svelte/svelte5';
 
 describe('UserProfileMenu Component', () => {
 	const userProfileMenuProps = {

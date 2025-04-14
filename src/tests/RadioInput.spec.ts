@@ -1,5 +1,5 @@
 import { RadioInput } from '$lib';
-import { fireEvent, render } from '@testing-library/svelte';
+import { fireEvent, render } from '@testing-library/svelte/svelte5';
 import { tick } from 'svelte';
 
 describe('RadioInput Component', () => {

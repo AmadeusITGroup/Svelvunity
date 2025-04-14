@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/svelte';
+import { render, screen } from '@testing-library/svelte/svelte5';
 
 import userEvent from '@testing-library/user-event';
 import { AccordionItem } from '$lib';

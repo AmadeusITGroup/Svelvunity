@@ -1,4 +1,4 @@
-import { render } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte/svelte5';
 
 import { Direction } from '$lib/enums/direction.enum';
 import { FILTER_SVG } from '$lib/config/constants';
