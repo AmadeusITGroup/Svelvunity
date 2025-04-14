@@ -1,9 +1,7 @@
 <script lang="ts">
     import { InputTypes } from '$lib/enums/inputtypes.enum';
     import { removeLeadingZero } from '$lib/utils/helpers';
-    import { createEventDispatcher } from 'svelte';
 
-    const dispatch = createEventDispatcher();
     interface Props {
         classes?: string;
         classesForInput?: string;
@@ -25,6 +23,9 @@
         resizableTextarea?: boolean;
         showError?: boolean;
         testId?: string;
+        onInput: any;
+        onInputChanges: any;
+        onInputBlur: any;
     }
 
     let {
@@ -47,7 +48,10 @@
         textareaInput = false,
         resizableTextarea = true,
         showError = true,
-        testId = ''
+        testId = '',
+        onInput,
+        onInputChanges,
+        onInputBlur
     }: Props = $props();
     const isTypeNumber: boolean = type === InputTypes.Number;
 
@@ -90,11 +94,11 @@
                     {classesForInput}"
                 bind:value={inputValue}
                 onblur={(event) => {
-                    dispatch('onInputBlur', event);
+                    onInputBlur (event);
                     isTypeNumber ? handleNumbers() : null;
                 }}
-                oninput={(event) => dispatch('onInput', event)}
-                onchange={(event) => dispatch('onInputChanges', event)}
+                oninput={(event) => onInput(event)}
+                onchange={(event) => onInputChanges(event)}
                 use:typeAction
                 {placeholder}
                 name={inputName}
@@ -116,9 +120,9 @@
                     {inputError ? 'svelvunity-input--field-error-border' : ''} 
                     {classesForInput}"
                 bind:value={inputValue}
-                onblur={(event) => dispatch('onInputBlur', event)}
-                oninput={(event) => dispatch('onInput', event)}
-                onchange={(event) => dispatch('onInputChanges', event)}
+                onblur={(event) => onInputBlur (event)}
+                oninput={(event) => onInput (event)}
+                onchange={(event) => onInputChanges (event)}
                 {placeholder}
                 name={inputName}
                 id={inputName}

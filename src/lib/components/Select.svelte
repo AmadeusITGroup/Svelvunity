@@ -1,7 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    const dispatch = createEventDispatcher();
     interface Props {
         classes?: string;
         labelName?: string;
@@ -11,6 +10,8 @@
         placeholder?: string;
         testId?: string;
         options?: Array<any>;
+        onSelectChanges: any;
+        onInputBlur: any;
     }
 
     let {
@@ -21,7 +22,9 @@
         inputValue = $bindable(''),
         placeholder = '',
         testId = '',
-        options = []
+        options = [],
+        onSelectChanges,
+        onInputBlur
     }: Props = $props();
 </script>
 
@@ -37,9 +40,9 @@
                 {inputError ? 'svelvunity-input--on-error' : ''}
             "
             bind:value={inputValue}
-            onchange={() => dispatch('onSelectChanges')}
+            onchange={() => onSelectChanges()}
             onblur={(event) => {
-                dispatch('onInputBlur', event);
+                onInputBlur (event);
             }}
         >
             {#if placeholder}<option value="" disabled selected hidden>{placeholder}</option>{/if}

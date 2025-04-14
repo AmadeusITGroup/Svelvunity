@@ -199,6 +199,7 @@
                     labelName={'Dance'}
                     inputId="testCheckBox"
                     inputValue={false}
+                    onInputChanges={() => alert('Svelte5')}
                     testId="testCheckbox"
                 />
             </div>
@@ -736,18 +737,9 @@
                     dropdownLabel={'example.sample@muster.org'}
                     func={() => toast.success('Logged Out Successfully')}
                     options={[
-                        {
-                            link: '/#',
-                            label: 'Lorem Ipsum'
-                        },
-                        {
-                            link: '/#',
-                            label: 'Lorem Ipsum'
-                        },
-                        {
-                            link: '/#',
-                            label: 'Lorem Ipsum'
-                        }
+                        { link: '/#', label: 'Lorem Ipsum' },
+                        { link: '/#', label: 'Lorem Ipsum' },
+                        { link: '/#', label: 'Lorem Ipsum' }
                     ]}
                     funcLabel="Sign Out"
                 />

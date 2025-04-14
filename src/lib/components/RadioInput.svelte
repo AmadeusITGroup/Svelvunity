@@ -17,6 +17,7 @@
         isDisabled?: boolean;
         testId: string;
         selectedOption: any;
+        optionSelected: any;
     }
 
     let {
@@ -32,10 +33,10 @@
         isRequired = false,
         isDisabled = false,
         testId,
-        selectedOption = $bindable()
+        selectedOption = $bindable(),
+        optionSelected
     }: Props = $props();
 
-    const dispatch = createEventDispatcher();
 
     run(() => {
         selectedOption, dispatch('optionSelected', selectedOption);
@@ -66,7 +67,7 @@
                 disabled={isDisabled}
                 required={isRequired}
                 bind:group={selectedOption}
-                onblur={() => dispatch('optionSelected', selectedOption)}
+                onblur={() => optionSelected (selectedOption)}
                 data-cy-id={`${testId}-${index}-input`}
             />
 

@@ -1,9 +1,7 @@
 <script lang="ts">
     import { Icon, Tooltip } from '$lib';
     import { PEN_SVG, RESTORE_ICON, SAVE_ICON } from '$lib/config/constants';
-    import { createEventDispatcher, onMount } from 'svelte';
-
-
+    import { onMount } from 'svelte';
 
     interface Props {
         value?: string;
@@ -31,6 +29,10 @@
         testIdNonEditing?: string;
         testIdInput?: string;
         testIdError?: string;
+        InputChanges: any;
+        Input: any;
+        Submit: any;
+        Restore: any;
     }
 
     let {
@@ -58,13 +60,15 @@
         editIconTestId = '',
         testIdNonEditing = '',
         testIdInput = '',
-        testIdError = ''
+        testIdError = '',
+        InputChanges,
+        Input,
+        Submit,
+        Restore
     }: Props = $props();
 
     let editing = $state(false);
     let original = $state('');
-
-    const dispatch = createEventDispatcher();
 
     onMount(() => {
         original = value;
@@ -76,7 +80,7 @@
 
     function submit() {
         if (value !== original) {
-            dispatch('Submit', value);
+            Submit(value);
         }
 
         editing = false;
@@ -85,7 +89,7 @@
     function restore() {
         value = original;
         editing = false;
-        dispatch('Restore');
+        Restore();
     }
 
     function keydown(event: KeyboardEvent) {
@@ -114,8 +118,12 @@
                 onblur={() => {
                     if (value.trim() === original) restore();
                 }}
-                oninput={() => dispatch('Input', value)}
-                onchange={() => dispatch('InputChanges', value)}
+                oninput={(e) => {
+                    Input(value);
+                }}
+                onchange={(e) => {
+                    InputChanges(value);
+                }}
                 onkeydown={keydown}
                 use:focus
                 data-cy-id={testIdInput}

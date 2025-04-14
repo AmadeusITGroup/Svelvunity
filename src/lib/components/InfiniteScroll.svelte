@@ -21,15 +21,11 @@
         window = false
     }: Props = $props();
 
-    const dispatch = createEventDispatcher<{ loadMore: never }>();
-
     let isLoadMore = $state(false);
     let component: HTMLElement = $state();
     let beforeScrollHeight: number = $state();
     let beforeScrollTop: number = $state();
     let element: any | null = $state();
-
-
 
     const onScroll = (e: Event) => {
         if (!hasMore) return;
@@ -41,7 +37,7 @@
             if (!isLoadMore && hasMore) {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                dispatch('loadMore');
+                loadMore();
                 beforeScrollHeight = target.scrollHeight;
                 beforeScrollTop = target.scrollTop;
             }
