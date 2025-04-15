@@ -68,7 +68,8 @@
     }
 
     .svelvunity-select {
-        background-image: linear-gradient(45deg, transparent 50%, black 50%),
+        background-image:
+            linear-gradient(45deg, transparent 50%, black 50%),
             linear-gradient(135deg, black 50%, transparent 50%);
         background-position:
             calc(100% - 20px) calc(1em + 2px),
