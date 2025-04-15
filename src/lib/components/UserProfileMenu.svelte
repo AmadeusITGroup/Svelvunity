@@ -138,7 +138,8 @@
             var(--tw-ring-offset-color);
         --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width))
             var(--tw-ring-color);
-        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+        box-shadow:
+            var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
         background-color: aliceblue;
     }
     .dropdown {
