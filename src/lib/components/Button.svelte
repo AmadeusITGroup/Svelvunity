@@ -50,7 +50,9 @@
         {type === ButtonType.Primary ? 'am-c-df_btn am-c-df_btn-primary' : ''}
         {type === ButtonType.OutlinePrimary ? 'am-c-df_btn am-c-df_btn-outline-primary' : ''}
         {type === ButtonType.PrimaryDanger ? 'am-c-df_btn am-c-df_btn-primary-danger' : ''}
-        {type === ButtonType.OutlinePrimaryDanger ? 'am-c-df_btn am-c-df_btn-outline-primary-danger': ''}
+        {type === ButtonType.OutlinePrimaryDanger
+        ? 'am-c-df_btn am-c-df_btn-outline-primary-danger'
+        : ''}
         {getButtonSize(buttonSize)} {additionalClasses}"
     disabled={isDisabled}
     aria-label={label}
