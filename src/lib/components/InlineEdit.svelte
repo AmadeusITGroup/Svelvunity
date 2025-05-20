@@ -3,8 +3,6 @@
     import { PEN_SVG, RESTORE_ICON, SAVE_ICON } from '$lib/config/constants';
     import { createEventDispatcher, onMount } from 'svelte';
 
-
-
     interface Props {
         value?: string;
         required?: boolean;

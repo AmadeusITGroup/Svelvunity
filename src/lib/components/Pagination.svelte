@@ -37,7 +37,7 @@
 
     let totalRows = $derived(rows.length);
     let currentPage = $state(0);
-    
+
     let totalPages = $derived(Math.ceil(totalRows / perPage));
     let start = $derived(currentPage * perPage);
     let end = $derived(currentPage === totalPages - 1 ? totalRows - 1 : start + perPage - 1);

@@ -6,8 +6,6 @@
     import { toast } from '$lib/components/Toast/stores';
     import ToastItem from '$lib/components/Toast/ToastItem.svelte';
 
-    
-    
     /** @type {{options?: import('./stores').SvelteToastOptions, target?: (string|'default')}} */
     let { options = {}, target = 'default' } = $props();
 

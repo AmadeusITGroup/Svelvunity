@@ -123,7 +123,7 @@
                 name={inputName}
                 id={inputName}
                 autocomplete="off"
-></textarea>
+            ></textarea>
         {/if}
     </div>
     {#if showError || inputError}

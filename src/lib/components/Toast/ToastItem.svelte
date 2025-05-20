@@ -6,7 +6,6 @@
     import { linear } from 'svelte/easing';
     import { toast } from './stores';
 
-    
     /** @type {{item: import('./stores').SvelteToastOptions}} */
     let { item = $bindable() } = $props();
 

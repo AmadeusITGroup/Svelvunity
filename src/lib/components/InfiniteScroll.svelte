@@ -29,8 +29,6 @@
     let beforeScrollTop: number = $state();
     let element: any | null = $state();
 
-
-
     const onScroll = (e: Event) => {
         if (!hasMore) return;
 
