@@ -11,7 +11,7 @@
 
     /** @type {any} */
     let next = $state(item.initial);
-    let prev = $state(next);
+    let prev = $derived(next);
     let paused = $state(false);
     let cprops = $state({});
     /** @type {any} */

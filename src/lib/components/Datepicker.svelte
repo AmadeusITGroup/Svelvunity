@@ -221,7 +221,7 @@
     run(() => {
         prev = calendarize(new Date(selectedDateYear, selectedDateMonth - 1), 1);
     });
-    let selectedDateCalendar;
+    let selectedDateCalendar = $state();
     run(() => {
         selectedDateCalendar = calendarize(new Date(selectedDateYear, selectedDateMonth), 1);
     });

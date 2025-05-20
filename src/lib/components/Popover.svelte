@@ -190,7 +190,7 @@
 </script>
 
 {#if !referenceEl}
-    <div bind:this={contentEl} />
+    <div bind:this={contentEl}></div>
 {/if}
 
 {#if open && referenceEl}
@@ -206,6 +206,6 @@
         {...$$restProps}
     >
         <slot />
-        {#if arrow}<div use:initArrow class={arrowClass} />{/if}
+        {#if arrow}<div use:initArrow class={arrowClass}></div>{/if}
     </Frame>
 {/if}

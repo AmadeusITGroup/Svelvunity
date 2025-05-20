@@ -446,10 +446,13 @@
                                 <th>Age</th>
                             </tr>
                         </thead>
-
-                        {#each filteredItems as item}
-                            <tr> <td>{item}</td></tr>
-                        {/each}
+                        <tbody>
+                            {#each filteredItems as item}
+                                <tr>
+                                    <td>{item}</td>
+                                </tr>
+                            {/each}
+                        </tbody>
                     </table>
                     <InfiniteScroll
                         window={false}

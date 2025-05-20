@@ -57,7 +57,7 @@
                 />
             </div>
         {:else if !(showBody && $$slots.body) && fillEmptyChevronSpace}
-            <div class="accordion-button-chevron-space-filler" />
+            <div class="accordion-button-chevron-space-filler"></div>
         {/if}
         <slot name="button" />
     </div>
