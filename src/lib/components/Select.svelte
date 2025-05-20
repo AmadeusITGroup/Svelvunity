@@ -2,14 +2,27 @@
     import { createEventDispatcher } from 'svelte';
 
     const dispatch = createEventDispatcher();
-    export let classes = '';
-    export let labelName = '';
-    export let inputName = '';
-    export let inputError = '';
-    export let inputValue = '';
-    export let placeholder = '';
-    export let testId = '';
-    export let options: Array<any> = [];
+    interface Props {
+        classes?: string;
+        labelName?: string;
+        inputName?: string;
+        inputError?: string;
+        inputValue?: string;
+        placeholder?: string;
+        testId?: string;
+        options?: Array<any>;
+    }
+
+    let {
+        classes = '',
+        labelName = '',
+        inputName = '',
+        inputError = '',
+        inputValue = $bindable(''),
+        placeholder = '',
+        testId = '',
+        options = []
+    }: Props = $props();
 </script>
 
 <div class={classes}>
@@ -24,8 +37,8 @@
                 {inputError ? 'svelvunity-input--on-error' : ''}
             "
             bind:value={inputValue}
-            on:change={() => dispatch('onSelectChanges')}
-            on:blur={(event) => {
+            onchange={() => dispatch('onSelectChanges')}
+            onblur={(event) => {
                 dispatch('onInputBlur', event);
             }}
         >

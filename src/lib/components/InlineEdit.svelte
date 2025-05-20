@@ -3,36 +3,66 @@
     import { PEN_SVG, RESTORE_ICON, SAVE_ICON } from '$lib/config/constants';
     import { createEventDispatcher, onMount } from 'svelte';
 
-    export let value = '';
-    export let required = false;
-    export let disabled = false;
-    export let canSubmit = true;
-    export let placeholder = '';
-    export let error = '';
-    export let submitLabel = 'Submit';
-    export let restoreLabel = 'Restore';
-    export let editLabel = 'Edit';
 
-    export let classes = '';
-    export let classesForEditIcon = '';
-    export let classesForRestoreIcon = '';
-    export let classesForSubmitIcon = '';
-    export let classesForInput = '';
-    export let classesForButton = '';
-    export let classesForError = '';
 
-    export let submitLabelTooltipTestId = '';
-    export let submitIconTestId = '';
-    export let restoreLabelTooltipTestId = '';
-    export let restoreIconTestId = '';
-    export let editLabelTooltipTestId = '';
-    export let editIconTestId = '';
-    export let testIdNonEditing = '';
-    export let testIdInput = '';
-    export let testIdError = '';
+    interface Props {
+        value?: string;
+        required?: boolean;
+        disabled?: boolean;
+        canSubmit?: boolean;
+        placeholder?: string;
+        error?: string;
+        submitLabel?: string;
+        restoreLabel?: string;
+        editLabel?: string;
+        classes?: string;
+        classesForEditIcon?: string;
+        classesForRestoreIcon?: string;
+        classesForSubmitIcon?: string;
+        classesForInput?: string;
+        classesForButton?: string;
+        classesForError?: string;
+        submitLabelTooltipTestId?: string;
+        submitIconTestId?: string;
+        restoreLabelTooltipTestId?: string;
+        restoreIconTestId?: string;
+        editLabelTooltipTestId?: string;
+        editIconTestId?: string;
+        testIdNonEditing?: string;
+        testIdInput?: string;
+        testIdError?: string;
+    }
 
-    let editing = false;
-    let original = '';
+    let {
+        value = $bindable(''),
+        required = false,
+        disabled = false,
+        canSubmit = true,
+        placeholder = '',
+        error = '',
+        submitLabel = 'Submit',
+        restoreLabel = 'Restore',
+        editLabel = 'Edit',
+        classes = '',
+        classesForEditIcon = '',
+        classesForRestoreIcon = '',
+        classesForSubmitIcon = '',
+        classesForInput = '',
+        classesForButton = '',
+        classesForError = '',
+        submitLabelTooltipTestId = '',
+        submitIconTestId = '',
+        restoreLabelTooltipTestId = '',
+        restoreIconTestId = '',
+        editLabelTooltipTestId = '',
+        editIconTestId = '',
+        testIdNonEditing = '',
+        testIdInput = '',
+        testIdError = ''
+    }: Props = $props();
+
+    let editing = $state(false);
+    let original = $state('');
 
     const dispatch = createEventDispatcher();
 
@@ -81,12 +111,12 @@
                 {placeholder}
                 {required}
                 bind:value
-                on:blur={() => {
+                onblur={() => {
                     if (value.trim() === original) restore();
                 }}
-                on:input={() => dispatch('Input', value)}
-                on:change={() => dispatch('InputChanges', value)}
-                on:keydown={keydown}
+                oninput={() => dispatch('Input', value)}
+                onchange={() => dispatch('InputChanges', value)}
+                onkeydown={keydown}
                 use:focus
                 data-cy-id={testIdInput}
             />
@@ -151,7 +181,7 @@
                 : 'border-b-amadeusgray200 hover:border-b-amadeusblue'} {value === ''
                 ? 'text-amadeusgray400'
                 : 'text-amadeusblack'} {classesForButton}"
-            on:click={() => {
+            onclick={() => {
                 if (!disabled) edit();
             }}
             data-cy-id={testIdNonEditing}

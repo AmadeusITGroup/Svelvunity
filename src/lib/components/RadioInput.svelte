@@ -1,23 +1,45 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import { createEventDispatcher } from 'svelte';
 
-    export let labelText = '';
-    export let inputName = '';
-    export let inputError = '';
-    export let options: any = [];
-    export let classesForError = '';
-    export let classesForInput = '';
-    export let classesForInputLabel = '';
-    export let classesForLabel = '';
-    export let classesForRadioGroup = '';
-    export let isRequired = false;
-    export let isDisabled = false;
-    export let testId: string;
-    export let selectedOption: any;
+    interface Props {
+        labelText?: string;
+        inputName?: string;
+        inputError?: string;
+        options?: any;
+        classesForError?: string;
+        classesForInput?: string;
+        classesForInputLabel?: string;
+        classesForLabel?: string;
+        classesForRadioGroup?: string;
+        isRequired?: boolean;
+        isDisabled?: boolean;
+        testId: string;
+        selectedOption: any;
+    }
+
+    let {
+        labelText = '',
+        inputName = '',
+        inputError = '',
+        options = [],
+        classesForError = '',
+        classesForInput = '',
+        classesForInputLabel = '',
+        classesForLabel = '',
+        classesForRadioGroup = '',
+        isRequired = false,
+        isDisabled = false,
+        testId,
+        selectedOption = $bindable()
+    }: Props = $props();
 
     const dispatch = createEventDispatcher();
 
-    $: selectedOption, dispatch('optionSelected', selectedOption);
+    run(() => {
+        selectedOption, dispatch('optionSelected', selectedOption);
+    });
 </script>
 
 <div role="radiogroup" data-cy-id={testId} class="radiogroup {classesForRadioGroup}">
@@ -44,7 +66,7 @@
                 disabled={isDisabled}
                 required={isRequired}
                 bind:group={selectedOption}
-                on:blur={() => dispatch('optionSelected', selectedOption)}
+                onblur={() => dispatch('optionSelected', selectedOption)}
                 data-cy-id={`${testId}-${index}-input`}
             />
 

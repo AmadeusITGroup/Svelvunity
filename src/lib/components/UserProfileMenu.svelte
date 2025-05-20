@@ -7,15 +7,27 @@
     import { clickOutside } from '$lib/utils/clickOutside';
     import SymbolIcon from './SymbolIcon.svelte';
 
-    export let testId = '';
-    export let classes = '';
-    export let classesForDropdownButton = '';
-    export let dropdownLabel: string;
-    export let options: { link: string; label: string }[];
-    export let funcLabel: string;
-    export let func: any;
+    interface Props {
+        testId?: string;
+        classes?: string;
+        classesForDropdownButton?: string;
+        dropdownLabel: string;
+        options: { link: string; label: string }[];
+        funcLabel: string;
+        func: any;
+    }
 
-    let isDropdownOpen = false;
+    let {
+        testId = '',
+        classes = '',
+        classesForDropdownButton = '',
+        dropdownLabel,
+        options,
+        funcLabel,
+        func
+    }: Props = $props();
+
+    let isDropdownOpen = $state(false);
 
     function toggleDropdown() {
         isDropdownOpen = !isDropdownOpen;
@@ -25,7 +37,7 @@
 <div
     class="dropdown-wrapper {classes}"
     use:clickOutside
-    on:click_outside={() => (isDropdownOpen = false)}
+    onclick_outside={() => (isDropdownOpen = false)}
 >
     <div
         data-cy-id={testId}
@@ -33,8 +45,8 @@
         aria-label="User profile menu"
         role="button"
         tabindex="0"
-        on:click={() => toggleDropdown()}
-        on:keypress={(e) => {
+        onclick={() => toggleDropdown()}
+        onkeypress={(e) => {
             if (e.key === 'Enter') toggleDropdown();
         }}
     >
@@ -55,12 +67,12 @@
                 <a
                     href={option.link}
                     class="dropdown-list"
-                    on:keypress={(e) => {
+                    onkeypress={(e) => {
                         if (e.key === 'Enter') {
                             isDropdownOpen = false;
                         }
                     }}
-                    on:click={() => {
+                    onclick={() => {
                         isDropdownOpen = false;
                     }}
                     >{option.label}
@@ -71,13 +83,13 @@
                 class="dropdown-list-divider"
                 role="button"
                 tabindex="0"
-                on:keypress={(e) => {
+                onkeypress={(e) => {
                     if (e.key === 'Enter') {
                         isDropdownOpen = false;
                         func();
                     }
                 }}
-                on:click={() => {
+                onclick={() => {
                     isDropdownOpen = false;
                     func();
                 }}

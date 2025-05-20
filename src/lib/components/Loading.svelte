@@ -3,13 +3,25 @@
     import { LOADING_ANIMATION_DELAY_AND_DURATION } from '$lib/config/constants';
     import { fade } from 'svelte/transition';
 
-    export let width = '140px';
-    export let height = '140px';
-    export let loadingAnimationDuration = LOADING_ANIMATION_DELAY_AND_DURATION;
-    export let removeAnimation = false;
-    export let isScreenCentered = false;
-    export let classes = '';
-    export let testId = '';
+    interface Props {
+        width?: string;
+        height?: string;
+        loadingAnimationDuration?: any;
+        removeAnimation?: boolean;
+        isScreenCentered?: boolean;
+        classes?: string;
+        testId?: string;
+    }
+
+    let {
+        width = '140px',
+        height = '140px',
+        loadingAnimationDuration = LOADING_ANIMATION_DELAY_AND_DURATION,
+        removeAnimation = false,
+        isScreenCentered = false,
+        classes = '',
+        testId = ''
+    }: Props = $props();
 </script>
 
 {#if removeAnimation}

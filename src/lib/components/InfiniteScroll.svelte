@@ -1,32 +1,35 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import { onMount, onDestroy, createEventDispatcher } from 'svelte';
 
-    export let threshold: number | undefined = 0;
-    export let horizontal: boolean | undefined = false;
-    export let elementScroll: HTMLElement | null = null;
-    export let hasMore: boolean | undefined = true;
-    export let reverse: boolean | undefined = false;
-    export let window: boolean | undefined = false;
+    interface Props {
+        threshold?: number | undefined;
+        horizontal?: boolean | undefined;
+        elementScroll?: HTMLElement | null;
+        hasMore?: boolean | undefined;
+        reverse?: boolean | undefined;
+        window?: boolean | undefined;
+    }
+
+    let {
+        threshold = 0,
+        horizontal = false,
+        elementScroll = null,
+        hasMore = true,
+        reverse = false,
+        window = false
+    }: Props = $props();
 
     const dispatch = createEventDispatcher<{ loadMore: never }>();
 
-    let isLoadMore = false;
-    let component: HTMLElement;
-    let beforeScrollHeight: number;
-    let beforeScrollTop: number;
-    let element: any | null;
+    let isLoadMore = $state(false);
+    let component: HTMLElement = $state();
+    let beforeScrollHeight: number = $state();
+    let beforeScrollTop: number = $state();
+    let element: any | null = $state();
 
-    $: if (element) {
-        if (reverse) {
-            element.scrollTop = element.scrollHeight;
-        }
-        element.addEventListener('scroll', onScroll);
-        element.addEventListener('resize', onScroll);
-    }
 
-    $: if (reverse && isLoadMore) {
-        element.scrollTop = element.scrollHeight - beforeScrollHeight + beforeScrollTop;
-    }
 
     const onScroll = (e: Event) => {
         if (!hasMore) return;
@@ -75,10 +78,24 @@
             element.removeEventListener('resize', onScroll);
         }
     });
+    run(() => {
+        if (element) {
+            if (reverse) {
+                element.scrollTop = element.scrollHeight;
+            }
+            element.addEventListener('scroll', onScroll);
+            element.addEventListener('resize', onScroll);
+        }
+    });
+    run(() => {
+        if (reverse && isLoadMore) {
+            element.scrollTop = element.scrollHeight - beforeScrollHeight + beforeScrollTop;
+        }
+    });
 </script>
 
 {#if !window && !elementScroll}
-    <div class="infinite-scroll" bind:this={component} id="svelte-infinite-scroll" />
+    <div class="infinite-scroll" bind:this={component} id="svelte-infinite-scroll"></div>
 {/if}
 
 <style>

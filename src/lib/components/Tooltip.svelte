@@ -6,24 +6,28 @@
     import { formatVariableKey, getMinWidth, isInViewport } from '$lib/utils/helpers';
     import { INVERSE } from '$lib//config/constants';
 
-    export let content = '';
-    export let align = 'left';
-    export let position = 'top';
-    export let maxWidth = 200;
-    export let style = null;
-    export let theme = '';
-    export let animation = '';
-    export let arrow = true;
-    export let autoPosition = false;
-    export let testId = '';
+    /** @type {{content?: string, align?: string, position?: string, maxWidth?: number, style?: any, theme?: string, animation?: string, arrow?: boolean, autoPosition?: boolean, testId?: string, children?: import('svelte').Snippet}} */
+    let {
+        content = '',
+        align = 'left',
+        position = $bindable('top'),
+        maxWidth = 200,
+        style = null,
+        theme = '',
+        animation = '',
+        arrow = true,
+        autoPosition = false,
+        testId = '',
+        children
+    } = $props();
 
-    let containerRef = null;
-    let tooltipRef = null;
-    let minWidth = 0;
+    let containerRef = $state(null);
+    let tooltipRef = $state(null);
+    let minWidth = $state(0);
     let component = null;
     let initialPosition = position;
-    let animationEffect = null;
-    let show = false;
+    let animationEffect = $state(null);
+    let show = $state(false);
     let timer = null;
 
     const onMouseEnter = () => {
@@ -94,11 +98,11 @@
         }
     });
 
-    $: isComponent = typeof content === 'object';
+    let isComponent = $derived(typeof content === 'object');
 </script>
 
 <span data-cy-id={testId !== '' ? testId : null} bind:this={containerRef} class="tooltip-container">
-    <slot />
+    {@render children?.()}
     <div
         bind:this={tooltipRef}
         class="tooltip animation-{animationEffect} {position} {theme}"

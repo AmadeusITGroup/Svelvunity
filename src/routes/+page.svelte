@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: `<tr>` is invalid inside `<table>` -->
 <script lang="ts">
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-nocheck
@@ -440,9 +441,11 @@
                         />
                     </div>
                     <table>
-                        <tr>
-                            <th>Age</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Age</th>
+                            </tr>
+                        </thead>
 
                         {#each filteredItems as item}
                             <tr> <td>{item}</td></tr>
