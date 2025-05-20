@@ -92,6 +92,7 @@
     };
     let selectedDateYear = $state(Number(defaultYear));
     let selectedDateMonth = $state(Number(defaultMonth));
+    let selectedDateCalendar = $derived(calendarize(new Date(selectedDateYear, selectedDateMonth), 1));
     const updateCalendars = () => {
         selectedDateCalendar = selectedDateCalendar;
     };
@@ -220,10 +221,6 @@
     let prev;
     run(() => {
         prev = calendarize(new Date(selectedDateYear, selectedDateMonth - 1), 1);
-    });
-    let selectedDateCalendar = $state();
-    run(() => {
-        selectedDateCalendar = calendarize(new Date(selectedDateYear, selectedDateMonth), 1);
     });
     let next;
     run(() => {
