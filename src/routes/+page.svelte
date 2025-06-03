@@ -720,7 +720,7 @@
                         shadow
                         rounded
                         triggeredBy=".info-icon"
-                        class="w-72 z-20"
+                        classes="w-72 z-20"
                         onShow={() => {
                             console.log('PopOver icon show');
                         }}

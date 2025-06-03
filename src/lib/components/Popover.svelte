@@ -1,13 +1,16 @@
-<!-- @migration-task Error while migrating Svelte code: $$props is used together with named props in a way that cannot be automatically migrated. -->
 <script lang="ts">
-    import type { Placement, Side } from '@floating-ui/dom';
+    import { Frame } from '$lib';
+    import type { ComputePositionReturn, Middleware, Placement, Side } from '@floating-ui/dom';
+    import * as dom from '@floating-ui/dom';
     import { onMount, type Snippet } from 'svelte';
     import { twJoin } from 'tailwind-merge';
-    import Frame from './Frame.svelte';
 
     let {
-        border,
+        border = false,
+        rounded = false,
+        shadow = false,
         onShow,
+        classes = '',
         activeContent = false,
         arrow = true,
         placement = 'top',
@@ -15,10 +18,16 @@
         triggeredBy = undefined,
         reference = undefined,
         open = false,
+        offset = 8,
+        strategy = 'absolute',
+        yOnly = false,
         children
     }: {
-        border: any;
-        onShow: any;
+        border: boolean;
+        rounded: boolean;
+        shadow: boolean;
+        classes?: string;
+        onShow: (open: boolean) => void;
         activeContent: boolean;
         arrow: boolean;
         placement: Placement;
@@ -26,22 +35,32 @@
         triggeredBy: string | undefined;
         reference: string | undefined;
         open: boolean;
+        offset: number;
+        strategy: 'absolute' | 'fixed';
+        yOnly: boolean;
         children?: Snippet;
     } = $props();
 
+    // extra floating UI middleware list
+    let middlewares: Middleware[] = [dom.flip(), dom.shift()];
+
     let clickable: boolean = $derived(trigger === 'click');
+    let isOpen = $state(open);
+    onShow(isOpen);
 
-    onShow(open);
-    $effect(() => {
-        if (placement) {
-            referenceEl;
-        }
-    });
+    let referenceEl: Element | undefined = $state();
 
-    let referenceEl: any = $state(undefined);
-    let floatingEl: HTMLElement | undefined = undefined;
-    let contentEl: HTMLElement | undefined = $state();
+    let floatingEl: HTMLElement;
+    let arrowEl: HTMLElement | null = null;
+    let contentEl: HTMLElement;
     let triggerEls: HTMLElement[] = [];
+
+    let middleware = $state([
+        ...middlewares,
+        dom.offset(+offset),
+        arrowEl && dom.arrow({ element: arrowEl, padding: 10 })
+    ]);
+
     let _blocked = false; // management of the race condition between focusin and click events
     const block = () => ((_blocked = true), setTimeout(() => (_blocked = false), 250));
 
@@ -56,23 +75,22 @@
             block();
         }
         if (clickable && ev.type === 'focusin' && !open) block();
-        open = clickable && ev.type === 'click' && !_blocked ? !open : true;
+        isOpen = clickable && ev.type === 'click' && !_blocked ? !isOpen : true;
     };
 
-    const hasHover = (el: any) => el.matches(':hover');
-    const hasFocus = (el: any) => el.contains(document.activeElement);
+    const hasHover = (el: Element | undefined) => el?.matches(':hover');
+    const hasFocus = (el: Element | undefined) => el?.contains(document.activeElement);
+    const px = (n: number | undefined) => (n != null ? `${n}px` : '');
 
     const hideHandler = (ev: Event) => {
         if (activeContent) {
             setTimeout(() => {
-                if (floatingEl) {
-                    const elements = [referenceEl, floatingEl, ...triggerEls].filter(Boolean);
-                    if (ev.type === 'mouseleave' && elements.some(hasHover)) return;
-                    if (ev.type === 'focusout' && elements.some(hasFocus)) return;
-                    open = false;
-                }
+                const elements = [referenceEl, floatingEl, ...triggerEls].filter(Boolean);
+                if (ev.type === 'mouseleave' && elements.some(hasHover)) return;
+                if (ev.type === 'focusout' && elements.some(hasFocus)) return;
+                isOpen = false;
             }, 100);
-        } else open = false;
+        } else isOpen = false;
     };
 
     const oppositeSideMap: Record<Side, Side> = {
@@ -81,8 +99,42 @@
         bottom: 'top',
         top: 'bottom'
     };
-
     let arrowSide: Side = oppositeSideMap.top;
+
+    function updatePosition() {
+        if (referenceEl) {
+            dom.computePosition(referenceEl, floatingEl, { placement, strategy, middleware }).then(
+                ({ x, y, middlewareData, placement, strategy }: ComputePositionReturn) => {
+                    floatingEl.style.position = strategy;
+                    floatingEl.style.left = yOnly ? '0' : px(x);
+                    floatingEl.style.top = px(y);
+
+                    if (middlewareData.arrow && arrowEl instanceof HTMLDivElement) {
+                        arrowEl.style.left = px(middlewareData.arrow.x);
+                        arrowEl.style.top = px(middlewareData.arrow.y);
+
+                        arrowSide = oppositeSideMap[placement.split('-')[0] as Side];
+                        arrowEl.style[arrowSide] = px(-arrowEl.offsetWidth / 2 - (border ? 1 : 0));
+                    }
+                }
+            );
+        }
+    }
+
+    function init(node: HTMLElement, _referenceEl: HTMLElement) {
+        floatingEl = node;
+        let cleanup = dom.autoUpdate(_referenceEl, floatingEl, updatePosition);
+
+        return {
+            update(_referenceEl: HTMLElement) {
+                cleanup();
+                cleanup = dom.autoUpdate(_referenceEl, floatingEl, updatePosition);
+            },
+            destroy() {
+                cleanup();
+            }
+        };
+    }
 
     onMount(() => {
         const events: [string, any, boolean][] = [
@@ -95,7 +147,7 @@
 
         if (triggeredBy) triggerEls = [...document.querySelectorAll<HTMLElement>(triggeredBy)];
         else
-            triggerEls = contentEl?.previousElementSibling
+            triggerEls = contentEl.previousElementSibling
                 ? [contentEl.previousElementSibling as HTMLElement]
                 : [];
 
@@ -149,22 +201,37 @@
             border && arrowSide === 'left' && 'border-b border-s '
         )
     );
+
+    function initArrow(node: HTMLElement) {
+        arrowEl = node;
+        return {
+            destroy() {
+                arrowEl = null;
+            }
+        };
+    }
 </script>
 
 {#if !referenceEl}
-    <div bind:this={contentEl}></div>
+    <div bind:this={contentEl} />
 {/if}
 
-{#if open && referenceEl}
+{#if isOpen && referenceEl}
     <Frame
+        action={init}
         options={referenceEl}
         role="tooltip"
+        {border}
+        {rounded}
+        {shadow}
+        {classes}
+        tabindex={activeContent ? -1 : undefined}
         onfocusin={optional(activeContent, showHandler)}
         onfocusout={optional(activeContent, hideHandler)}
         onmouseenter={optional(activeContent && !clickable, showHandler)}
         onmouseleave={optional(activeContent && !clickable, hideHandler)}
     >
         {@render children?.()}
-        {#if arrow}<div class={arrowClass}></div>{/if}
+        {#if arrow}<div use:initArrow class={arrowClass} />{/if}
     </Frame>
 {/if}

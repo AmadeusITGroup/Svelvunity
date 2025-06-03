@@ -4,21 +4,20 @@
     import type { Action } from 'svelte/action';
     import type { FocusEventHandler, MouseEventHandler } from 'svelte/elements';
 
-    const noop = () => {};
-
     setContext('background', true);
 
     let {
+        action = () => {},
         href = undefined,
         bgColor = 'bg-white',
         textColor = 'text-gray-500',
         borderColor = 'border-gray-50 divide-gray-50',
-        customClasses = '',
+        classes = '',
         rounded = false,
         border = false,
+        tabindex = undefined,
         shadow = false,
         node = undefined,
-        use = noop,
         options = {},
         role = undefined,
         onclick = undefined,
@@ -26,19 +25,19 @@
         onfocusout = undefined,
         onmouseenter = undefined,
         onmouseleave = undefined,
-        children,
-        ...restProps
+        children
     }: {
+        action: Action<HTMLElement, any>;
         href?: string | undefined;
         bgColor?: string;
         textColor?: string;
         borderColor?: string;
-        customClasses?: string;
+        classes?: string;
         rounded?: boolean;
         border?: boolean;
+        tabindex: number | undefined;
         shadow?: boolean;
         node?: HTMLElement | undefined;
-        use?: Action<HTMLElement, unknown>;
         options?: object;
         role?: string | undefined;
         onclick?: MouseEventHandler<any> | null | undefined;
@@ -51,24 +50,26 @@
 
     let tag: string = href ? 'a' : 'div';
 
-    let divClass: string = twMerge(
-        bgColor,
-        textColor,
-        rounded && 'rounded-lg',
-        border && 'border',
-        borderColor,
-        shadow && 'shadow-md',
-        customClasses
+    let divClass: string = $state(
+        twMerge(
+            bgColor,
+            textColor,
+            rounded && 'rounded-lg',
+            border && 'border',
+            borderColor,
+            shadow && 'shadow-md',
+            classes
+        )
     );
 </script>
 
 <svelte:element
     this={tag}
-    use:use={options}
+    use:action={options}
     bind:this={node}
     {role}
     class={divClass}
-    {...restProps}
+    {tabindex}
     {onclick}
     {onmouseenter}
     {onmouseleave}

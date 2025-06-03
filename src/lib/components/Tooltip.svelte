@@ -22,7 +22,6 @@
     let containerRef = $state(null);
     let tooltipRef = $state(null);
     let minWidth = $state(0);
-    // TODO: Not sure why is that. I think it can safely be removed
     let component = null;
     let initialPosition = position;
     let animationEffect = $state(null);
