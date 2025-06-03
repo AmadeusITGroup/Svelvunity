@@ -2,12 +2,12 @@
     interface Props {
         inputId: string;
         labelName: string;
-        classes?: string;
-        classesForInput?: string;
-        classesForLabel?: string;
+        classes: string;
+        classesForInput: string;
+        classesForLabel: string;
         inputValue: boolean;
-        required?: boolean;
-        isDisabled?: boolean;
+        required: boolean;
+        isDisabled: boolean;
         testId: string;
         onInputChange?: (e: Event) => void;
     }
