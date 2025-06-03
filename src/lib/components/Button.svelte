@@ -71,7 +71,11 @@
     tabindex="0"
 >
     {#if loading}
-        <Loading classes={getSpinnerSize(buttonSize)} removeAnimation={true} testId={ `${testId}-loader` } />
+        <Loading
+            classes={getSpinnerSize(buttonSize)}
+            removeAnimation={true}
+            testId={`${testId}-loader`}
+        />
     {:else}
         {label}
     {/if}

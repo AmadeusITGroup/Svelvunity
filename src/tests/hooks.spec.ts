@@ -1,11 +1,12 @@
 import { describe, it, expect, vi } from 'vitest';
+import type { RequestEvent } from '@sveltejs/kit';
 import { handle } from '../hooks.server';
 
 describe('handle function', () => {
   it('returns 204 response for /.well-known/appspecific/com.chrome.devtools path', async () => {
     const event = {
       url: new URL('http://localhost/.well-known/appspecific/com.chrome.devtools/something'),
-    };
+    } as unknown as RequestEvent;
     const resolve = vi.fn();
 
     const response = await handle({ event, resolve });
@@ -20,7 +21,7 @@ describe('handle function', () => {
   it('calls resolve and returns its response for other paths', async () => {
     const event = {
       url: new URL('http://localhost/other-path'),
-    };
+    } as unknown as RequestEvent;
     const mockResponse = new Response('OK', { status: 200 });
     const resolve = vi.fn(() => Promise.resolve(mockResponse));
 

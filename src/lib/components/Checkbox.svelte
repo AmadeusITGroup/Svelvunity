@@ -36,7 +36,7 @@
         disabled={isDisabled}
         class="input-checkbox {classesForInput}"
         bind:checked={inputValue}
-        onchange={ (e) => onInputChange?.(e) }
+        onchange={(e) => onInputChange?.(e)}
     />
     <label class="input-label {classesForLabel}" for={inputId}>{labelName}</label>
 </div>
