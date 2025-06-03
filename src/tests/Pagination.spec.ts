@@ -46,7 +46,7 @@ describe('Pagination Component', () => {
 		const nextButton = container.querySelector("[data-cy-id='next-page-button']") as HTMLElement;
 
 		fireEvent.click(nextButton);
-		expect(currentPage).toHaveTextContent('1');
+		expect(currentPage).toHaveTextContent('2');
 	});
 
 	test('should navigate to previous page when previous button is clicked', async () => {

@@ -21,7 +21,6 @@ describe('Datepicker Component', () => {
         expect(screen.getByText('25')).toBeInTheDocument();
     });
     test('should display the correct month and year when navigating', () => {
-        const today = new Date();
         const { container } =  render(Datepicker);
         const prevButton = container.getElementsByClassName('icon-previous-month')[0] as HTMLElement;
         const nextButton = container.getElementsByClassName('icon-next-month')[0] as HTMLElement;

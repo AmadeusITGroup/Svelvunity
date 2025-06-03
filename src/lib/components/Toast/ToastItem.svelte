@@ -1,8 +1,6 @@
 <script>
-    import { run } from 'svelte/legacy';
-
     import { onMount, onDestroy } from 'svelte';
-    import { tweened } from 'svelte/motion';
+    import { Tween } from 'svelte/motion';
     import { linear } from 'svelte/easing';
     import { toast } from './stores';
 
@@ -17,19 +15,23 @@
     /** @type {any} */
     let unlisten;
 
-    const progress = tweened(item.initial, { duration: item.duration, easing: linear });
+    console.log(item.duration);
+
+    const progress = new Tween(item.initial, { duration: item.duration, easing: linear });
 
     function close() {
         toast.pop(item.id);
     }
 
     function autoclose() {
-        if ($progress === 1 || $progress === 0) close();
+        if (progress.current === 1 || progress.current === 0) {
+            close();
+        }
     }
 
     function pause() {
-        if (!paused && $progress !== next) {
-            progress.set($progress, { duration: 0 });
+        if (!paused && progress.current !== next) {
+            progress.set(progress.current, { duration: 0 });
             paused = true;
         }
     }
@@ -37,7 +39,8 @@
     function resume() {
         if (paused) {
             const d = /** @type {any} */ (item.duration);
-            const duration = d - d * (($progress - prev) / (next - prev));
+            const currentValue = progress?.current ?? 0;
+            const duration = d - d * ((currentValue - prev) / (next - prev));
             progress.set(next, { duration }).then(autoclose);
             paused = false;
         }
@@ -57,30 +60,19 @@
         handler();
     }
 
-    run(() => {
+    $effect(() => {
         if (next !== item.next) {
             next = item.next;
-            prev = $progress;
+            prev = progress.current;
             paused = false;
             progress.set(next).then(autoclose);
         }
     });
 
-    run(() => {
+    $effect(() => {
         if (item.component) {
             const { props = {}, sendIdTo } = item.component;
             cprops = { ...props, ...(sendIdTo && { [sendIdTo]: item.id }) };
-        }
-    });
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // `progress` has been renamed to `next`; shim included for backward compatibility, to remove in next major
-    run(() => {
-        if (!check(item.progress)) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            item.next = item.progress;
         }
     });
 
@@ -125,7 +117,7 @@
             }}
         ></div>
     {/if}
-    <progress class="_toastBar" value={$progress}></progress>
+    <progress class="_toastBar" value={progress.current}></progress>
 </div>
 
 <style>

@@ -1,5 +1,4 @@
 <script lang="ts">
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-nocheck
 
     import Loading from './Loading.svelte';
@@ -8,7 +7,7 @@
     import { TEST_IDS } from '$lib/enums/testconstants.enum';
 
     interface Props {
-        clickLogic?: null | ((...args: any) => any);
+        clickLogic?: null | ((...args: unknown[]) => unknown);
         label?: string;
         isDisabled?: boolean;
         additionalClasses?: string;
@@ -79,6 +78,8 @@
 </button>
 
 <style global>
+    @reference "../../app.css";
+
     .am-c-df_btn-group,
     .am-c-df_btn-group-vertical {
         position: relative;

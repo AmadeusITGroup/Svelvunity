@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
-
     interface Props {
         inputId?: string;
         labelName?: string;
@@ -11,6 +9,7 @@
         required?: boolean;
         isDisabled?: boolean;
         testId: string;
+        onInputChange?: (e: Event) => void;
     }
 
     let {
@@ -22,10 +21,9 @@
         inputValue = $bindable(),
         required = false,
         isDisabled = false,
-        testId
+        testId,
+        onInputChange
     }: Props = $props();
-
-    const dispatch = createEventDispatcher();
 </script>
 
 <div class="checkbox-wrapper {classes}">
@@ -38,7 +36,11 @@
         disabled={isDisabled}
         class="input-checkbox {classesForInput}"
         bind:checked={inputValue}
-        onchange={(e) => dispatch('onInputChanges', e)}
+        onchange={(e) => {
+            if (onInputChange) {
+                onInputChange(e);
+            }
+        }}
     />
     <label class="input-label {classesForLabel}" for={inputId}>{labelName}</label>
 </div>

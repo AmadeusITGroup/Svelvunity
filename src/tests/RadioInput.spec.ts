@@ -15,7 +15,8 @@ describe('RadioInput Component', () => {
 		classesForInputLabel: 'test-class-for-input-label',
 		classesForLabel: 'test-class-for-label',
 		testId: 'test-radio-input',
-		selectedOption: 'option1'
+		selectedOption: 'option1',
+		onOptionSelected: () => {}
 	};
 
 	test('should render the radio inputs and labels', () => {
@@ -24,10 +25,14 @@ describe('RadioInput Component', () => {
 		});
 
 		expect(getByRole('radiogroup')).toBeInTheDocument();
-		const labelForRadioInput = container.querySelector(
-			"[for='radio-input-name']"
+		const labelForRadioInput1 = container.querySelector(
+			`[for='${radioInputProps.options[0].name}']`
 		) as HTMLLabelElement;
-		expect(labelForRadioInput).toBeInTheDocument();
+		expect(labelForRadioInput1).toBeInTheDocument();
+				const labelForRadioInput2 = container.querySelector(
+			`[for='${radioInputProps.options[0].name}']`
+		) as HTMLLabelElement;
+		expect(labelForRadioInput2).toBeInTheDocument();
 	});
 
 	test('should select a radio input when clicked', () => {
@@ -110,7 +115,7 @@ describe('RadioInput Component', () => {
 		});
 
 		const labelForRadioInput = container.querySelector(
-			"[for='radio-input-name']"
+			`[for='${radioInputProps.options[0].name}']`
 		) as HTMLLabelElement;
 
 		fireEvent.click(labelForRadioInput);

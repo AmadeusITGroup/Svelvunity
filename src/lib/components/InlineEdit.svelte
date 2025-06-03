@@ -1,7 +1,6 @@
 <script lang="ts">
     import { Icon, Tooltip } from '$lib';
     import { PEN_SVG, RESTORE_ICON, SAVE_ICON } from '$lib/config/constants';
-    import { createEventDispatcher, onMount } from 'svelte';
 
     interface Props {
         value?: string;
@@ -29,6 +28,10 @@
         testIdNonEditing?: string;
         testIdInput?: string;
         testIdError?: string;
+        onSubmit?: (value: any) => void;
+        onRestore?: () => void;
+        onInput?: (value: any) => void;
+        onInputChange?: (value: any) => void;
     }
 
     let {
@@ -56,34 +59,38 @@
         editIconTestId = '',
         testIdNonEditing = '',
         testIdInput = '',
-        testIdError = ''
+        testIdError = '',
+        onSubmit,
+        onRestore,
+        onInput,
+        onInputChange
     }: Props = $props();
 
     let editing = $state(false);
-    let original = $state('');
-
-    const dispatch = createEventDispatcher();
-
-    onMount(() => {
-        original = value;
-    });
+    // svelte-ignore non_reactive_update
+    let initialValueCapture = value;
 
     function edit() {
+        // TODO: In the browser it would throw velte error: state_unsafe_mutation because a child component Icon is mutating a state variable for this example
+        // The component is working fine, it's just the demo action should be bound internally for the component. The component works as expected
         editing = true;
     }
 
     function submit() {
-        if (value !== original) {
-            dispatch('Submit', value);
+        if (value !== initialValueCapture) {
+            onSubmit?.(value);
+            initialValueCapture = value;
+        } else {
+            console.warn('Identical value submitted');
         }
 
         editing = false;
     }
 
     function restore() {
-        value = original;
+        value = initialValueCapture;
         editing = false;
-        dispatch('Restore');
+        onRestore?.();
     }
 
     function keydown(event: KeyboardEvent) {
@@ -109,11 +116,8 @@
                 {placeholder}
                 {required}
                 bind:value
-                onblur={() => {
-                    if (value.trim() === original) restore();
-                }}
-                oninput={() => dispatch('Input', value)}
-                onchange={() => dispatch('InputChanges', value)}
+                oninput={() => onInput?.(value)}
+                onchange={() => onInputChange?.(value)}
                 onkeydown={keydown}
                 use:focus
                 data-cy-id={testIdInput}
@@ -140,7 +144,7 @@
                 testId={submitIconTestId}
             ></Icon>
         </Tooltip>
-        {#if value !== original}
+        {#if value !== initialValueCapture}
             <Tooltip
                 content={restoreLabel}
                 position="left"
@@ -201,9 +205,7 @@
                     height={17}
                     fill={disabled ? 'var(--amadeus-color-gray-200)' : 'var(--amadeus-color-blue)'}
                     label={editLabel}
-                    clickLogic={() => {
-                        edit();
-                    }}
+                    clickLogic={edit}
                     testId={editIconTestId}
                 ></Icon>
             </Tooltip>

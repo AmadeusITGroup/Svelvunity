@@ -1,10 +1,20 @@
 /** Dispatch event on click outside of node */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-export function clickOutside(node) {
-	const handleClick = (event) => {
-		if (node && !node.contains(event.target) && !event.defaultPrevented) {
-			node.dispatchEvent(new CustomEvent('click_outside', node));
+// @ts-nocheck+
+
+export let $$events_def: {
+	click_outside: CustomEvent<{ target: HTMLElement }>;
+};
+
+export function clickOutside(node: HTMLElement, clickOutsideAction: any) {
+	const handleClick = (event: MouseEvent) => {
+		if (
+			node &&
+			!node.contains(event.target as Node) &&
+			!event.defaultPrevented &&
+			clickOutsideAction
+		) {
+			clickOutsideAction(node);
 		}
 	};
 

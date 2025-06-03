@@ -1,18 +1,43 @@
 import { Tooltip } from '$lib';
 import { render, screen, fireEvent } from '@testing-library/svelte';
-import html from '@playpilot/svelte-htm';
+import { createRawSnippet, type ComponentProps } from 'svelte';
+
+let tooltipOptions: ComponentProps<typeof Tooltip> = getTooltipOptions();
+
+beforeEach(() => {
+	tooltipOptions = getTooltipOptions()
+})
+
+function getTooltipOptions() {
+	return {
+		content: 'Test tooltip content',
+		position: 'bottom',
+		align: 'center',
+		animation: 'fade',
+		testId: 'tooltip-test-id',
+		maxWidth: 200,
+		autoPosition: false,
+		arrow: true,
+		theme: '',
+		style: null,
+		children: createRawSnippet(() => {
+			return {
+				render: () => `<div></div>`,
+			};
+		})
+	}
+}
 
 describe('Tooltip Component', () => {
 	test('renders tooltip component correctly', () => {
-		render(Tooltip, { props: { content: 'Test tooltip content' } });
+		render(Tooltip, tooltipOptions);
 
 		expect(screen.getByText('Test tooltip content')).toBeInTheDocument();
 	});
 
 	test('shows tooltip content when hovered', () => {
-		const { container } = render(Tooltip, {
-			props: { content: 'Test tooltip content', testId: 'test-tooltip' }
-		});
+		tooltipOptions.testId = 'test-tooltip';
+		const { container } = render(Tooltip, tooltipOptions);
 
 		fireEvent.mouseEnter(container.querySelector('span') as HTMLElement);
 
@@ -24,15 +49,13 @@ describe('Tooltip Component', () => {
 	});
 
 	test('renders tooltip with correct content', () => {
-		const { container } = render(html`
-		<${Tooltip} content=${'Test tooltip content'}
-				position=${'bottom'}
-				align=${'center'}
-				animation=${'fade'}
-				testId=${'tooltip-test-id'}>
-			<div class="tooltip-button" role="button">Click</div>
-		</${Tooltip}>
-	`);
+		tooltipOptions.children = createRawSnippet(() => {
+			return {
+				render: () => `<div class="tooltip-button" role="button">Click</div>`,
+			};
+		});
+
+		const { container } = render(Tooltip, tooltipOptions);
 
 		const icon = container.querySelector('.tooltip-button') as HTMLElement;
 		fireEvent.mouseEnter(icon);
@@ -40,9 +63,9 @@ describe('Tooltip Component', () => {
 	});
 
 	test('renders tooltip with correct position', () => {
-		const { container } = render(Tooltip, { props: { position: 'bottom' } });
+		const { container } = render(Tooltip, tooltipOptions);
 
-		expect(container.querySelector('span')?.children[0] as HTMLElement).toHaveClass('bottom');
+		expect(container.querySelector('span > div.tooltip') as HTMLElement).toHaveClass('bottom');
 		expect(container.querySelector('span') as HTMLElement).toBeInTheDocument();
 	});
 });

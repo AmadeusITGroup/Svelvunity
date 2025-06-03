@@ -1,4 +1,3 @@
-<!-- PageTransition.svelte -->
 <script>
     import { fly } from 'svelte/transition';
     /** @type {{url?: string, children?: import('svelte').Snippet}} */

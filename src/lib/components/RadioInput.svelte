@@ -1,8 +1,4 @@
 <script lang="ts">
-    import { run } from 'svelte/legacy';
-
-    import { createEventDispatcher } from 'svelte';
-
     interface Props {
         labelText?: string;
         inputName?: string;
@@ -17,6 +13,7 @@
         isDisabled?: boolean;
         testId: string;
         selectedOption: any;
+        onOptionSelected: (opt: any) => void;
     }
 
     let {
@@ -32,13 +29,12 @@
         isRequired = false,
         isDisabled = false,
         testId,
-        selectedOption = $bindable()
+        selectedOption = $bindable(),
+        onOptionSelected
     }: Props = $props();
 
-    const dispatch = createEventDispatcher();
-
-    run(() => {
-        selectedOption, dispatch('optionSelected', selectedOption);
+    $effect(() => {
+        onOptionSelected?.(selectedOption);
     });
 </script>
 
@@ -51,11 +47,12 @@
         >
     {/if}
 
-    {#each options as option, index}
+    {#each options as option, index (option.name)}
         <div class="input-wrapper" role="textbox" aria-required={isRequired} aria-label={labelText}>
             <input
                 type="radio"
-                name={`${inputName}`}
+                id={option.name}
+                name={inputName}
                 value={option?.value}
                 aria-label={option.name}
                 class="
@@ -66,12 +63,12 @@
                 disabled={isDisabled}
                 required={isRequired}
                 bind:group={selectedOption}
-                onblur={() => dispatch('optionSelected', selectedOption)}
+                onblur={() => onOptionSelected?.(selectedOption)}
                 data-cy-id={`${testId}-${index}-input`}
             />
 
             <label
-                for={`${inputName}`}
+                for={option.name}
                 class="
                     {isDisabled ? 'input-cursor-disabled' : 'input-cursor'}
                     {inputError !== '' ? 'error' : 'normal'} 

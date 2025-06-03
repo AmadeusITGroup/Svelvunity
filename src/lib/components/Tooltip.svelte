@@ -1,12 +1,10 @@
 <script>
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-nocheck
 
     import { onMount, onDestroy } from 'svelte';
     import { formatVariableKey, getMinWidth, isInViewport } from '$lib/utils/helpers';
     import { INVERSE } from '$lib//config/constants';
 
-    /** @type {{content?: string, align?: string, position?: string, maxWidth?: number, style?: any, theme?: string, animation?: string, arrow?: boolean, autoPosition?: boolean, testId?: string, children?: import('svelte').Snippet}} */
     let {
         content = '',
         align = 'left',
@@ -24,6 +22,7 @@
     let containerRef = $state(null);
     let tooltipRef = $state(null);
     let minWidth = $state(0);
+    // TODO: Not sure why is that. I think it can safely be removed
     let component = null;
     let initialPosition = position;
     let animationEffect = $state(null);

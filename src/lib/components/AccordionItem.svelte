@@ -1,28 +1,43 @@
-<!-- @migration-task Error while migrating Svelte code: Cannot split a chunk that has already been edited (28:16 – "on:click={(e) => {
-            if ($$slots.body && showBody) {
-                handleClick();
-                clickLogic ? clickLogic(e) : null;
-            }
-        }}") -->
 <script lang="ts">
     import { CHEVRON_SVG } from '$lib/config/constants';
     import { Direction } from '$lib/enums/direction.enum';
     import { slide } from 'svelte/transition';
     import SymbolIcon from './SymbolIcon.svelte';
+    import { type Snippet } from 'svelte';
 
-    export let open = false;
-    export let disabled = false;
-    export let showBody = true;
-    export let fillEmptyChevronSpace = false;
-    export let clickLogic: null | ((...args: any) => any) = null;
-    export let animationDurationForShowingBody = 200;
-    export let animationDurationForHidingBody = 0;
-    export let buttonTestId = '';
-    export let bodyTestId = '';
-    export let buttonClasses = '';
-    export let bodyClasses = '';
+    let {
+        open = false,
+        disabled = false,
+        showBody = true,
+        fillEmptyChevronSpace = false,
+        clickLogic = null,
+        animationDurationForShowingBody = 200,
+        animationDurationForHidingBody = 0,
+        buttonTestId = '',
+        bodyTestId = '',
+        buttonClasses = '',
+        bodyClasses = '',
+        bodySnippet,
+        buttonSnippet
+    }: {
+        open?: boolean;
+        disabled?: boolean;
+        showBody?: boolean;
+        fillEmptyChevronSpace?: boolean;
+        clickLogic?: null | ((...args: unknown[]) => unknown);
+        animationDurationForShowingBody?: number;
+        animationDurationForHidingBody?: number;
+        buttonTestId?: string;
+        bodyTestId?: string;
+        buttonClasses?: string;
+        bodyClasses?: string;
+        bodySnippet?: Snippet<[]> | undefined;
+        buttonSnippet?: Snippet<[]> | undefined;
+    } = $props();
 
-    const handleClick = () => (open = !open);
+    let isOpened = $derived(open);
+
+    const handleClick = () => (isOpened = !isOpened);
 </script>
 
 <div class={disabled ? 'accordion-button__not-allowed' : ''}>
@@ -31,46 +46,53 @@
         tabindex="0"
         class="accordion-button {buttonClasses} {disabled ? 'accordion-button__disabled' : ''}"
         data-cy-id={buttonTestId}
-        on:click={(e) => {
-            if ($$slots.body && showBody) {
+        onclick={(e) => {
+            if (bodySnippet && showBody) {
                 handleClick();
-                clickLogic ? clickLogic(e) : null;
+                if (clickLogic) {
+                    clickLogic(e);
+                }
             }
         }}
-        on:keydown={(e) => {
+        onkeydown={(e) => {
             if (e.code === 'Enter' || e.code === 'Space') {
-                if ($$slots.body && showBody && !disabled) {
+                if (bodySnippet && showBody && !disabled) {
                     handleClick();
-                    clickLogic ? clickLogic(e) : null;
+                    if (clickLogic) {
+                        clickLogic(e);
+                    }
                 }
             }
         }}
     >
-        {#if showBody && $$slots.body}
+        {#if showBody && bodySnippet}
             <div class="accordion-button-chevron">
                 <SymbolIcon
                     height={17}
                     width={17}
                     iconSVG={CHEVRON_SVG}
                     fill={disabled ? '#b3b3b3' : '#005eb8'}
-                    direction={open ? Direction.Up : Direction.Down}
+                    direction={isOpened ? Direction.Up : Direction.Down}
                 />
             </div>
-        {:else if !(showBody && $$slots.body) && fillEmptyChevronSpace}
+        {:else if !(showBody && bodySnippet) && fillEmptyChevronSpace}
             <div class="accordion-button-chevron-space-filler"></div>
         {/if}
-        <slot name="button" />
+
+        {#if buttonSnippet}
+            {@render buttonSnippet()}
+        {/if}
     </div>
 </div>
 
-{#if open && $$slots.body && showBody}
+{#if isOpened && bodySnippet && showBody}
     <div
-        class="accordion-body {!$$slots.body && !showBody ? 'no-before' : ''} {bodyClasses}"
+        class="accordion-body {!bodySnippet && !showBody ? 'no-before' : ''} {bodyClasses}"
         in:slide|local={{ duration: animationDurationForShowingBody }}
         out:slide|local={{ duration: animationDurationForHidingBody }}
         data-cy-id={bodyTestId}
     >
-        <slot name="body" />
+        {@render bodySnippet()}
     </div>
 {/if}
 

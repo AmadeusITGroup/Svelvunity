@@ -28,7 +28,7 @@
         label = ''
     }: Props = $props();
 
-    function handleKeyboardPress(e: KeyboardEvent): null | ((...args: any) => any) {
+    function handleKeyboardPress(e: KeyboardEvent): null | ((...args: unknown[]) => unknown) {
         if (clickLogic) {
             switch (e.key) {
                 case 'Enter':
@@ -43,7 +43,7 @@
 
 <button
     class="button-icon cursor-pointer p-1"
-    onclick={(e) => (clickLogic ? clickLogic(e) : null)}
+    onclick={(e) => clickLogic?.(e)}
     onkeypress={(e) => handleKeyboardPress(e)}
     aria-label={label}
     tabindex="0"

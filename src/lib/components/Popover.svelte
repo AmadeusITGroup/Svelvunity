@@ -1,38 +1,47 @@
 <!-- @migration-task Error while migrating Svelte code: $$props is used together with named props in a way that cannot be automatically migrated. -->
 <script lang="ts">
-    import type { ComputePositionReturn, Middleware, Placement, Side } from '@floating-ui/dom';
-    import * as dom from '@floating-ui/dom';
-    import { onMount, createEventDispatcher } from 'svelte';
+    import type { Placement, Side } from '@floating-ui/dom';
+    import { onMount, type Snippet } from 'svelte';
     import { twJoin } from 'tailwind-merge';
     import Frame from './Frame.svelte';
 
-    export let activeContent = false;
-    export let arrow = true;
-    export let offset = 8;
-    export let placement: Placement = 'top';
-    export let trigger: 'hover' | 'click' = 'hover';
-    export let triggeredBy: string | undefined = undefined;
-    export let reference: string | undefined = undefined;
-    export let strategy: 'absolute' | 'fixed' = 'absolute';
-    export let open = false;
-    export let yOnly = false;
-    // extra floating UI middleware list
-    export let middlewares: Middleware[] = [dom.flip(), dom.shift()];
+    let {
+        border,
+        onShow,
+        activeContent = false,
+        arrow = true,
+        placement = 'top',
+        trigger = 'hover',
+        triggeredBy = undefined,
+        reference = undefined,
+        open = false,
+        children
+    }: {
+        border: any;
+        onShow: any;
+        activeContent: boolean;
+        arrow: boolean;
+        placement: Placement;
+        trigger: 'hover' | 'click';
+        triggeredBy: string | undefined;
+        reference: string | undefined;
+        open: boolean;
+        children?: Snippet;
+    } = $props();
 
-    const dispatch = createEventDispatcher();
+    let clickable: boolean = $derived(trigger === 'click');
 
-    let clickable: boolean;
-    $: clickable = trigger === 'click';
+    onShow(open);
+    $effect(() => {
+        if (placement) {
+            referenceEl;
+        }
+    });
 
-    $: dispatch('show', open);
-    $: placement && (referenceEl = referenceEl);
-
-    let referenceEl: Element;
-    let floatingEl: HTMLElement;
-    let arrowEl: HTMLElement | null;
-    let contentEl: HTMLElement;
+    let referenceEl: any = $state(undefined);
+    let floatingEl: HTMLElement | undefined = undefined;
+    let contentEl: HTMLElement | undefined = $state();
     let triggerEls: HTMLElement[] = [];
-
     let _blocked = false; // management of the race condition between focusin and click events
     const block = () => ((_blocked = true), setTimeout(() => (_blocked = false), 250));
 
@@ -50,22 +59,22 @@
         open = clickable && ev.type === 'click' && !_blocked ? !open : true;
     };
 
-    const hasHover = (el: Element) => el.matches(':hover');
-    const hasFocus = (el: Element) => el.contains(document.activeElement);
-    const px = (n: number | undefined) => (n != null ? `${n}px` : '');
+    const hasHover = (el: any) => el.matches(':hover');
+    const hasFocus = (el: any) => el.contains(document.activeElement);
 
     const hideHandler = (ev: Event) => {
         if (activeContent) {
             setTimeout(() => {
-                const elements = [referenceEl, floatingEl, ...triggerEls].filter(Boolean);
-                if (ev.type === 'mouseleave' && elements.some(hasHover)) return;
-                if (ev.type === 'focusout' && elements.some(hasFocus)) return;
-                open = false;
+                if (floatingEl) {
+                    const elements = [referenceEl, floatingEl, ...triggerEls].filter(Boolean);
+                    if (ev.type === 'mouseleave' && elements.some(hasHover)) return;
+                    if (ev.type === 'focusout' && elements.some(hasFocus)) return;
+                    open = false;
+                }
             }, 100);
         } else open = false;
     };
 
-    let arrowSide: Side;
     const oppositeSideMap: Record<Side, Side> = {
         left: 'right',
         right: 'left',
@@ -73,46 +82,7 @@
         top: 'bottom'
     };
 
-    $: middleware = [
-        ...middlewares,
-        dom.offset(+offset),
-        arrowEl && dom.arrow({ element: arrowEl, padding: 10 })
-    ];
-
-    function updatePosition() {
-        dom.computePosition(referenceEl, floatingEl, { placement, strategy, middleware }).then(
-            ({ x, y, middlewareData, placement, strategy }: ComputePositionReturn) => {
-                floatingEl.style.position = strategy;
-                floatingEl.style.left = yOnly ? '0' : px(x);
-                floatingEl.style.top = px(y);
-
-                if (middlewareData.arrow && arrowEl instanceof HTMLDivElement) {
-                    arrowEl.style.left = px(middlewareData.arrow.x);
-                    arrowEl.style.top = px(middlewareData.arrow.y);
-
-                    arrowSide = oppositeSideMap[placement.split('-')[0] as Side];
-                    arrowEl.style[arrowSide] = px(
-                        -arrowEl.offsetWidth / 2 - ($$props.border ? 1 : 0)
-                    );
-                }
-            }
-        );
-    }
-
-    function init(node: HTMLElement, _referenceEl: HTMLElement) {
-        floatingEl = node;
-        let cleanup = dom.autoUpdate(_referenceEl, floatingEl, updatePosition);
-
-        return {
-            update(_referenceEl: HTMLElement) {
-                cleanup();
-                cleanup = dom.autoUpdate(_referenceEl, floatingEl, updatePosition);
-            },
-            destroy() {
-                cleanup();
-            }
-        };
-    }
+    let arrowSide: Side = oppositeSideMap.top;
 
     onMount(() => {
         const events: [string, any, boolean][] = [
@@ -125,7 +95,7 @@
 
         if (triggeredBy) triggerEls = [...document.querySelectorAll<HTMLElement>(triggeredBy)];
         else
-            triggerEls = contentEl.previousElementSibling
+            triggerEls = contentEl?.previousElementSibling
                 ? [contentEl.previousElementSibling as HTMLElement]
                 : [];
 
@@ -170,23 +140,15 @@
         return pred ? func : () => undefined;
     }
 
-    let arrowClass: string;
-    $: arrowClass = twJoin(
-        'absolute pointer-events-none block w-[10px] h-[10px] rotate-45 bg-inherit border-inherit',
-        $$props.border && arrowSide === 'bottom' && 'border-b border-e',
-        $$props.border && arrowSide === 'top' && 'border-t border-s ',
-        $$props.border && arrowSide === 'right' && 'border-t border-e ',
-        $$props.border && arrowSide === 'left' && 'border-b border-s '
+    let arrowClass: string = $state(
+        twJoin(
+            'absolute pointer-events-none block w-[10px] h-[10px] rotate-45 bg-inherit border-inherit',
+            border && arrowSide === 'bottom' && 'border-b border-e',
+            border && arrowSide === 'top' && 'border-t border-s ',
+            border && arrowSide === 'right' && 'border-t border-e ',
+            border && arrowSide === 'left' && 'border-b border-s '
+        )
     );
-
-    function initArrow(node: HTMLElement) {
-        arrowEl = node;
-        return {
-            destroy() {
-                arrowEl = null;
-            }
-        };
-    }
 </script>
 
 {#if !referenceEl}
@@ -195,17 +157,14 @@
 
 {#if open && referenceEl}
     <Frame
-        use={init}
         options={referenceEl}
         role="tooltip"
-        tabindex={activeContent ? -1 : undefined}
-        on:focusin={optional(activeContent, showHandler)}
-        on:focusout={optional(activeContent, hideHandler)}
-        on:mouseenter={optional(activeContent && !clickable, showHandler)}
-        on:mouseleave={optional(activeContent && !clickable, hideHandler)}
-        {...$$restProps}
+        onfocusin={optional(activeContent, showHandler)}
+        onfocusout={optional(activeContent, hideHandler)}
+        onmouseenter={optional(activeContent && !clickable, showHandler)}
+        onmouseleave={optional(activeContent && !clickable, hideHandler)}
     >
-        <slot />
-        {#if arrow}<div use:initArrow class={arrowClass}></div>{/if}
+        {@render children?.()}
+        {#if arrow}<div class={arrowClass}></div>{/if}
     </Frame>
 {/if}

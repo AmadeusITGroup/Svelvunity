@@ -4,7 +4,7 @@ import { ButtonType } from '$lib/enums/buttontype.enum';
 
 import { Size } from '$lib/enums/size.enum';
 import { TEST_IDS } from '$lib/enums/testconstants.enum';
-import { Button } from '$lib';
+import Button from '$lib/components/Button.svelte';
 
 describe('Button Component', () => {
 	const buttonProps = {

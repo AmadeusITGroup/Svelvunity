@@ -1,37 +1,64 @@
-<!-- @migration-task Error while migrating Svelte code: $$props is used together with named props in a way that cannot be automatically migrated. -->
 <script lang="ts">
-    import { setContext } from 'svelte';
+    import { setContext, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import type { Action } from 'svelte/action';
+    import type { FocusEventHandler, MouseEventHandler } from 'svelte/elements';
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const noop = () => {};
 
     setContext('background', true);
 
-    export let tag: string = $$restProps.href ? 'a' : 'div';
-    export let bgColor = 'bg-white';
-    export let textColor = 'text-gray-500';
-    export let borderColor = 'border-gray-50 divide-gray-50';
-    export let rounded = false;
-    export let border = false;
-    export let shadow = false;
-    // For components development
-    export let node: HTMLElement | undefined = undefined;
-    // Action function and its params
-    export let use: Action<HTMLElement, any> = noop;
-    export let options = {};
-    export let role: string | undefined = undefined;
+    let {
+        href = undefined,
+        bgColor = 'bg-white',
+        textColor = 'text-gray-500',
+        borderColor = 'border-gray-50 divide-gray-50',
+        customClasses = '',
+        rounded = false,
+        border = false,
+        shadow = false,
+        node = undefined,
+        use = noop,
+        options = {},
+        role = undefined,
+        onclick = undefined,
+        onfocusin = undefined,
+        onfocusout = undefined,
+        onmouseenter = undefined,
+        onmouseleave = undefined,
+        children,
+        ...restProps
+    }: {
+        href?: string | undefined;
+        bgColor?: string;
+        textColor?: string;
+        borderColor?: string;
+        customClasses?: string;
+        rounded?: boolean;
+        border?: boolean;
+        shadow?: boolean;
+        node?: HTMLElement | undefined;
+        use?: Action<HTMLElement, unknown>;
+        options?: object;
+        role?: string | undefined;
+        onclick?: MouseEventHandler<any> | null | undefined;
+        onfocusin?: FocusEventHandler<any> | undefined;
+        onfocusout?: FocusEventHandler<any> | null | undefined;
+        onmouseenter?: MouseEventHandler<any> | undefined;
+        onmouseleave?: MouseEventHandler<any> | null | undefined;
+        children?: Snippet;
+    } = $props();
 
-    let divClass: string;
-    $: divClass = twMerge(
+    let tag: string = href ? 'a' : 'div';
+
+    let divClass: string = twMerge(
         bgColor,
         textColor,
         rounded && 'rounded-lg',
         border && 'border',
         borderColor,
         shadow && 'shadow-md',
-        $$props.class
+        customClasses
     );
 </script>
 
@@ -40,13 +67,13 @@
     use:use={options}
     bind:this={node}
     {role}
-    {...$$restProps}
     class={divClass}
-    on:click
-    on:mouseenter
-    on:mouseleave
-    on:focusin
-    on:focusout
+    {...restProps}
+    {onclick}
+    {onmouseenter}
+    {onmouseleave}
+    {onfocusin}
+    {onfocusout}
 >
-    <slot />
+    {@render children?.()}
 </svelte:element>

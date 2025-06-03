@@ -1,7 +1,4 @@
 <script lang="ts">
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-nocheck
-
     import { CHEVRON_SVG, Direction } from '$lib';
     import { USER_SVG, USER_LOGOUT_SVG } from '$lib/config/constants';
     import { clickOutside } from '$lib/utils/clickOutside';
@@ -11,7 +8,7 @@
         testId?: string;
         classes?: string;
         classesForDropdownButton?: string;
-        dropdownLabel: string;
+        selectedDropdownLabel?: string;
         options: { link: string; label: string }[];
         funcLabel: string;
         func: any;
@@ -21,24 +18,21 @@
         testId = '',
         classes = '',
         classesForDropdownButton = '',
-        dropdownLabel,
+        selectedDropdownLabel,
         options,
         funcLabel,
         func
     }: Props = $props();
 
     let isDropdownOpen = $state(false);
+    let selectedOptionLabel = $state(selectedDropdownLabel);
 
     function toggleDropdown() {
         isDropdownOpen = !isDropdownOpen;
     }
 </script>
 
-<div
-    class="dropdown-wrapper {classes}"
-    use:clickOutside
-    onclick_outside={() => (isDropdownOpen = false)}
->
+<div class="dropdown-wrapper {classes}" use:clickOutside={() => (isDropdownOpen = false)}>
     <div
         data-cy-id={testId}
         class="dropdown-button {classesForDropdownButton}"
@@ -50,11 +44,11 @@
             if (e.key === 'Enter') toggleDropdown();
         }}
     >
-        <SymbolIcon iconSVG={USER_SVG} classes={'cursor-pointer'} width={17} height={17} />
-        {dropdownLabel}
+        <SymbolIcon iconSVG={USER_SVG} classes="cursor-pointer" width={17} height={17} />
+        {selectedOptionLabel}
         <SymbolIcon
             iconSVG={CHEVRON_SVG}
-            classes={'cursor-pointer'}
+            classes="cursor-pointer"
             width={15}
             height={15}
             direction={isDropdownOpen ? Direction.Up : Direction.Down}
@@ -64,19 +58,23 @@
     {#if isDropdownOpen}
         <div class="dropdown">
             {#each options as option}
-                <a
-                    href={option.link}
-                    class="dropdown-list"
-                    onkeypress={(e) => {
-                        if (e.key === 'Enter') {
+                {#if option.label !== selectedOptionLabel}
+                    <a
+                        href={option.link}
+                        class="dropdown-list"
+                        onkeypress={(e) => {
+                            if (e.key === 'Enter') {
+                                isDropdownOpen = false;
+                            }
+                        }}
+                        onclick={(e) => {
+                            e.preventDefault();
+                            selectedOptionLabel = option.label;
                             isDropdownOpen = false;
-                        }
-                    }}
-                    onclick={() => {
-                        isDropdownOpen = false;
-                    }}
-                    >{option.label}
-                </a>
+                        }}
+                        >{option.label}
+                    </a>
+                {/if}
             {/each}
             <hr class="divider" />
             <div
@@ -96,7 +94,7 @@
             >
                 <SymbolIcon
                     iconSVG={USER_LOGOUT_SVG}
-                    classes={'cursor-pointer'}
+                    classes="cursor-pointer"
                     fill="#808080"
                     width={28}
                     height={17}

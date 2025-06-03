@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { run } from 'svelte/legacy';
-
     import {
         BACKFORWARD_STEP_SVG,
         CHEVRON_LEFT_SVG,
@@ -42,15 +40,8 @@
     let start = $derived(currentPage * perPage);
     let end = $derived(currentPage === totalPages - 1 ? totalRows - 1 : start + perPage - 1);
 
-    run(() => {
+    $effect(() => {
         trimmedRows = rows.slice(start, end + 1);
-    });
-
-    run(() => {
-        totalRows, (currentPage = 0);
-    });
-    run(() => {
-        currentPage, start, end;
     });
 
     function setCurrentPage(newPage: number) {

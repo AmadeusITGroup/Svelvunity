@@ -1,21 +1,16 @@
 <script lang="ts">
-    import { run } from 'svelte/legacy';
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-nocheck
-
     import {
         ANGLE_DOWN_SVG,
         ANGLE_UP_SVG,
         CHEVRON_LEFT_SVG,
         CHEVRON_RIGHT_SVG
     } from '$lib/config/constants';
-    import { clickOutside } from '../utils/clickOutside';
+    import { clickOutside } from '$lib/utils/clickOutside';
+    import type { Snippet } from 'svelte';
     import {
         calendarize,
         createTimestamp,
         getDatesFromArray,
-        getTimestamp,
         normalizeTimestamp
     } from '../utils/date';
     import Icon from './Icon.svelte';
@@ -39,7 +34,7 @@
         classes?: string;
         ariaLabelPreviousYear?: string;
         ariaLabelNextYear?: string;
-        children?: import('svelte').Snippet;
+        children?: Snippet;
     }
 
     let {
@@ -76,6 +71,10 @@
         ariaLabelNextYear = '',
         children
     }: Props = $props();
+
+    let prev: number[][];
+    let next: number[][];
+
     let tempEndDate: any;
     let prevSelectedDate: any;
     let prevEndDate: any;
@@ -92,10 +91,9 @@
     };
     let selectedDateYear = $state(Number(defaultYear));
     let selectedDateMonth = $state(Number(defaultMonth));
-    let selectedDateCalendar = $derived(calendarize(new Date(selectedDateYear, selectedDateMonth), 1));
-    const updateCalendars = () => {
-        selectedDateCalendar = selectedDateCalendar;
-    };
+    let selectedDateCalendar = $derived(
+        calendarize(new Date(selectedDateYear, selectedDateMonth), 1)
+    );
     const goToPreviousMonth = () => {
         [selectedDateCalendar, next] = [prev, selectedDateCalendar];
         if (--selectedDateMonth < 0) {
@@ -207,55 +205,16 @@
             return;
         }
     };
-    run(() => {
-        selectedDate = selectedDate ? getTimestamp(selectedDate) : null;
-    });
-    run(() => {
-        if (selectedDate) {
-            updateCalendars();
-        }
-    });
+
     let todayMonth = $derived(today && today.getMonth());
     let todayDay = $derived(today && today.getDate());
     let todayYear = $derived(today && today.getFullYear());
-    let prev;
-    run(() => {
-        prev = calendarize(new Date(selectedDateYear, selectedDateMonth - 1), 1);
-    });
-    let next;
-    run(() => {
-        next = calendarize(new Date(selectedDateYear, selectedDateMonth + 1), 1);
-    });
+
     let disabled = $derived(getDatesFromArray(disabledDates));
     let enabled = $derived(getDatesFromArray(enabledDates));
-    run(() => {
-        if (!selectedDate) {
-            selectedDateYear = Number(defaultYear);
-            selectedDateMonth = Number(defaultMonth);
-        }
-    });
-    run(() => {
-        if (
-            (selectedDate && tempEndDate !== null) ||
-            !isOpen ||
-            disableDatesBefore ||
-            disableDatesAfter
-        ) {
-            updateCalendars();
-        }
-    });
-    run(() => {
-        if (isOpen) {
-            if (selectedDate) {
-                const date = new Date(selectedDate);
-                selectedDateYear = date.getFullYear();
-                selectedDateMonth = date.getMonth();
-            }
-        }
-    });
 </script>
 
-<div class="datepicker" use:clickOutside onclick_outside={handleCalendarClickOutside}>
+<div class="datepicker" use:clickOutside={handleCalendarClickOutside}>
     {@render children?.()}
     <div
         class="calendar-card {classes}"
@@ -280,10 +239,10 @@
                 >
                     <SymbolIcon
                         iconSVG={CHEVRON_LEFT_SVG}
-                        classes={'cursor-pointer'}
+                        classes="cursor-pointer"
                         width={18}
                         height={18}
-                        fill={'#666'}
+                        fill="#666"
                     />
                 </a>
                 <span>
@@ -296,7 +255,7 @@
                                 clickLogic={goToNextYear}
                                 width={12}
                                 height={12}
-                                fill={'#666'}
+                                fill="#666"
                             />
                             <Icon
                                 iconSVG={ANGLE_DOWN_SVG}
@@ -304,7 +263,7 @@
                                 clickLogic={goToPreviousYear}
                                 width={12}
                                 height={12}
-                                fill={'#666'}
+                                fill="#666"
                             />
                         </div>
                     {/if}
@@ -324,10 +283,10 @@
                 >
                     <SymbolIcon
                         iconSVG={CHEVRON_RIGHT_SVG}
-                        classes={'cursor-pointer'}
+                        classes="cursor-pointer"
                         width={18}
                         height={18}
-                        fill={'#666'}
+                        fill="#666"
                     />
                 </a>
             </header>

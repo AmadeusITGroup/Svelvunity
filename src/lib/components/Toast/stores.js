@@ -43,7 +43,7 @@ import { writable } from 'svelte/store';
 
 /** @type {SvelteToastOptions} */
 const defaults = {
-	duration: 10000,
+	duration: 2000,
 	initial: 1,
 	classes: ['border-l-[3px]'],
 	next: 0,

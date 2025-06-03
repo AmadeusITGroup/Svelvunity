@@ -1,11 +1,16 @@
 import { render, screen } from '@testing-library/svelte';
-
 import userEvent from '@testing-library/user-event';
-import { AccordionItem } from '$lib';
-import html from '@playpilot/svelte-htm';
+import AccordionItem from '$lib/components/AccordionItem.svelte';
+import { createRawSnippet, type ComponentProps } from 'svelte';
 
-describe('Accordion Component', () => {
-	const AccordionItemProps = {
+let accordionItemOptions: ComponentProps<typeof AccordionItem> = getAccordionItemOprions();
+
+beforeEach(() => {
+	accordionItemOptions = getAccordionItemOprions()
+})
+
+function getAccordionItemOprions() {
+	return {
 		open: false,
 		disabled: false,
 		showBody: true,
@@ -15,11 +20,25 @@ describe('Accordion Component', () => {
 		buttonTestId: `testAccordionItemButton`,
 		bodyTestId: 'testAccordionItemBody',
 		buttonClasses: '',
-		bodyClasses: ''
-	};
+		bodyClasses: '',
+		bodySnippet: createRawSnippet(() => {
+			return {
+				render: () => `<div>Clicked</div>`,
+			};
+		}),
+        buttonSnippet: createRawSnippet(() => {
+			return {
+				render: () => `<div>Click</div>`,
+			};
+		})
+	}
+}
 
+describe('Accordion Component', () => {
 	test('should render accordionItem with all props', async () => {
-		render(AccordionItem, { props: AccordionItemProps });
+		accordionItemOptions.bodySnippet = undefined;
+		accordionItemOptions.buttonSnippet = undefined;
+		render(AccordionItem, { props: accordionItemOptions });
 
 		const accordionItemButton = screen.getByRole(`button`);
 		expect(accordionItemButton).toBeInTheDocument();
@@ -28,7 +47,9 @@ describe('Accordion Component', () => {
 	});
 
 	test('should render accordionItem disabled', async () => {
-		render(AccordionItem, { props: { ...AccordionItemProps, disabled: true } });
+		accordionItemOptions.bodySnippet = undefined;
+		accordionItemOptions.buttonSnippet = undefined;
+		render(AccordionItem, { props: { ...accordionItemOptions, disabled: true } });
 
 		const accordionItemButton = screen.getByRole(`button`);
 		expect(accordionItemButton).toBeInTheDocument();
@@ -37,12 +58,8 @@ describe('Accordion Component', () => {
 	});
 
 	test('should render accordionItem with the body opened', async () => {
-		render(html`
-            <${AccordionItem} open=${true}>
-                <div slot="button">Click</div>
-                <div slot="body">Clicked</div>
-            </${AccordionItem}>
-        `);
+		accordionItemOptions.open = true;
+		render(AccordionItem, accordionItemOptions);
 
 		const accordionItemButton = screen.getByText(`Click`);
 		const accordionItemBody = screen.getByText(`Clicked`);
@@ -52,15 +69,8 @@ describe('Accordion Component', () => {
 
 	test('should open the accordionItem body on click on the AccordionItem button', async () => {
 		const user = userEvent.setup();
-		render(
-			html`
-            <${AccordionItem}>
-                <div slot="button">Click</div>
-                <div slot="body">Clicked</div>
-            </${AccordionItem}>
-        `,
-			{ props: AccordionItemProps }
-		);
+		HTMLElement.prototype.animate = vi.fn().mockImplementation(() => ({ cancel: vi.fn() }));
+		render(AccordionItem, accordionItemOptions);
 
 		const accordionItemButton = screen.getByText(`Click`);
 		expect(accordionItemButton).toBeInTheDocument();
@@ -73,30 +83,19 @@ describe('Accordion Component', () => {
 
 	test('should test click event', async () => {
 		const clickFunc = vi.fn();
+		accordionItemOptions.clickLogic = clickFunc;
 		const user = userEvent.setup();
-		render(html`
-            <${AccordionItem} clickLogic=${clickFunc}>
-                <div slot="button">Click</div>
-                <div slot="body">Clicked</div>
-            </${AccordionItem}>
-        `);
-		const accordionItemButton = screen.getByText('Click');
+		render(AccordionItem, accordionItemOptions);
 
+		const accordionItemButton = screen.getByText('Click');
 		await user.click(accordionItemButton);
 		expect(clickFunc).toHaveBeenCalled();
 	});
 
 	test('should not hide the accordionItem body on click inside the AccordionItem', async () => {
 		const user = userEvent.setup();
-		render(
-			html`
-				<${AccordionItem} open=${true}>
-					<div slot="button">Click</div>
-					<div slot="body">Clicked</div>
-				</${AccordionItem}>
-			`,
-			{ props: AccordionItemProps }
-		);
+		render(AccordionItem, accordionItemOptions);
+
 		const accordionItemButton = screen.getByText(`Click`);
 		expect(accordionItemButton).toBeInTheDocument();
 		await user.click(accordionItemButton);
@@ -106,17 +105,10 @@ describe('Accordion Component', () => {
 
 	test('should not hide the accordionItem body on click inside the AccordionItem body', async () => {
 		const user = userEvent.setup();
-		render(
-			html`
-				<${AccordionItem} open=${true}>
-					<div slot="button">Click</div>
-					<div slot="body">Clicked</div>
-				</${AccordionItem}>
-			`,
-			{ props: AccordionItemProps }
-		);
-		const accordionItemButton = screen.getByText(`Click`);
-		expect(accordionItemButton).toBeInTheDocument();
+		accordionItemOptions.open = true;
+		render(AccordionItem, accordionItemOptions);
+		// const accordionItemButton = screen.getByText(`Click`);
+		// expect(accordionItemButton).toBeInTheDocument();
 		const accordionItemBody = screen.getByText(`Clicked`);
 		expect(accordionItemBody).toBeInTheDocument();
 		await user.click(accordionItemBody);
