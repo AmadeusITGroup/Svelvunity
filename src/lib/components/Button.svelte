@@ -8,13 +8,13 @@
 
     interface Props {
         clickLogic?: null | ((...args: unknown[]) => unknown);
-        label?: string;
-        isDisabled?: boolean;
+        label: string;
+        isDisabled: boolean;
         additionalClasses?: string;
-        type?: ButtonType;
-        buttonSize?: Size;
-        testingId?: any;
-        loading?: boolean;
+        type: ButtonType;
+        buttonSize: Size;
+        testId: any;
+        loading: boolean;
     }
 
     let {
@@ -24,7 +24,7 @@
         additionalClasses = '',
         type = ButtonType.Primary,
         buttonSize = Size.Unset,
-        testingId = `${TEST_IDS.ButtonId}-${label}`,
+        testId = `${TEST_IDS.ButtonId}-${label}`,
         loading = false
     }: Props = $props();
 
@@ -56,7 +56,7 @@
 </script>
 
 <button
-    data-cy-id={testingId}
+    data-cy-id={testId}
     onclick={(e) => clickLogic && clickLogic(e)}
     class="
         {type === ButtonType.Primary ? 'am-c-df_btn am-c-df_btn-primary' : ''}
@@ -71,7 +71,7 @@
     tabindex="0"
 >
     {#if loading}
-        <Loading classes={getSpinnerSize(buttonSize)} removeAnimation={true} />
+        <Loading classes={getSpinnerSize(buttonSize)} removeAnimation={true} testId={ `${testId}-loader` } />
     {:else}
         {label}
     {/if}

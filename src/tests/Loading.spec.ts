@@ -42,4 +42,18 @@ describe('Loading Component', () => {
 
 		expect(loadingDiv).not.toBeInTheDocument();
 	});
+
+	test('loading spinner should fade out', async () => {
+		loadingProps.removeAnimation = true;
+		loadingProps.loadingAnimationDuration = 100;
+
+		const { container } = render(Loading, { props: loadingProps });
+		const loadingDiv = container.querySelector("[data-cy-id='test-loading']") as HTMLDivElement;
+
+		expect(loadingDiv).not.toBeInTheDocument();
+
+		await waitFor(() => {
+  		  expect(loadingDiv).not.toBeInTheDocument();
+  		}, { timeout: 200 });
+	});
 });

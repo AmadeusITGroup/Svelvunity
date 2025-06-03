@@ -1,7 +1,7 @@
 <script lang="ts">
     interface Props {
-        inputId?: string;
-        labelName?: string;
+        inputId: string;
+        labelName: string;
         classes?: string;
         classesForInput?: string;
         classesForLabel?: string;
@@ -36,11 +36,7 @@
         disabled={isDisabled}
         class="input-checkbox {classesForInput}"
         bind:checked={inputValue}
-        onchange={(e) => {
-            if (onInputChange) {
-                onInputChange(e);
-            }
-        }}
+        onchange={ (e) => onInputChange?.(e) }
     />
     <label class="input-label {classesForLabel}" for={inputId}>{labelName}</label>
 </div>

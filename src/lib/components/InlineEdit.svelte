@@ -71,7 +71,7 @@
     let initialValueCapture = value;
 
     function edit() {
-        // TODO: In the browser it would throw velte error: state_unsafe_mutation because a child component Icon is mutating a state variable for this example
+        // TODO: In the browser it would throw svelte error: state_unsafe_mutation because a child component Icon is mutating a state variable for this example
         // The component is working fine, it's just the demo action should be bound internally for the component. The component works as expected
         editing = true;
     }

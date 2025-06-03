@@ -25,7 +25,7 @@
         clickLogic = null,
         classes = '',
         testId = '',
-        label = ''
+        label = 'gf'
     }: Props = $props();
 
     function handleKeyboardPress(e: KeyboardEvent): null | ((...args: unknown[]) => unknown) {
@@ -44,7 +44,7 @@
 <button
     class="button-icon cursor-pointer p-1"
     onclick={(e) => clickLogic?.(e)}
-    onkeypress={(e) => handleKeyboardPress(e)}
+    onkeypress={(e) => handleKeyboardPress?.(e)}
     aria-label={label}
     tabindex="0"
 >
