@@ -38,32 +38,51 @@ describe('InlineEdit Component', () => {
         expect(input).toHaveDisplayValue('New Value');
     });
 
-    // TODO: The functionality is working. Maybe there's something wrong with Jest's reactivity, because the value
-    // is not updated in the test. I've tried to use internal $state('') bound to the <input /> but that's also not working
-    // Things tried: await Promise.resolve(), await tick() & the Svelte's waitFor. As well as internal state variable. 
-    // Maybe we should try once a new version of the @testing-library/svelte appears. 
-    // Maybe it would support children components as well as now slots are not supported
+    test('should call restore function when restore button is clicked', async () => {
+        const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
+    
+        const { getByRole, container } = render(InlineEdit, { value: 'Test Value', classesForEditIcon: 'edit-icon-class', classesForRestoreIcon: 'restore-icon-class', onRestore: () => alert('Restore') });
+        
+        // Enter edit mode
+        const editIcon = container.querySelector('.edit-icon-class') as HTMLElement;
+        await fireEvent.click(editIcon);
+        
+        // Change the input value
+        const input = getByRole('textbox') as HTMLInputElement;
+        await fireEvent.input(input, { target: { value: 'New Value' } });
+        
+        // Click restore button
+        const restoreIcon = container.querySelector('.restore-icon-class') as HTMLElement;
+        expect(restoreIcon).toBeInTheDocument();
+        await fireEvent.click(restoreIcon);
+    
+        // Check if alert was called
+        expect(alertMock).toHaveBeenCalledWith('Restore');
+    
+    
+        // Restore the original alert implementation
+        alertMock.mockRestore();
+    });
 
-    // test('should restore original value when restore button is clicked', async () => {
-    //     const { getByRole, container } = render(InlineEdit, { value: 'Test Value' , classesForEditIcon:'edit-icon-class', classesForRestoreIcon:'restore-icon-class'});
-    //     const editIcon = container.querySelector('.edit-icon-class') as HTMLElement;
-    //     await fireEvent.click(editIcon);
-    //     const input = getByRole('textbox') as HTMLInputElement;
-    //     await fireEvent.input(input, { target: { value: 'New Value' } });
-    //     const restoreIcon = container.querySelector('.restore-icon-class') as HTMLElement;
-    //     await fireEvent.click(restoreIcon);
-    //     await tick();
-    //     console.log('Input value:', input.value);
-    //     expect(input).toHaveDisplayValue('Test Value');
-    // });
-
-    // test('should restore value on Escape key press', async () => {
-    //     const { getByRole,container } = render(InlineEdit, { value: 'Test Value' , classesForEditIcon:'edit-icon-class'});
-    //     const editIcon = container.querySelector('.edit-icon-class') as HTMLElement;
-    //     await fireEvent.click(editIcon);
-    //     const input = getByRole('textbox');
-    //     await fireEvent.input(input, { target: { value: 'New Value' } });
-    //     await fireEvent.keyDown(input, { key: 'Escape' });
-    //     expect(input).toHaveDisplayValue('Test Value');
-    // });
+    test('should call restore function when restore button is clicked', async () => {
+        const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
+    
+        const { getByRole, container } = render(InlineEdit, { value: 'Test Value', classesForEditIcon: 'edit-icon-class', onRestore: () => alert('Restore') });
+        
+        // Enter edit mode
+        const editIcon = container.querySelector('.edit-icon-class') as HTMLElement;
+        await fireEvent.click(editIcon);
+        
+        // Change the input value
+        const input = getByRole('textbox') as HTMLInputElement;
+        await fireEvent.input(input, { target: { value: 'New Value' } });
+        
+        await fireEvent.keyDown(input, { key: 'Escape' });
+    
+        // Check if alert was called
+        expect(alertMock).toHaveBeenCalledWith('Restore');
+    
+        // Restore the original alert implementation
+        alertMock.mockRestore();
+    });
 });

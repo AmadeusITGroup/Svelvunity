@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon, Tooltip } from '$lib';
+    import { Icon } from '$lib';
     import { PEN_SVG, RESTORE_ICON, SAVE_ICON } from '$lib/config/constants';
 
     interface Props {
@@ -19,11 +19,8 @@
         classesForInput?: string;
         classesForButton?: string;
         classesForError?: string;
-        submitLabelTooltipTestId?: string;
         submitIconTestId?: string;
-        restoreLabelTooltipTestId?: string;
         restoreIconTestId?: string;
-        editLabelTooltipTestId?: string;
         editIconTestId?: string;
         testIdNonEditing?: string;
         testIdInput?: string;
@@ -51,11 +48,8 @@
         classesForInput = '',
         classesForButton = '',
         classesForError = '',
-        submitLabelTooltipTestId = '',
         submitIconTestId = '',
-        restoreLabelTooltipTestId = '',
         restoreIconTestId = '',
-        editLabelTooltipTestId = '',
         editIconTestId = '',
         testIdNonEditing = '',
         testIdInput = '',
@@ -71,8 +65,6 @@
     let initialValueCapture = value;
 
     function edit() {
-        // TODO: In the browser it would throw svelte error: state_unsafe_mutation because a child component Icon is mutating a state variable for this example
-        // The component is working fine, it's just the demo action should be bound internally for the component. The component works as expected
         editing = true;
     }
 
@@ -123,46 +115,30 @@
                 data-cy-id={testIdInput}
             />
         </div>
-        <Tooltip
-            content={submitLabel}
-            position="left"
-            align="center"
-            animation="fade"
-            testId={submitLabelTooltipTestId}
-        >
+        <Icon
+            iconSVG={SAVE_ICON}
+            viewBox="0 0 32 32"
+            width={17}
+            height={17}
+            classes={classesForSubmitIcon}
+            fill={canSubmit ? 'var(--amadeus-color-blue)' : 'var(--amadeus-color-gray-200)'}
+            label={submitLabel}
+            clickLogic={() => {
+                if (canSubmit) submit();
+            }}
+            testId={submitIconTestId}
+        ></Icon>
+        {#if value !== initialValueCapture}
             <Icon
-                iconSVG={SAVE_ICON}
-                viewBox="0 0 32 32"
+                iconSVG={RESTORE_ICON}
+                viewBox="10 10 20 20"
                 width={17}
                 height={17}
-                classes={classesForSubmitIcon}
-                fill={canSubmit ? 'var(--amadeus-color-blue)' : 'var(--amadeus-color-gray-200)'}
-                label={submitLabel}
-                clickLogic={() => {
-                    if (canSubmit) submit();
-                }}
-                testId={submitIconTestId}
+                classes={classesForRestoreIcon}
+                label={restoreLabel}
+                clickLogic={restore}
+                testId={restoreIconTestId}
             ></Icon>
-        </Tooltip>
-        {#if value !== initialValueCapture}
-            <Tooltip
-                content={restoreLabel}
-                position="left"
-                align="center"
-                animation="fade"
-                testId={restoreLabelTooltipTestId}
-            >
-                <Icon
-                    iconSVG={RESTORE_ICON}
-                    viewBox="10 10 20 20"
-                    width={17}
-                    height={17}
-                    classes={classesForRestoreIcon}
-                    label={restoreLabel}
-                    clickLogic={restore}
-                    testId={restoreIconTestId}
-                ></Icon>
-            </Tooltip>
         {/if}
     </div>
     {#if error !== ''}
@@ -191,24 +167,16 @@
             {value === '' ? placeholder : value}
         </button>
         {#if !disabled}
-            <Tooltip
-                content={editLabel}
-                position="left"
-                align="center"
-                animation="fade"
-                testId={editLabelTooltipTestId}
-            >
-                <Icon
-                    iconSVG={PEN_SVG}
-                    classes={classesForEditIcon}
-                    width={17}
-                    height={17}
-                    fill={disabled ? 'var(--amadeus-color-gray-200)' : 'var(--amadeus-color-blue)'}
-                    label={editLabel}
-                    clickLogic={edit}
-                    testId={editIconTestId}
-                ></Icon>
-            </Tooltip>
+            <Icon
+                iconSVG={PEN_SVG}
+                classes={classesForEditIcon}
+                width={17}
+                height={17}
+                fill={disabled ? 'var(--amadeus-color-gray-200)' : 'var(--amadeus-color-blue)'}
+                label={editLabel}
+                clickLogic={edit}
+                testId={editIconTestId}
+            ></Icon>
         {/if}
     </div>
 {/if}
