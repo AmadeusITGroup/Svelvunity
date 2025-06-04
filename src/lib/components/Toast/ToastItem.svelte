@@ -15,8 +15,6 @@
     /** @type {any} */
     let unlisten;
 
-    console.log(item.duration);
-
     const progress = new Tween(item.initial, { duration: item.duration, easing: linear });
 
     function close() {

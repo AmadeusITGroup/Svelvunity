@@ -64,12 +64,6 @@
 	--color-amadeusgray200: var(--amadeus-color-gray-200);
 	--color-amadeusgray100: var(--amadeus-color-gray-100);
 	--color-amadeusgray50: var(--amadeus-color-gray-50);
-
-	--font-amadeuslight: 'AmadeusNeue-Light';
-	--font-amadeusthin: 'Amadeus-Thin';
-	--font-amadeusneuregular: 'AmadeusNeue-Regular';
-	--font-sans: 'AmadeusNeue-Regular', 'Source Sans Pro', 'Calibri', 'sans-serif';
-	--font-body: 'Source Sans Pro', 'Calibri', 'sans-serif';
 }
 
 @font-face {

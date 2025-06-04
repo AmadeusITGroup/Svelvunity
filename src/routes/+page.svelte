@@ -1,4 +1,3 @@
-<!-- @migration-task Error while migrating Svelte code: `<tr>` is invalid inside `<table>` -->
 <script lang="ts">
     // @ts-nocheck
 
@@ -423,39 +422,6 @@
 
         <AccordionItem>
             {#snippet buttonSnippet()}
-                <div>
-                    <span>UserProfileMenu component</span>
-                </div>
-            {/snippet}
-
-            {#snippet bodySnippet()}
-                <div>
-                    <UserProfileMenu
-                        classesForDropdownButton="gap-2"
-                        selectedDropdownLabel="aleksis.sideris@example.com"
-                        func={() => toast.success('Logged Out Successfully')}
-                        options={[
-                            {
-                                link: '/#',
-                                label: 'aleksis.sideris@example.com'
-                            },
-                            {
-                                link: '/#',
-                                label: 'mehtap.mavdar@example.com'
-                            },
-                            {
-                                link: '/#',
-                                label: 'aroosa.batool@amadeus.com'
-                            }
-                        ]}
-                        funcLabel="Sign Out"
-                    />
-                </div>
-            {/snippet}
-        </AccordionItem>
-
-        <AccordionItem>
-            {#snippet buttonSnippet()}
                 <div><span>Icon component</span></div>
             {/snippet}
 
@@ -484,7 +450,7 @@
         <AccordionItem>
             {#snippet buttonSnippet()}
                 <div>
-                    <span>Infinite scroll component</span>
+                    <span>InfiniteScroll component</span>
                 </div>
             {/snippet}
 
@@ -882,6 +848,39 @@
                             testId="remove-icon"
                         />
                     </Tooltip>
+                </div>
+            {/snippet}
+        </AccordionItem>
+
+        <AccordionItem>
+            {#snippet buttonSnippet()}
+                <div>
+                    <span>UserProfileMenu component</span>
+                </div>
+            {/snippet}
+
+            {#snippet bodySnippet()}
+                <div>
+                    <UserProfileMenu
+                        classesForDropdownButton="gap-2"
+                        dropdownLabel="example.sample@muster.org"
+                        func={() => toast.success('Logged Out Successfully')}
+                        options={[
+                            {
+                                link: '/#',
+                                label: 'Lorem Ipsum'
+                            },
+                            {
+                                link: '/#',
+                                label: 'Lorem Ipsum'
+                            },
+                            {
+                                link: '/#',
+                                label: 'Lorem Ipsum'
+                            }
+                        ]}
+                        funcLabel="Sign Out"
+                    />
                 </div>
             {/snippet}
         </AccordionItem>

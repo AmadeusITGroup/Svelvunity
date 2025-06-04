@@ -4,7 +4,7 @@ import { fireEvent, render } from '@testing-library/svelte';
 describe('UserProfileMenu Component', () => {
 	const userProfileMenuProps = {
 		classesForDropdownButton: 'gap-2',
-		selectedDropdownLabel: 'example.sample@muster.org',
+		dropdownLabel: 'example.sample@muster.org',
 		func: () => alert('logout'),
 		options: [
 			{
@@ -59,7 +59,7 @@ describe('UserProfileMenu Component', () => {
 
 	test('should render the options correctly with dropdownLabel when clicked', () => {
 		const { getByText } = render(UserProfileMenu, {
-			props: { ...userProfileMenuProps, selectedDropdownLabel: 'dropdown-label' }
+			props: { ...userProfileMenuProps, dropdownLabel: 'dropdown-label' }
 		});
 		const divDropdownButton = getByText('dropdown-label') as HTMLElement;
 		fireEvent.click(divDropdownButton);
@@ -94,7 +94,7 @@ describe('UserProfileMenu Component', () => {
 
 	test('should render the options correctly with a different dropdown label', () => {
 		const { getByText } = render(UserProfileMenu, {
-			props: { ...userProfileMenuProps, selectedDropdownLabel: 'Custom Dropdown Label' }
+			props: { ...userProfileMenuProps, dropdownLabel: 'Custom Dropdown Label' }
 		});
 		const dropdownLabel = getByText('Custom Dropdown Label');
 		expect(dropdownLabel).toBeInTheDocument();

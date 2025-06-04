@@ -29,7 +29,7 @@ describe('RadioInput Component', () => {
 			`[for='${radioInputProps.options[0].name}']`
 		) as HTMLLabelElement;
 		expect(labelForRadioInput1).toBeInTheDocument();
-				const labelForRadioInput2 = container.querySelector(
+		const labelForRadioInput2 = container.querySelector(
 			`[for='${radioInputProps.options[0].name}']`
 		) as HTMLLabelElement;
 		expect(labelForRadioInput2).toBeInTheDocument();

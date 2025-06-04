@@ -8,7 +8,7 @@
         testId?: string;
         classes?: string;
         classesForDropdownButton?: string;
-        selectedDropdownLabel?: string;
+        dropdownLabel?: string;
         options: { link: string; label: string }[];
         funcLabel: string;
         func: any;
@@ -18,14 +18,13 @@
         testId = '',
         classes = '',
         classesForDropdownButton = '',
-        selectedDropdownLabel,
+        dropdownLabel,
         options,
         funcLabel,
         func
     }: Props = $props();
 
     let isDropdownOpen = $state(false);
-    let selectedOptionLabel = $state(selectedDropdownLabel);
 
     function toggleDropdown() {
         isDropdownOpen = !isDropdownOpen;
@@ -45,7 +44,7 @@
         }}
     >
         <SymbolIcon iconSVG={USER_SVG} classes="cursor-pointer" width={17} height={17} />
-        {selectedOptionLabel}
+        {dropdownLabel}
         <SymbolIcon
             iconSVG={CHEVRON_SVG}
             classes="cursor-pointer"
@@ -58,23 +57,19 @@
     {#if isDropdownOpen}
         <div class="dropdown">
             {#each options as option}
-                {#if option.label !== selectedOptionLabel}
-                    <a
-                        href={option.link}
-                        class="dropdown-list"
-                        onkeypress={(e) => {
-                            if (e.key === 'Enter') {
-                                isDropdownOpen = false;
-                            }
-                        }}
-                        onclick={(e) => {
-                            e.preventDefault();
-                            selectedOptionLabel = option.label;
+                <a
+                    href={option.link}
+                    class="dropdown-list"
+                    onkeypress={(e) => {
+                        if (e.key === 'Enter') {
                             isDropdownOpen = false;
-                        }}
-                        >{option.label}
-                    </a>
-                {/if}
+                        }
+                    }}
+                    onclick={() => {
+                        isDropdownOpen = false;
+                    }}
+                    >{option.label}
+                </a>
             {/each}
             <hr class="divider" />
             <div

@@ -3,13 +3,13 @@ import userEvent from '@testing-library/user-event';
 import AccordionItem from '$lib/components/AccordionItem.svelte';
 import { createRawSnippet, type ComponentProps } from 'svelte';
 
-let accordionItemOptions: ComponentProps<typeof AccordionItem> = getAccordionItemOprions();
+let accordionItemOptions: ComponentProps<typeof AccordionItem> = getAccordionItemOptions();
 
 beforeEach(() => {
-	accordionItemOptions = getAccordionItemOprions()
-})
+	accordionItemOptions = getAccordionItemOptions();
+});
 
-function getAccordionItemOprions() {
+function getAccordionItemOptions() {
 	return {
 		open: false,
 		disabled: false,
@@ -23,15 +23,15 @@ function getAccordionItemOprions() {
 		bodyClasses: '',
 		bodySnippet: createRawSnippet(() => {
 			return {
-				render: () => `<div>Clicked</div>`,
+				render: () => `<div>Clicked</div>`
 			};
 		}),
-        buttonSnippet: createRawSnippet(() => {
+		buttonSnippet: createRawSnippet(() => {
 			return {
-				render: () => `<div>Click</div>`,
+				render: () => `<div>Click</div>`
 			};
 		})
-	}
+	};
 }
 
 describe('Accordion Component', () => {
@@ -107,8 +107,6 @@ describe('Accordion Component', () => {
 		const user = userEvent.setup();
 		accordionItemOptions.open = true;
 		render(AccordionItem, accordionItemOptions);
-		// const accordionItemButton = screen.getByText(`Click`);
-		// expect(accordionItemButton).toBeInTheDocument();
 		const accordionItemBody = screen.getByText(`Clicked`);
 		expect(accordionItemBody).toBeInTheDocument();
 		await user.click(accordionItemBody);

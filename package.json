@@ -38,6 +38,9 @@
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*"
 	],
+	"peerDependencies": {
+		"svelte": "^5.33.4"
+	},
 	"dependencies": {
 		"@eslint/compat": "^1.2.9",
 		"@floating-ui/dom": "^1.7.0",

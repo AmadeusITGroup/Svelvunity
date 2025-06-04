@@ -49,13 +49,14 @@
     onShow(isOpen);
 
     let referenceEl: Element | undefined = $state();
+    let hasArrow: boolean = $state(arrow);
 
     let floatingEl: HTMLElement;
-    let arrowEl: HTMLElement | null = null;
+    let arrowEl: HTMLElement | null = $state(null);
     let contentEl: HTMLElement;
     let triggerEls: HTMLElement[] = [];
 
-    let middleware = $state([
+    let middleware = $derived([
         ...middlewares,
         dom.offset(+offset),
         arrowEl && dom.arrow({ element: arrowEl, padding: 10 })
@@ -232,6 +233,6 @@
         onmouseleave={optional(activeContent && !clickable, hideHandler)}
     >
         {@render children?.()}
-        {#if arrow}<div use:initArrow class={arrowClass} />{/if}
+        {#if hasArrow}<div use:initArrow class={arrowClass} />{/if}
     </Frame>
 {/if}

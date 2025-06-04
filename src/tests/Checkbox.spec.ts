@@ -4,21 +4,21 @@ import { tick, type ComponentProps } from 'svelte';
 
 let checkBoxOptions: ComponentProps<typeof Checkbox> = getCheckBoxOptions();
 
-function getCheckBoxOptions () {
+function getCheckBoxOptions() {
 	return {
-			classes: 'test-class-1 test-class-2',
-			classesForInput: 'test1 test2',
-			classesForLabel: 'test3 test4',
-			labelName: 'label-name',
-			inputId: 'checkbox-id',
-			id: 'input-id',
-			required: true,
-			inputValue: true,
-			testId: 'test-checkbox',
-			onInputChange: undefined,
-			isDisabled: false
+		classes: 'test-class-1 test-class-2',
+		classesForInput: 'test1 test2',
+		classesForLabel: 'test3 test4',
+		labelName: 'label-name',
+		inputId: 'checkbox-id',
+		id: 'input-id',
+		required: true,
+		inputValue: true,
+		testId: 'test-checkbox',
+		onInputChange: undefined,
+		isDisabled: false
 	};
-} 
+}
 
 beforeEach(() => {
 	checkBoxOptions = getCheckBoxOptions();
@@ -33,7 +33,7 @@ describe('Checkbox Component', () => {
 		const wrapper = container.getElementsByClassName('checkbox-wrapper')[0] as HTMLLabelElement;
 		const inputLabel = screen.getByText('Label');
 		const checkbox = screen.getByRole('checkbox');
-		
+
 		await fireEvent.click(inputLabel);
 
 		expect(wrapper).toBeInTheDocument();
@@ -44,8 +44,8 @@ describe('Checkbox Component', () => {
 		expect(checkbox).toHaveAttribute('type', 'checkbox');
 
 		checkBoxOptions.classes?.split(' ').forEach((cls) => {
-  		  expect(wrapper.classList.contains(cls)).toBe(true);
-  		});
+			expect(wrapper.classList.contains(cls)).toBe(true);
+		});
 
 		expect(onInputChangeHandler).toHaveBeenCalled();
 	});
@@ -92,16 +92,16 @@ describe('Checkbox Component', () => {
 		const checkbox = screen.getByRole('checkbox');
 
 		checkBoxOptions.classesForLabel?.split(' ').forEach((cls) => {
-  		  expect(checkboxLabel.classList.contains(cls)).toBe(true);
-  		});
+			expect(checkboxLabel.classList.contains(cls)).toBe(true);
+		});
 
 		checkBoxOptions.classesForInput?.split(' ').forEach((cls) => {
-  		  expect(checkbox.classList.contains(cls)).toBe(true);
-  		});
+			expect(checkbox.classList.contains(cls)).toBe(true);
+		});
 
 		expect(checkboxLabel).toBeInTheDocument();
 		expect(checkbox).toHaveProperty('checked', true);
 		expect(checkboxLabel.getAttribute('for')).toBe(checkBoxOptions.inputId);
- 		expect(checkboxLabel.textContent).toBe(checkBoxOptions.labelName);
+		expect(checkboxLabel.textContent).toBe(checkBoxOptions.labelName);
 	});
 });

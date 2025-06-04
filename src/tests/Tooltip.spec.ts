@@ -5,8 +5,8 @@ import { createRawSnippet, type ComponentProps } from 'svelte';
 let tooltipOptions: ComponentProps<typeof Tooltip> = getTooltipOptions();
 
 beforeEach(() => {
-	tooltipOptions = getTooltipOptions()
-})
+	tooltipOptions = getTooltipOptions();
+});
 
 function getTooltipOptions() {
 	return {
@@ -22,10 +22,10 @@ function getTooltipOptions() {
 		style: null,
 		children: createRawSnippet(() => {
 			return {
-				render: () => `<div></div>`,
+				render: () => `<div></div>`
 			};
 		})
-	}
+	};
 }
 
 describe('Tooltip Component', () => {
@@ -51,7 +51,7 @@ describe('Tooltip Component', () => {
 	test('renders tooltip with correct content', () => {
 		tooltipOptions.children = createRawSnippet(() => {
 			return {
-				render: () => `<div class="tooltip-button" role="button">Click</div>`,
+				render: () => `<div class="tooltip-button" role="button">Click</div>`
 			};
 		});
 

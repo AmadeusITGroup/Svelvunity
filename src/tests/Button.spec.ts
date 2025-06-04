@@ -16,7 +16,7 @@ function getButtonOptions() {
 		testId: 'my-test-id',
 		clickLogic: () => vi.fn(),
 		loading: false
-	}
+	};
 }
 
 describe('Button Component', () => {
@@ -52,13 +52,8 @@ describe('Button Component', () => {
 
 		expect(buttonLabel).toBeInTheDocument();
 		expect(buttonLabel).toBeDisabled();
-		expect(buttonLabel).toHaveClass(
-			'test-class am-c-df_btn am-c-df_btn-primary am-c-df_btn__sm'
-		);
-		expect(buttonLabel).toHaveAttribute(
-			'data-cy-id',
-			buttonOptions.testId
-		);
+		expect(buttonLabel).toHaveClass('test-class am-c-df_btn am-c-df_btn-primary am-c-df_btn__sm');
+		expect(buttonLabel).toHaveAttribute('data-cy-id', buttonOptions.testId);
 	});
 
 	test('should render a button with xlarge size prop', async () => {
@@ -69,13 +64,8 @@ describe('Button Component', () => {
 
 		expect(buttonLabel).toBeInTheDocument();
 		expect(buttonLabel).toBeDisabled();
-		expect(buttonLabel).toHaveClass(
-			'test-class am-c-df_btn am-c-df_btn-primary am-c-df_btn__xl'
-		);
-		expect(buttonLabel).toHaveAttribute(
-			'data-cy-id',
-			buttonOptions.testId
-		);
+		expect(buttonLabel).toHaveClass('test-class am-c-df_btn am-c-df_btn-primary am-c-df_btn__xl');
+		expect(buttonLabel).toHaveAttribute('data-cy-id', buttonOptions.testId);
 	});
 
 	test('should render a button with outline button prop', async () => {
@@ -90,10 +80,7 @@ describe('Button Component', () => {
 		expect(buttonLabel).toHaveClass(
 			'test-class am-c-df_btn am-c-df_btn-outline-primary am-c-df_btn__lg'
 		);
-		expect(buttonLabel).toHaveAttribute(
-			'data-cy-id',
-			buttonOptions.testId
-		);
+		expect(buttonLabel).toHaveAttribute('data-cy-id', buttonOptions.testId);
 	});
 
 	test('should render a button with primary-danger prop', async () => {
@@ -107,10 +94,7 @@ describe('Button Component', () => {
 		expect(buttonLabel).toHaveClass(
 			'test-class am-c-df_btn am-c-df_btn-primary-danger am-c-df_btn__lg'
 		);
-		expect(buttonLabel).toHaveAttribute(
-			'data-cy-id',
-			buttonOptions.testId
-		);
+		expect(buttonLabel).toHaveAttribute('data-cy-id', buttonOptions.testId);
 	});
 
 	test('should render a button with outline-primary-danger prop', async () => {
@@ -124,17 +108,16 @@ describe('Button Component', () => {
 		expect(buttonLabel).toHaveClass(
 			'test-class am-c-df_btn am-c-df_btn-outline-primary-danger am-c-df_btn__xl'
 		);
-		expect(buttonLabel).toHaveAttribute(
-			'data-cy-id',
-			buttonOptions.testId
-		);
+		expect(buttonLabel).toHaveAttribute('data-cy-id', buttonOptions.testId);
 	});
 
 	test('should render loading componnent with size based on the button [small]', async () => {
 		buttonOptions.buttonSize = Size.Small;
 		buttonOptions.loading = true;
 		const { container } = render(Button, buttonOptions);
-		const loader = container.querySelector(`[data-cy-id='${buttonOptions.testId}-loader'`) as HTMLDivElement;
+		const loader = container.querySelector(
+			`[data-cy-id='${buttonOptions.testId}-loader'`
+		) as HTMLDivElement;
 
 		expect(loader).toBeInTheDocument();
 		expect(loader).toHaveClass('am-c-spinner__sm');
@@ -144,7 +127,9 @@ describe('Button Component', () => {
 		buttonOptions.buttonSize = Size.Large;
 		buttonOptions.loading = true;
 		const { container } = render(Button, buttonOptions);
-		const loader = container.querySelector(`[data-cy-id='${buttonOptions.testId}-loader'`) as HTMLDivElement;
+		const loader = container.querySelector(
+			`[data-cy-id='${buttonOptions.testId}-loader'`
+		) as HTMLDivElement;
 
 		expect(loader).toBeInTheDocument();
 		expect(loader).toHaveClass('am-c-spinner__lg');
@@ -154,10 +139,11 @@ describe('Button Component', () => {
 		buttonOptions.buttonSize = Size.XLarge;
 		buttonOptions.loading = true;
 		const { container } = render(Button, buttonOptions);
-		const loader = container.querySelector(`[data-cy-id='${buttonOptions.testId}-loader'`) as HTMLDivElement;
+		const loader = container.querySelector(
+			`[data-cy-id='${buttonOptions.testId}-loader'`
+		) as HTMLDivElement;
 
 		expect(loader).toBeInTheDocument();
 		expect(loader).toHaveClass('am-c-spinner__xl');
 	});
 });
-

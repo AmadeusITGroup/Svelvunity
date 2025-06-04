@@ -52,8 +52,11 @@ describe('Loading Component', () => {
 
 		expect(loadingDiv).not.toBeInTheDocument();
 
-		await waitFor(() => {
-  		  expect(loadingDiv).not.toBeInTheDocument();
-  		}, { timeout: 200 });
+		await waitFor(
+			() => {
+				expect(loadingDiv).not.toBeInTheDocument();
+			},
+			{ timeout: 200 }
+		);
 	});
 });

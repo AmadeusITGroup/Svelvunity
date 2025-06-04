@@ -17,7 +17,6 @@ describe('Icon Component', () => {
 		clickLogic: vi.fn(),
 		label: 'test-label'
 	};
-	
 
 	test('should render a icon with all props', () => {
 		iconProps.iconSVG = FILTER_SVG;
@@ -30,10 +29,10 @@ describe('Icon Component', () => {
 		expect(svgIcon).toHaveAttribute('fill', iconProps.fill);
 		expect(svgIcon).toHaveAttribute('width', iconProps.width.toString());
 		expect(svgIcon).toHaveAttribute('height', iconProps.height.toString());
-		expect(svgIcon).toHaveAttribute('data-cy-id', iconProps.testId );
+		expect(svgIcon).toHaveAttribute('data-cy-id', iconProps.testId);
 	});
 
-	test('should render the icon\'s button correctly', () => {
+	test("should render the icon's button correctly", () => {
 		const { getByRole } = render(Icon, iconProps);
 		const button = getByRole('button', { name: iconProps.label });
 
@@ -47,7 +46,7 @@ describe('Icon Component', () => {
 		const { getByRole } = render(Icon, iconProps);
 		const button = getByRole('button', { name: iconProps.label });
 		await fireEvent.click(button);
-		
+
 		expect(button).toBeInTheDocument();
 		expect(onClickHandler).toHaveBeenCalled();
 	});
@@ -59,7 +58,7 @@ describe('Icon Component', () => {
 		const { getByRole } = render(Icon, iconProps);
 		const button = getByRole('button', { name: iconProps.label });
 		await fireEvent.keyPress(button, { key: 'Enter', code: 'Enter', charCode: 13 });
-		
+
 		expect(button).toBeInTheDocument();
 		expect(onClickHandler).toHaveBeenCalled();
 	});
