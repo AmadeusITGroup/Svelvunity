@@ -1,4 +1,5 @@
 <script lang="ts">
+    import spinner from '$lib/assets/images/spinner.svg';
     import { LOADING_ANIMATION_DELAY_AND_DURATION } from '$lib/config/constants';
     import { fade } from 'svelte/transition';
 
@@ -28,7 +29,7 @@
         class="{classes} {isScreenCentered ? 'am-c-loading__screen-center' : ''}"
         data-cy-id={testId !== '' ? testId : null}
     >
-        <img {width} {height} src="/spinner.svg" alt="Loading..." class="am-c-loading" />
+        <img {width} {height} src={spinner} alt="Loading..." class="am-c-loading" />
     </div>
 {:else}
     <div
@@ -36,7 +37,7 @@
         data-cy-id={testId !== '' ? testId : null}
         out:fade|global={{ duration: loadingAnimationDuration }}
     >
-        <img {width} {height} src="/spinner.svg" alt="Loading..." class="am-c-loading" />
+        <img {width} {height} src={spinner} alt="Loading..." class="am-c-loading" />
     </div>
 {/if}
 

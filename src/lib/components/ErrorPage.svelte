@@ -1,4 +1,5 @@
 <script>
+    import errorBgImg from '$lib/assets/images/error-bg-img.png';
     import { onMount } from 'svelte';
 
     /** @type {{errorCode?: number, headMessage?: string, message?: string, testId?: string}} */
@@ -13,7 +14,7 @@
         const sectionElem = document.querySelector('section');
 
         if (sectionElem) {
-            sectionElem.style.backgroundImage = `url(/error-bg-img.png)`;
+            sectionElem.style.backgroundImage = `url("${errorBgImg}")`;
         }
     });
 </script>

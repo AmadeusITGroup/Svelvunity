@@ -32,6 +32,15 @@ npm install @amadeus-it-group/svelvunity
 
 For comprehensive information on each component and how to use it, see the [Documentation](https://mehtapcavdar.github.io/svelvunity/).
 
+### Svelte Compatibility
+
+This library supports different versions of Svelte depending on the library version:
+
+| Library Version | Compatible Svelte Version |
+| --------------- | ------------------------- |
+| ≤ 0.0.3         | 4.x                       |
+| ≥ 0.0.4         | 5.x                       |
+
 ## Usage
 
 Import the components you need and start using them in your Svelte application:
