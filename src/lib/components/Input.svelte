@@ -1,29 +1,58 @@
 <script lang="ts">
     import { InputTypes } from '$lib/enums/inputtypes.enum';
     import { removeLeadingZero } from '$lib/utils/helpers';
-    import { createEventDispatcher } from 'svelte';
 
-    const dispatch = createEventDispatcher();
-    export let classes = '';
-    export let classesForInput = '';
-    export let classesForLabel = '';
-    export let classesForInputError = '';
-    export let labelName = '';
-    export let inputName = '';
-    export let inputError = '';
-    export let inputValue: string | number = '';
-    export let placeholder = '';
-    export let min: string | number = '';
-    export let max: string | number = '';
-    export let type: string = InputTypes.Text;
-    export let extraSign = '';
-    export let required = false;
-    export let isReadOnly = false;
-    export let isDisabled = false;
-    export let textareaInput = false;
-    export let resizableTextarea = true;
-    export let showError = true;
-    export let testId = '';
+    interface Props {
+        classes?: string;
+        classesForInput?: string;
+        classesForLabel?: string;
+        classesForInputError?: string;
+        labelName?: string;
+        inputName?: string;
+        inputError?: string;
+        inputValue?: string | number;
+        placeholder?: string;
+        min?: string | number;
+        max?: string | number;
+        type?: string;
+        extraSign?: string;
+        required?: boolean;
+        isReadOnly?: boolean;
+        isDisabled?: boolean;
+        textareaInput?: boolean;
+        resizableTextarea?: boolean;
+        showError?: boolean;
+        testId?: string;
+        onInput?: (value: Event) => void;
+        onInputBlur?: (value: FocusEvent) => void;
+        onInputChange?: (value: Event) => void;
+    }
+
+    let {
+        classes = '',
+        classesForInput = '',
+        classesForLabel = '',
+        classesForInputError = '',
+        labelName = '',
+        inputName = '',
+        inputError = '',
+        inputValue = $bindable(''),
+        placeholder = '',
+        min = '',
+        max = '',
+        type = InputTypes.Text,
+        extraSign = '',
+        required = false,
+        isReadOnly = false,
+        isDisabled = false,
+        textareaInput = false,
+        resizableTextarea = true,
+        showError = true,
+        testId = '',
+        onInput,
+        onInputBlur,
+        onInputChange
+    }: Props = $props();
     const isTypeNumber: boolean = type === InputTypes.Number;
 
     function typeAction(node: any) {
@@ -64,12 +93,14 @@
                     {isTypeNumber ? 'svelvunity-input--field-number-padding' : ''} 
                     {classesForInput}"
                 bind:value={inputValue}
-                on:blur={(event) => {
-                    dispatch('onInputBlur', event);
-                    isTypeNumber ? handleNumbers() : null;
+                onblur={(event) => {
+                    onInputBlur?.(event);
+                    if (isTypeNumber) {
+                        handleNumbers();
+                    }
                 }}
-                on:input={(event) => dispatch('onInput', event)}
-                on:change={(event) => dispatch('onInputChanges', event)}
+                oninput={(event) => onInput?.(event)}
+                onchange={(event) => onInputChange?.(event)}
                 use:typeAction
                 {placeholder}
                 name={inputName}
@@ -91,14 +122,14 @@
                     {inputError ? 'svelvunity-input--field-error-border' : ''} 
                     {classesForInput}"
                 bind:value={inputValue}
-                on:blur={(event) => dispatch('onInputBlur', event)}
-                on:input={(event) => dispatch('onInput', event)}
-                on:change={(event) => dispatch('onInputChanges', event)}
+                onblur={(event) => onInputBlur?.(event)}
+                oninput={(event) => onInput?.(event)}
+                onchange={(event) => onInputChange?.(event)}
                 {placeholder}
                 name={inputName}
                 id={inputName}
                 autocomplete="off"
-            />
+            ></textarea>
         {/if}
     </div>
     {#if showError || inputError}

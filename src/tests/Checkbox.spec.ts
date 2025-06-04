@@ -1,71 +1,107 @@
 import { Checkbox } from '$lib';
 import { render, fireEvent, screen } from '@testing-library/svelte';
+import { tick, type ComponentProps } from 'svelte';
 
-import { tick } from 'svelte';
+let checkBoxOptions: ComponentProps<typeof Checkbox> = getCheckBoxOptions();
 
-describe('Checkbox Component', () => {
-	let checkboxProps = {
-		classes: 'test-class',
-		classesForInput: 'test-class-for-input',
-		classesForLabel: 'test-class-for-label',
+function getCheckBoxOptions() {
+	return {
+		classes: 'test-class-1 test-class-2',
+		classesForInput: 'test1 test2',
+		classesForLabel: 'test3 test4',
 		labelName: 'label-name',
 		inputId: 'checkbox-id',
+		id: 'input-id',
+		required: true,
 		inputValue: true,
-		testId: 'test-checkbox'
+		testId: 'test-checkbox',
+		onInputChange: undefined,
+		isDisabled: false
 	};
+}
 
-	beforeEach(() => {
-		checkboxProps = {
-			classes: 'test-class',
-			classesForInput: 'test-class-for-input',
-			classesForLabel: 'test-class-for-label',
-			labelName: 'label-name',
-			inputId: 'checkbox-id',
-			inputValue: true,
-			testId: 'test-checkbox'
-		};
-	});
+beforeEach(() => {
+	checkBoxOptions = getCheckBoxOptions();
+});
 
+describe('Checkbox Component', () => {
 	test('should render a checkbox', async () => {
-		const { container } = render(Checkbox, { props: { ...checkboxProps } });
-		const labelForInput = container.getElementsByClassName('input-label')[0] as HTMLLabelElement;
+		const onInputChangeHandler = vi.fn();
+		checkBoxOptions.labelName = 'Label';
+		checkBoxOptions.onInputChange = onInputChangeHandler;
+		const { container } = render(Checkbox, checkBoxOptions);
+		const wrapper = container.getElementsByClassName('checkbox-wrapper')[0] as HTMLLabelElement;
+		const inputLabel = screen.getByText('Label');
+		const checkbox = screen.getByRole('checkbox');
 
-		expect(labelForInput).toHaveTextContent(`${checkboxProps.labelName}`);
+		await fireEvent.click(inputLabel);
+
+		expect(wrapper).toBeInTheDocument();
+		expect(checkbox).toBeInTheDocument();
+		expect(inputLabel).toHaveTextContent(`${checkBoxOptions.labelName}`);
+		expect(checkbox).toHaveAttribute('data-cy-id', checkBoxOptions.testId);
+		expect(checkbox).toHaveAttribute('aria-label', checkBoxOptions.labelName);
+		expect(checkbox).toHaveAttribute('type', 'checkbox');
+
+		checkBoxOptions.classes?.split(' ').forEach((cls) => {
+			expect(wrapper.classList.contains(cls)).toBe(true);
+		});
+
+		expect(onInputChangeHandler).toHaveBeenCalled();
 	});
 
 	test('should render a disabled checkbox', async () => {
-		const { container } = render(Checkbox, { props: { ...checkboxProps, isDisabled: true } });
-		const inputCheckbox = container.getElementsByClassName('input-checkbox')[0] as HTMLElement;
+		checkBoxOptions.inputValue = false;
+		checkBoxOptions.isDisabled = true;
+		const { container } = render(Checkbox, checkBoxOptions);
+		const checkbox = container.getElementsByClassName('input-checkbox')[0] as HTMLElement;
 
-		expect(inputCheckbox).toBeDisabled();
+		expect(checkbox).toBeDisabled();
+		expect(checkbox).toHaveAttribute('disabled', '');
+		expect(checkbox).toHaveProperty('checked', false);
 	});
 
 	test('should have false value after clicking', async () => {
-		const { container } = render(Checkbox, { props: checkboxProps });
-		const inputCheckbox = container.getElementsByClassName('input-checkbox')[0] as HTMLElement;
+		const { container } = render(Checkbox, checkBoxOptions);
+		const checkbox = container.getElementsByClassName('input-checkbox')[0] as HTMLElement;
 
-		expect(inputCheckbox).toBeChecked();
-		fireEvent.click(inputCheckbox);
+		expect(checkbox).toBeChecked();
+		await fireEvent.click(checkbox);
 		await tick();
-		expect(inputCheckbox).not.toBeChecked();
+		expect(checkbox).not.toBeChecked();
 	});
 
 	test('should render a input type as checkbox', async () => {
-		const { container } = render(Checkbox, { props: checkboxProps });
-		const input = container.getElementsByClassName('input-checkbox')[0] as HTMLElement;
+		const onInputChangeHandler = vi.fn();
+		checkBoxOptions.onInputChange = onInputChangeHandler;
+		const { container } = render(Checkbox, checkBoxOptions);
+		const checkbox = container.getElementsByClassName('input-checkbox')[0] as HTMLElement;
 
-		expect(input).toHaveAttribute('type', 'checkbox');
+		expect(checkbox).toHaveAttribute('type', 'checkbox');
+		expect(onInputChangeHandler).not.toHaveBeenCalled();
 	});
 
 	test('should render the checkbox with the provided label and value', () => {
-		render(Checkbox, {
-			props: { labelName: 'Test Checkbox', inputValue: true, testId: 'test-checkbox' }
+		checkBoxOptions.labelName = 'Label';
+		checkBoxOptions.inputValue = true;
+		checkBoxOptions.testId = 'test-checkbox';
+
+		render(Checkbox, checkBoxOptions);
+
+		const checkboxLabel = screen.getByText('Label');
+		const checkbox = screen.getByRole('checkbox');
+
+		checkBoxOptions.classesForLabel?.split(' ').forEach((cls) => {
+			expect(checkboxLabel.classList.contains(cls)).toBe(true);
 		});
 
-		const labelElement = screen.getByText('Test Checkbox');
-		expect(labelElement).toBeInTheDocument();
+		checkBoxOptions.classesForInput?.split(' ').forEach((cls) => {
+			expect(checkbox.classList.contains(cls)).toBe(true);
+		});
 
-		const inputElement = screen.getByRole('checkbox');
-		expect(inputElement).toHaveProperty('checked', true);
+		expect(checkboxLabel).toBeInTheDocument();
+		expect(checkbox).toHaveProperty('checked', true);
+		expect(checkboxLabel.getAttribute('for')).toBe(checkBoxOptions.inputId);
+		expect(checkboxLabel.textContent).toBe(checkBoxOptions.labelName);
 	});
 });

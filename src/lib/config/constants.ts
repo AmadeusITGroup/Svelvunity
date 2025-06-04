@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
 const DEFAULT_DEBOUNCE_TIME: number = 300;
 
 const INPUT_DELAY: number = 200;

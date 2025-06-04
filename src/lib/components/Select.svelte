@@ -1,15 +1,29 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
+    interface Props {
+        classes?: string;
+        labelName?: string;
+        inputName?: string;
+        inputError?: string;
+        inputValue?: string;
+        placeholder?: string;
+        testId?: string;
+        options?: Array<any>;
+        onSelectChange?: () => void;
+        onInputBlur?: (event: FocusEvent) => void;
+    }
 
-    const dispatch = createEventDispatcher();
-    export let classes = '';
-    export let labelName = '';
-    export let inputName = '';
-    export let inputError = '';
-    export let inputValue = '';
-    export let placeholder = '';
-    export let testId = '';
-    export let options: Array<any> = [];
+    let {
+        classes = '',
+        labelName = '',
+        inputName = '',
+        inputError = '',
+        inputValue = $bindable(''),
+        placeholder = '',
+        testId = '',
+        options = [],
+        onSelectChange,
+        onInputBlur
+    }: Props = $props();
 </script>
 
 <div class={classes}>
@@ -24,13 +38,11 @@
                 {inputError ? 'svelvunity-input--on-error' : ''}
             "
             bind:value={inputValue}
-            on:change={() => dispatch('onSelectChanges')}
-            on:blur={(event) => {
-                dispatch('onInputBlur', event);
-            }}
+            onchange={() => onSelectChange?.()}
+            onblur={(event) => onInputBlur?.(event)}
         >
             {#if placeholder}<option value="" disabled selected hidden>{placeholder}</option>{/if}
-            {#each options as option}
+            {#each options as option (option.id)}
                 <option value={option.id}>{option.value}</option>
             {/each}
         </select>

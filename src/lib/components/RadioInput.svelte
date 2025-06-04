@@ -1,23 +1,41 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
+    interface Props {
+        labelText?: string;
+        inputName?: string;
+        inputError?: string;
+        options?: any;
+        classesForError?: string;
+        classesForInput?: string;
+        classesForInputLabel?: string;
+        classesForLabel?: string;
+        classesForRadioGroup?: string;
+        isRequired?: boolean;
+        isDisabled?: boolean;
+        testId: string;
+        selectedOption: any;
+        onOptionSelected: (opt: any) => void;
+    }
 
-    export let labelText = '';
-    export let inputName = '';
-    export let inputError = '';
-    export let options: any = [];
-    export let classesForError = '';
-    export let classesForInput = '';
-    export let classesForInputLabel = '';
-    export let classesForLabel = '';
-    export let classesForRadioGroup = '';
-    export let isRequired = false;
-    export let isDisabled = false;
-    export let testId: string;
-    export let selectedOption: any;
+    let {
+        labelText = '',
+        inputName = '',
+        inputError = '',
+        options = [],
+        classesForError = '',
+        classesForInput = '',
+        classesForInputLabel = '',
+        classesForLabel = '',
+        classesForRadioGroup = '',
+        isRequired = false,
+        isDisabled = false,
+        testId,
+        selectedOption = $bindable(),
+        onOptionSelected
+    }: Props = $props();
 
-    const dispatch = createEventDispatcher();
-
-    $: selectedOption, dispatch('optionSelected', selectedOption);
+    $effect(() => {
+        onOptionSelected?.(selectedOption);
+    });
 </script>
 
 <div role="radiogroup" data-cy-id={testId} class="radiogroup {classesForRadioGroup}">
@@ -29,11 +47,12 @@
         >
     {/if}
 
-    {#each options as option, index}
+    {#each options as option, index (option.name)}
         <div class="input-wrapper" role="textbox" aria-required={isRequired} aria-label={labelText}>
             <input
                 type="radio"
-                name={`${inputName}`}
+                id={option.name}
+                name={inputName}
                 value={option?.value}
                 aria-label={option.name}
                 class="
@@ -44,12 +63,12 @@
                 disabled={isDisabled}
                 required={isRequired}
                 bind:group={selectedOption}
-                on:blur={() => dispatch('optionSelected', selectedOption)}
+                onblur={() => onOptionSelected?.(selectedOption)}
                 data-cy-id={`${testId}-${index}-input`}
             />
 
             <label
-                for={`${inputName}`}
+                for={option.name}
                 class="
                     {isDisabled ? 'input-cursor-disabled' : 'input-cursor'}
                     {inputError !== '' ? 'error' : 'normal'} 

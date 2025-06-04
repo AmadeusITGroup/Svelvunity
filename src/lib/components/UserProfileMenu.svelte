@@ -1,48 +1,53 @@
 <script lang="ts">
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-nocheck
-
     import { CHEVRON_SVG, Direction } from '$lib';
     import { USER_SVG, USER_LOGOUT_SVG } from '$lib/config/constants';
     import { clickOutside } from '$lib/utils/clickOutside';
     import SymbolIcon from './SymbolIcon.svelte';
 
-    export let testId = '';
-    export let classes = '';
-    export let classesForDropdownButton = '';
-    export let dropdownLabel: string;
-    export let options: { link: string; label: string }[];
-    export let funcLabel: string;
-    export let func: any;
+    interface Props {
+        testId?: string;
+        classes?: string;
+        classesForDropdownButton?: string;
+        dropdownLabel?: string;
+        options: { link: string; label: string }[];
+        funcLabel: string;
+        func: any;
+    }
 
-    let isDropdownOpen = false;
+    let {
+        testId = '',
+        classes = '',
+        classesForDropdownButton = '',
+        dropdownLabel,
+        options,
+        funcLabel,
+        func
+    }: Props = $props();
+
+    let isDropdownOpen = $state(false);
 
     function toggleDropdown() {
         isDropdownOpen = !isDropdownOpen;
     }
 </script>
 
-<div
-    class="dropdown-wrapper {classes}"
-    use:clickOutside
-    on:click_outside={() => (isDropdownOpen = false)}
->
+<div class="dropdown-wrapper {classes}" use:clickOutside={() => (isDropdownOpen = false)}>
     <div
         data-cy-id={testId}
         class="dropdown-button {classesForDropdownButton}"
         aria-label="User profile menu"
         role="button"
         tabindex="0"
-        on:click={() => toggleDropdown()}
-        on:keypress={(e) => {
+        onclick={() => toggleDropdown()}
+        onkeypress={(e) => {
             if (e.key === 'Enter') toggleDropdown();
         }}
     >
-        <SymbolIcon iconSVG={USER_SVG} classes={'cursor-pointer'} width={17} height={17} />
+        <SymbolIcon iconSVG={USER_SVG} classes="cursor-pointer" width={17} height={17} />
         {dropdownLabel}
         <SymbolIcon
             iconSVG={CHEVRON_SVG}
-            classes={'cursor-pointer'}
+            classes="cursor-pointer"
             width={15}
             height={15}
             direction={isDropdownOpen ? Direction.Up : Direction.Down}
@@ -55,12 +60,12 @@
                 <a
                     href={option.link}
                     class="dropdown-list"
-                    on:keypress={(e) => {
+                    onkeypress={(e) => {
                         if (e.key === 'Enter') {
                             isDropdownOpen = false;
                         }
                     }}
-                    on:click={() => {
+                    onclick={() => {
                         isDropdownOpen = false;
                     }}
                     >{option.label}
@@ -71,20 +76,20 @@
                 class="dropdown-list-divider"
                 role="button"
                 tabindex="0"
-                on:keypress={(e) => {
+                onkeypress={(e) => {
                     if (e.key === 'Enter') {
                         isDropdownOpen = false;
                         func();
                     }
                 }}
-                on:click={() => {
+                onclick={() => {
                     isDropdownOpen = false;
                     func();
                 }}
             >
                 <SymbolIcon
                     iconSVG={USER_LOGOUT_SVG}
-                    classes={'cursor-pointer'}
+                    classes="cursor-pointer"
                     fill="#808080"
                     width={28}
                     height={17}

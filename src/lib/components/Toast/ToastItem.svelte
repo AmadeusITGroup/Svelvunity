@@ -1,33 +1,35 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
-    import { tweened } from 'svelte/motion';
+    import { Tween } from 'svelte/motion';
     import { linear } from 'svelte/easing';
     import { toast } from './stores';
 
-    /** @type {import('./stores').SvelteToastOptions} */
-    export let item;
+    /** @type {{item: import('./stores').SvelteToastOptions}} */
+    let { item = $bindable() } = $props();
 
     /** @type {any} */
-    let next = item.initial;
-    let prev = next;
-    let paused = false;
-    let cprops = {};
+    let next = $state(item.initial);
+    let prev = $derived(next);
+    let paused = $state(false);
+    let cprops = $state({});
     /** @type {any} */
     let unlisten;
 
-    const progress = tweened(item.initial, { duration: item.duration, easing: linear });
+    const progress = new Tween(item.initial, { duration: item.duration, easing: linear });
 
     function close() {
         toast.pop(item.id);
     }
 
     function autoclose() {
-        if ($progress === 1 || $progress === 0) close();
+        if (progress.current === 1 || progress.current === 0) {
+            close();
+        }
     }
 
     function pause() {
-        if (!paused && $progress !== next) {
-            progress.set($progress, { duration: 0 });
+        if (!paused && progress.current !== next) {
+            progress.set(progress.current, { duration: 0 });
             paused = true;
         }
     }
@@ -35,7 +37,8 @@
     function resume() {
         if (paused) {
             const d = /** @type {any} */ (item.duration);
-            const duration = d - d * (($progress - prev) / (next - prev));
+            const currentValue = progress?.current ?? 0;
+            const duration = d - d * ((currentValue - prev) / (next - prev));
             progress.set(next, { duration }).then(autoclose);
             paused = false;
         }
@@ -55,26 +58,21 @@
         handler();
     }
 
-    $: if (next !== item.next) {
-        next = item.next;
-        prev = $progress;
-        paused = false;
-        progress.set(next).then(autoclose);
-    }
+    $effect(() => {
+        if (next !== item.next) {
+            next = item.next;
+            prev = progress.current;
+            paused = false;
+            progress.set(next).then(autoclose);
+        }
+    });
 
-    $: if (item.component) {
-        const { props = {}, sendIdTo } = item.component;
-        cprops = { ...props, ...(sendIdTo && { [sendIdTo]: item.id }) };
-    }
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // `progress` has been renamed to `next`; shim included for backward compatibility, to remove in next major
-    $: if (!check(item.progress)) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        item.next = item.progress;
-    }
+    $effect(() => {
+        if (item.component) {
+            const { props = {}, sendIdTo } = item.component;
+            cprops = { ...props, ...(sendIdTo && { [sendIdTo]: item.id }) };
+        }
+    });
 
     onMount(listen);
 
@@ -93,14 +91,14 @@
     class:pe={item.pausable}
     role="button"
     tabindex="0"
-    on:mouseenter={() => {
+    onmouseenter={() => {
         if (item.pausable) pause();
     }}
-    on:mouseleave={resume}
+    onmouseleave={resume}
 >
     <div role="status" class="_toastMsg" class:pe={item.component}>
         {#if item.component}
-            <svelte:component this={item.component.src} {...cprops} />
+            <item.component.src {...cprops} />
         {:else}
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html item.msg}
@@ -111,13 +109,13 @@
             class="_toastBtn pe"
             role="button"
             tabindex="0"
-            on:click={close}
-            on:keydown={(e) => {
+            onclick={close}
+            onkeydown={(e) => {
                 if (e instanceof KeyboardEvent && ['Enter', ' '].includes(e.key)) close();
             }}
         ></div>
     {/if}
-    <progress class="_toastBar" value={$progress} />
+    <progress class="_toastBar" value={progress.current}></progress>
 </div>
 
 <style>

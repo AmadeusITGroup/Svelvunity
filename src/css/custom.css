@@ -34,33 +34,41 @@
 	--amadeus-color-gray-50: #f2f2f2;
 }
 
-@font-face {
-	font-family: 'Amadeus-Light';
-	font-style: normal;
-	font-weight: 300;
-	font-display: swap;
-	src: url('/fonts/Amadeus-Light.woff2');
-}
-
-@font-face {
-	font-family: 'Amadeus-Thin';
-	font-style: normal;
-	font-weight: 100;
-	font-display: swap;
-	src: url('/fonts/Amadeus-Thin.woff2');
-}
-
-@font-face {
-	font-family: 'Amadeus-Regular';
-	font-style: normal;
-	font-weight: 400;
-	font-display: swap;
-	src: url('/fonts/Amadeus-Regular.woff2');
+@theme inline {
+	--color-amadeusdarkblue: var(--amadeus-color-darkblue);
+	--color-amadeusblue: var(--amadeus-color-blue);
+	--color-amadeuslightblue: var(--amadeus-color-lightblue);
+	--color-amadeuspaleblue: var(--amadeus-color-paleblue);
+	--color-amadeuseasternblue: var(--amadeus-color-easternblue);
+	--color-amadeuswhite: var(--amadeus-color-white);
+	--color-amadeusgrey: var(--amadeus-color-grey);
+	--color-amadeuspurple: var(--amadeus-color-purple);
+	--color-amadeusred: var(--amadeus-color-red);
+	--color-amadeusred800: var(--amadeus-color-red-800);
+	--color-amadeuslightred: var(--amadeus-color-lightred);
+	--color-amadeuscherry: var(--amadeus-color-cherry);
+	--color-amadeusdeeporange: var(--amadeus-color-deeporange);
+	--color-amadeusorange: var(--amadeus-color-orange);
+	--color-amadeuslightorange: var(--amadeus-color-lightorange);
+	--color-amadeusyellow: var(--amadeus-color-yellow);
+	--color-amadeusgreen: var(--amadeus-color-green);
+	--color-amadeuslightgreen: var(--amadeus-color-lightgreen);
+	--color-amadeusblack: var(--amadeus-color-black);
+	--color-amadeusgray900: var(--amadeus-color-gray-900);
+	--color-amadeusgray800: var(--amadeus-color-gray-800);
+	--color-amadeusgray700: var(--amadeus-color-gray-700);
+	--color-amadeusgray600: var(--amadeus-color-gray-600);
+	--color-amadeusgray500: var(--amadeus-color-gray-500);
+	--color-amadeusgray400: var(--amadeus-color-gray-400);
+	--color-amadeusgray300: var(--amadeus-color-gray-300);
+	--color-amadeusgray200: var(--amadeus-color-gray-200);
+	--color-amadeusgray100: var(--amadeus-color-gray-100);
+	--color-amadeusgray50: var(--amadeus-color-gray-50);
 }
 
 body,
 html {
-	font-family: 'Source Sans Pro', 'Calibri', sans-serif;
+	font-family: 'Source Sans Pro', 'Calibri', 'sans-serif';
 	font-size: 16px;
 	height: 100%;
 }

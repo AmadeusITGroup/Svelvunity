@@ -1,32 +1,31 @@
 <script lang="ts">
-    import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
 
-    export let threshold: number | undefined = 0;
-    export let horizontal: boolean | undefined = false;
-    export let elementScroll: HTMLElement | null = null;
-    export let hasMore: boolean | undefined = true;
-    export let reverse: boolean | undefined = false;
-    export let window: boolean | undefined = false;
-
-    const dispatch = createEventDispatcher<{ loadMore: never }>();
-
-    let isLoadMore = false;
-    let component: HTMLElement;
-    let beforeScrollHeight: number;
-    let beforeScrollTop: number;
-    let element: any | null;
-
-    $: if (element) {
-        if (reverse) {
-            element.scrollTop = element.scrollHeight;
-        }
-        element.addEventListener('scroll', onScroll);
-        element.addEventListener('resize', onScroll);
+    interface Props {
+        threshold?: number | undefined;
+        horizontal?: boolean | undefined;
+        elementScroll?: HTMLElement | null;
+        hasMore?: boolean | undefined;
+        reverse?: boolean | undefined;
+        window?: boolean | undefined;
+        onLoadMore?: () => void;
     }
 
-    $: if (reverse && isLoadMore) {
-        element.scrollTop = element.scrollHeight - beforeScrollHeight + beforeScrollTop;
-    }
+    let {
+        threshold = 0,
+        horizontal = false,
+        elementScroll = null,
+        hasMore = true,
+        reverse = false,
+        window = false,
+        onLoadMore
+    }: Props = $props();
+
+    let shouldLoadMore = $state(false);
+    let component: HTMLElement | undefined = $state();
+    let beforeScrollHeight: number = $state(0);
+    let beforeScrollTop: number = $state(0);
+    let element: any | null = $state();
 
     const onScroll = (e: Event) => {
         if (!hasMore) return;
@@ -35,16 +34,14 @@
         const offset = calcOffset(target, reverse!, horizontal!);
 
         if (offset <= threshold!) {
-            if (!isLoadMore && hasMore) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                dispatch('loadMore');
+            if (!shouldLoadMore && hasMore) {
+                onLoadMore?.();
                 beforeScrollHeight = target.scrollHeight;
                 beforeScrollTop = target.scrollTop;
             }
-            isLoadMore = true;
+            shouldLoadMore = true;
         } else {
-            isLoadMore = false;
+            shouldLoadMore = false;
         }
     };
 
@@ -65,7 +62,7 @@
         } else if (elementScroll) {
             element = elementScroll;
         } else {
-            element = component.parentNode;
+            element = component?.parentNode;
         }
     });
 
@@ -75,10 +72,24 @@
             element.removeEventListener('resize', onScroll);
         }
     });
+    $effect(() => {
+        if (element) {
+            if (reverse) {
+                element.scrollTop = element.scrollHeight;
+            }
+            element.addEventListener('scroll', onScroll);
+            element.addEventListener('resize', onScroll);
+        }
+    });
+    $effect(() => {
+        if (reverse && shouldLoadMore) {
+            element.scrollTop = element.scrollHeight - beforeScrollHeight + beforeScrollTop;
+        }
+    });
 </script>
 
 {#if !window && !elementScroll}
-    <div class="infinite-scroll" bind:this={component} id="svelte-infinite-scroll" />
+    <div class="infinite-scroll" bind:this={component} id="svelte-infinite-scroll"></div>
 {/if}
 
 <style>

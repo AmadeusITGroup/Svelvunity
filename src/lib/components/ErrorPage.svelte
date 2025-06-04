@@ -1,17 +1,19 @@
 <script>
-    import errorBgImg from '$lib/assets/images/error-bg-img.png';
     import { onMount } from 'svelte';
 
-    export let errorCode = 403;
-    export let headMessage = "The page you're trying to reach has restricted access.";
-    export let message = 'Please refer to your administrator.';
-    export let testId = '';
+    /** @type {{errorCode?: number, headMessage?: string, message?: string, testId?: string}} */
+    let {
+        errorCode = 403,
+        headMessage = "The page you're trying to reach has restricted access.",
+        message = 'Please refer to your administrator.',
+        testId = ''
+    } = $props();
 
     onMount(() => {
         const sectionElem = document.querySelector('section');
 
         if (sectionElem) {
-            sectionElem.style.backgroundImage = `url("${errorBgImg}")`;
+            sectionElem.style.backgroundImage = `url(/error-bg-img.png)`;
         }
     });
 </script>

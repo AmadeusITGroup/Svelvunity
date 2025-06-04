@@ -1,54 +1,80 @@
 <script lang="ts">
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-nocheck
-
     import {
         ANGLE_DOWN_SVG,
         ANGLE_UP_SVG,
         CHEVRON_LEFT_SVG,
         CHEVRON_RIGHT_SVG
     } from '$lib/config/constants';
-    import { clickOutside } from '../utils/clickOutside';
+    import { clickOutside } from '$lib/utils/clickOutside';
+    import type { Snippet } from 'svelte';
     import {
         calendarize,
         createTimestamp,
         getDatesFromArray,
-        getTimestamp,
         normalizeTimestamp
     } from '../utils/date';
     import Icon from './Icon.svelte';
     import SymbolIcon from './SymbolIcon.svelte';
-    export let selectedDate: any = null;
-    export let today = new Date();
-    export let defaultYear = today.getFullYear();
-    export let defaultMonth = today.getMonth();
-    export let isOpen = false;
-    export let align = 'left';
-    export let disabledDates: string[] = [];
-    export let enabledDates: string[] = [];
-    export let alwaysShow = false;
-    export let disableDatesBefore: string | null = null;
-    export let disableDatesAfter: string | null = null;
-    export let dowLabels = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
-    export let showYears = false;
-    export let monthLabels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ];
-    export let testId = '';
-    export let classes = '';
-    export let ariaLabelPreviousYear = '';
-    export let ariaLabelNextYear = '';
+    interface Props {
+        selectedDate?: any;
+        today?: any;
+        defaultYear?: any;
+        defaultMonth?: any;
+        isOpen?: boolean;
+        align?: string;
+        disabledDates?: string[];
+        enabledDates?: string[];
+        alwaysShow?: boolean;
+        disableDatesBefore?: string | null;
+        disableDatesAfter?: string | null;
+        dowLabels?: any;
+        showYears?: boolean;
+        monthLabels?: any;
+        testId?: string;
+        classes?: string;
+        ariaLabelPreviousYear?: string;
+        ariaLabelNextYear?: string;
+        children?: Snippet;
+    }
+
+    let {
+        selectedDate = $bindable(null),
+        today = new Date(),
+        defaultYear = today.getFullYear(),
+        defaultMonth = today.getMonth(),
+        isOpen = $bindable(false),
+        align = 'left',
+        disabledDates = [],
+        enabledDates = [],
+        alwaysShow = false,
+        disableDatesBefore = null,
+        disableDatesAfter = null,
+        dowLabels = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'],
+        showYears = false,
+        monthLabels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ],
+        testId = '',
+        classes = '',
+        ariaLabelPreviousYear = '',
+        ariaLabelNextYear = '',
+        children
+    }: Props = $props();
+
+    let prev: number[][];
+    let next: number[][];
+
     let tempEndDate: any;
     let prevSelectedDate: any;
     let prevEndDate: any;
@@ -63,11 +89,11 @@
         }
         isOpen = false;
     };
-    let selectedDateYear = Number(defaultYear);
-    let selectedDateMonth = Number(defaultMonth);
-    const updateCalendars = () => {
-        selectedDateCalendar = selectedDateCalendar;
-    };
+    let selectedDateYear = $state(Number(defaultYear));
+    let selectedDateMonth = $state(Number(defaultMonth));
+    let selectedDateCalendar = $derived(
+        calendarize(new Date(selectedDateYear, selectedDateMonth), 1)
+    );
     const goToPreviousMonth = () => {
         [selectedDateCalendar, next] = [prev, selectedDateCalendar];
         if (--selectedDateMonth < 0) {
@@ -179,41 +205,17 @@
             return;
         }
     };
-    $: selectedDate = selectedDate ? getTimestamp(selectedDate) : null;
-    $: if (selectedDate) {
-        updateCalendars();
-    }
-    $: todayMonth = today && today.getMonth();
-    $: todayDay = today && today.getDate();
-    $: todayYear = today && today.getFullYear();
-    $: prev = calendarize(new Date(selectedDateYear, selectedDateMonth - 1), 1);
-    $: selectedDateCalendar = calendarize(new Date(selectedDateYear, selectedDateMonth), 1);
-    $: next = calendarize(new Date(selectedDateYear, selectedDateMonth + 1), 1);
-    $: disabled = getDatesFromArray(disabledDates);
-    $: enabled = getDatesFromArray(enabledDates);
-    $: if (!selectedDate) {
-        selectedDateYear = Number(defaultYear);
-        selectedDateMonth = Number(defaultMonth);
-    }
-    $: if (
-        (selectedDate && tempEndDate !== null) ||
-        !isOpen ||
-        disableDatesBefore ||
-        disableDatesAfter
-    ) {
-        updateCalendars();
-    }
-    $: if (isOpen) {
-        if (selectedDate) {
-            const date = new Date(selectedDate);
-            selectedDateYear = date.getFullYear();
-            selectedDateMonth = date.getMonth();
-        }
-    }
+
+    let todayMonth = $derived(today && today.getMonth());
+    let todayDay = $derived(today && today.getDate());
+    let todayYear = $derived(today && today.getFullYear());
+
+    let disabled = $derived(getDatesFromArray(disabledDates));
+    let enabled = $derived(getDatesFromArray(enabledDates));
 </script>
 
-<div class="datepicker" use:clickOutside on:click_outside={handleCalendarClickOutside}>
-    <slot />
+<div class="datepicker" use:clickOutside={handleCalendarClickOutside}>
+    {@render children?.()}
     <div
         class="calendar-card {classes}"
         class:right={align === 'right'}
@@ -226,10 +228,10 @@
                     class="icon-previous-month"
                     href={null}
                     tabindex="0"
-                    on:click={() => {
+                    onclick={() => {
                         goToPreviousMonth();
                     }}
-                    on:keydown={(e) => {
+                    onkeydown={(e) => {
                         if (e.key === 'Enter') {
                             goToPreviousMonth();
                         }
@@ -237,10 +239,10 @@
                 >
                     <SymbolIcon
                         iconSVG={CHEVRON_LEFT_SVG}
-                        classes={'cursor-pointer'}
+                        classes="cursor-pointer"
                         width={18}
                         height={18}
-                        fill={'#666'}
+                        fill="#666"
                     />
                 </a>
                 <span>
@@ -253,7 +255,7 @@
                                 clickLogic={goToNextYear}
                                 width={12}
                                 height={12}
-                                fill={'#666'}
+                                fill="#666"
                             />
                             <Icon
                                 iconSVG={ANGLE_DOWN_SVG}
@@ -261,7 +263,7 @@
                                 clickLogic={goToPreviousYear}
                                 width={12}
                                 height={12}
-                                fill={'#666'}
+                                fill="#666"
                             />
                         </div>
                     {/if}
@@ -270,10 +272,10 @@
                     class="icon-next-month"
                     href={null}
                     tabindex="0"
-                    on:click={() => {
+                    onclick={() => {
                         goToNextMonth();
                     }}
-                    on:keydown={(e) => {
+                    onkeydown={(e) => {
                         if (e.key === 'Enter') {
                             goToNextMonth();
                         }
@@ -281,10 +283,10 @@
                 >
                     <SymbolIcon
                         iconSVG={CHEVRON_RIGHT_SVG}
-                        classes={'cursor-pointer'}
+                        classes="cursor-pointer"
                         width={18}
                         height={18}
-                        fill={'#666'}
+                        fill="#666"
                     />
                 </a>
             </header>
@@ -337,9 +339,9 @@
                                         selectedDateYear
                                     )}
                                     tabindex="0"
-                                    on:mouseenter={(e) => handleMouseEnter(e)}
-                                    on:mouseleave={handleMouseLeave}
-                                    on:click={(e) =>
+                                    onmouseenter={(e) => handleMouseEnter(e)}
+                                    onmouseleave={handleMouseLeave}
+                                    onclick={(e) =>
                                         handleDateClick(
                                             e,
                                             selectedDateCalendar[weekIndex][dayIndex],

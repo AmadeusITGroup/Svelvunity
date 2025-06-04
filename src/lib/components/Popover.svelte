@@ -1,36 +1,66 @@
 <script lang="ts">
+    import { Frame } from '$lib';
     import type { ComputePositionReturn, Middleware, Placement, Side } from '@floating-ui/dom';
     import * as dom from '@floating-ui/dom';
-    import { onMount, createEventDispatcher } from 'svelte';
+    import { onMount, type Snippet } from 'svelte';
     import { twJoin } from 'tailwind-merge';
-    import Frame from './Frame.svelte';
 
-    export let activeContent = false;
-    export let arrow = true;
-    export let offset = 8;
-    export let placement: Placement = 'top';
-    export let trigger: 'hover' | 'click' = 'hover';
-    export let triggeredBy: string | undefined = undefined;
-    export let reference: string | undefined = undefined;
-    export let strategy: 'absolute' | 'fixed' = 'absolute';
-    export let open = false;
-    export let yOnly = false;
+    let {
+        border = false,
+        rounded = false,
+        shadow = false,
+        onShow,
+        classes = '',
+        activeContent = false,
+        arrow = true,
+        placement = 'top',
+        trigger = 'hover',
+        triggeredBy = undefined,
+        reference = undefined,
+        open = false,
+        offset = 8,
+        strategy = 'absolute',
+        yOnly = false,
+        children
+    }: {
+        border: boolean;
+        rounded: boolean;
+        shadow: boolean;
+        classes?: string;
+        onShow: (open: boolean) => void;
+        activeContent: boolean;
+        arrow: boolean;
+        placement: Placement;
+        trigger: 'hover' | 'click';
+        triggeredBy: string | undefined;
+        reference: string | undefined;
+        open: boolean;
+        offset: number;
+        strategy: 'absolute' | 'fixed';
+        yOnly: boolean;
+        children?: Snippet;
+    } = $props();
+
     // extra floating UI middleware list
-    export let middlewares: Middleware[] = [dom.flip(), dom.shift()];
+    let middlewares: Middleware[] = [dom.flip(), dom.shift()];
 
-    const dispatch = createEventDispatcher();
+    let clickable: boolean = $derived(trigger === 'click');
+    let isOpen = $state(open);
+    onShow(isOpen);
 
-    let clickable: boolean;
-    $: clickable = trigger === 'click';
+    let referenceEl: Element | undefined = $state();
+    let hasArrow: boolean = $state(arrow);
 
-    $: dispatch('show', open);
-    $: placement && (referenceEl = referenceEl);
-
-    let referenceEl: Element;
     let floatingEl: HTMLElement;
-    let arrowEl: HTMLElement | null;
+    let arrowEl: HTMLElement | null = $state(null);
     let contentEl: HTMLElement;
     let triggerEls: HTMLElement[] = [];
+
+    let middleware = $derived([
+        ...middlewares,
+        dom.offset(+offset),
+        arrowEl && dom.arrow({ element: arrowEl, padding: 10 })
+    ]);
 
     let _blocked = false; // management of the race condition between focusin and click events
     const block = () => ((_blocked = true), setTimeout(() => (_blocked = false), 250));
@@ -46,11 +76,11 @@
             block();
         }
         if (clickable && ev.type === 'focusin' && !open) block();
-        open = clickable && ev.type === 'click' && !_blocked ? !open : true;
+        isOpen = clickable && ev.type === 'click' && !_blocked ? !isOpen : true;
     };
 
-    const hasHover = (el: Element) => el.matches(':hover');
-    const hasFocus = (el: Element) => el.contains(document.activeElement);
+    const hasHover = (el: Element | undefined) => el?.matches(':hover');
+    const hasFocus = (el: Element | undefined) => el?.contains(document.activeElement);
     const px = (n: number | undefined) => (n != null ? `${n}px` : '');
 
     const hideHandler = (ev: Event) => {
@@ -59,43 +89,37 @@
                 const elements = [referenceEl, floatingEl, ...triggerEls].filter(Boolean);
                 if (ev.type === 'mouseleave' && elements.some(hasHover)) return;
                 if (ev.type === 'focusout' && elements.some(hasFocus)) return;
-                open = false;
+                isOpen = false;
             }, 100);
-        } else open = false;
+        } else isOpen = false;
     };
 
-    let arrowSide: Side;
     const oppositeSideMap: Record<Side, Side> = {
         left: 'right',
         right: 'left',
         bottom: 'top',
         top: 'bottom'
     };
-
-    $: middleware = [
-        ...middlewares,
-        dom.offset(+offset),
-        arrowEl && dom.arrow({ element: arrowEl, padding: 10 })
-    ];
+    let arrowSide: Side = oppositeSideMap.top;
 
     function updatePosition() {
-        dom.computePosition(referenceEl, floatingEl, { placement, strategy, middleware }).then(
-            ({ x, y, middlewareData, placement, strategy }: ComputePositionReturn) => {
-                floatingEl.style.position = strategy;
-                floatingEl.style.left = yOnly ? '0' : px(x);
-                floatingEl.style.top = px(y);
+        if (referenceEl) {
+            dom.computePosition(referenceEl, floatingEl, { placement, strategy, middleware }).then(
+                ({ x, y, middlewareData, placement, strategy }: ComputePositionReturn) => {
+                    floatingEl.style.position = strategy;
+                    floatingEl.style.left = yOnly ? '0' : px(x);
+                    floatingEl.style.top = px(y);
 
-                if (middlewareData.arrow && arrowEl instanceof HTMLDivElement) {
-                    arrowEl.style.left = px(middlewareData.arrow.x);
-                    arrowEl.style.top = px(middlewareData.arrow.y);
+                    if (middlewareData.arrow && arrowEl instanceof HTMLDivElement) {
+                        arrowEl.style.left = px(middlewareData.arrow.x);
+                        arrowEl.style.top = px(middlewareData.arrow.y);
 
-                    arrowSide = oppositeSideMap[placement.split('-')[0] as Side];
-                    arrowEl.style[arrowSide] = px(
-                        -arrowEl.offsetWidth / 2 - ($$props.border ? 1 : 0)
-                    );
+                        arrowSide = oppositeSideMap[placement.split('-')[0] as Side];
+                        arrowEl.style[arrowSide] = px(-arrowEl.offsetWidth / 2 - (border ? 1 : 0));
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     function init(node: HTMLElement, _referenceEl: HTMLElement) {
@@ -169,13 +193,14 @@
         return pred ? func : () => undefined;
     }
 
-    let arrowClass: string;
-    $: arrowClass = twJoin(
-        'absolute pointer-events-none block w-[10px] h-[10px] rotate-45 bg-inherit border-inherit',
-        $$props.border && arrowSide === 'bottom' && 'border-b border-e',
-        $$props.border && arrowSide === 'top' && 'border-t border-s ',
-        $$props.border && arrowSide === 'right' && 'border-t border-e ',
-        $$props.border && arrowSide === 'left' && 'border-b border-s '
+    let arrowClass: string = $state(
+        twJoin(
+            'absolute pointer-events-none block w-[10px] h-[10px] rotate-45 bg-inherit border-inherit',
+            border && arrowSide === 'bottom' && 'border-b border-e',
+            border && arrowSide === 'top' && 'border-t border-s ',
+            border && arrowSide === 'right' && 'border-t border-e ',
+            border && arrowSide === 'left' && 'border-b border-s '
+        )
     );
 
     function initArrow(node: HTMLElement) {
@@ -192,19 +217,22 @@
     <div bind:this={contentEl} />
 {/if}
 
-{#if open && referenceEl}
+{#if isOpen && referenceEl}
     <Frame
-        use={init}
+        action={init}
         options={referenceEl}
         role="tooltip"
+        {border}
+        {rounded}
+        {shadow}
+        {classes}
         tabindex={activeContent ? -1 : undefined}
-        on:focusin={optional(activeContent, showHandler)}
-        on:focusout={optional(activeContent, hideHandler)}
-        on:mouseenter={optional(activeContent && !clickable, showHandler)}
-        on:mouseleave={optional(activeContent && !clickable, hideHandler)}
-        {...$$restProps}
+        onfocusin={optional(activeContent, showHandler)}
+        onfocusout={optional(activeContent, hideHandler)}
+        onmouseenter={optional(activeContent && !clickable, showHandler)}
+        onmouseleave={optional(activeContent && !clickable, hideHandler)}
     >
-        <slot />
-        {#if arrow}<div use:initArrow class={arrowClass} />{/if}
+        {@render children?.()}
+        {#if hasArrow}<div use:initArrow class={arrowClass} />{/if}
     </Frame>
 {/if}

@@ -1,5 +1,4 @@
 <script lang="ts">
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-nocheck
 
     import Loading from './Loading.svelte';
@@ -7,14 +6,27 @@
     import { Size } from '$lib/enums/size.enum';
     import { TEST_IDS } from '$lib/enums/testconstants.enum';
 
-    export let clickLogic: null | ((...args: any) => any) = null;
-    export let label = '';
-    export let isDisabled = false;
-    export let additionalClasses = '';
-    export let type: ButtonType = ButtonType.Primary;
-    export let buttonSize: Size = Size.Unset;
-    export let testingId = `${TEST_IDS.ButtonId}-${label}`;
-    export let loading = false;
+    interface Props {
+        clickLogic?: null | ((...args: unknown[]) => unknown);
+        label: string;
+        isDisabled: boolean;
+        additionalClasses?: string;
+        type: ButtonType;
+        buttonSize: Size;
+        testId: any;
+        loading: boolean;
+    }
+
+    let {
+        clickLogic = null,
+        label = '',
+        isDisabled = false,
+        additionalClasses = '',
+        type = ButtonType.Primary,
+        buttonSize = Size.Unset,
+        testId = `${TEST_IDS.ButtonId}-${label}`,
+        loading = false
+    }: Props = $props();
 
     function getButtonSize(size: Size): string {
         switch (size) {
@@ -44,8 +56,8 @@
 </script>
 
 <button
-    data-cy-id={testingId}
-    on:click={(e) => clickLogic && clickLogic(e)}
+    data-cy-id={testId}
+    onclick={(e) => clickLogic && clickLogic(e)}
     class="
         {type === ButtonType.Primary ? 'am-c-df_btn am-c-df_btn-primary' : ''}
         {type === ButtonType.OutlinePrimary ? 'am-c-df_btn am-c-df_btn-outline-primary' : ''}
@@ -59,13 +71,19 @@
     tabindex="0"
 >
     {#if loading}
-        <Loading classes={getSpinnerSize(buttonSize)} removeAnimation={true} />
+        <Loading
+            classes={getSpinnerSize(buttonSize)}
+            removeAnimation={true}
+            testId={`${testId}-loader`}
+        />
     {:else}
         {label}
     {/if}
 </button>
 
 <style global>
+    @reference "../../app.css";
+
     .am-c-df_btn-group,
     .am-c-df_btn-group-vertical {
         position: relative;

@@ -17,23 +17,23 @@ describe('Toast Store', () => {
 		toast.push('Test message 1');
 		toast.push('Test message 2');
 		const toasts = get(toast);
-		// @ts-ignore
+		// @ts-expect-error
 		expect(toasts[0].id).not.toBe(toasts[1].id);
 	});
 
 	test('push function handles string message', () => {
 		toast.push('Test message');
 		const toasts = get(toast);
-			// @ts-ignore
+		// @ts-expect-error
 		expect(toasts[0].msg).toBe('Test message');
 	});
 
 	test('push function handles object message', () => {
 		toast.push({ msg: 'Test message', duration: 2000 });
 		const toasts = get(toast);
-			// @ts-ignore
+		// @ts-expect-error
 		expect(toasts[0].msg).toBe('Test message');
-			// @ts-ignore
+		// @ts-expect-error
 		expect(toasts[0].duration).toBe(2000);
 	});
 
@@ -166,10 +166,10 @@ describe('Toast Store', () => {
 		toast.set(id, { msg: 'New message' });
 
 		const toasts = get(toast);
-			// @ts-ignore
+		// @ts-expect-error
 		const updatedToast = toasts.find((t) => t.id === id);
 
-			// @ts-ignore
+		// @ts-expect-error
 		expect(updatedToast.msg).toBe('New message');
 	});
 
@@ -178,10 +178,10 @@ describe('Toast Store', () => {
 		toast.set(id, { duration: 10000 });
 
 		const toasts = get(toast);
-			// @ts-ignore
+		// @ts-expect-error
 		const updatedToast = toasts.find((t) => t.id === id);
 
-			// @ts-ignore
+		// @ts-expect-error
 		expect(updatedToast.duration).toBe(10000);
 	});
 

@@ -1,61 +1,88 @@
 <script lang="ts">
-    import { Icon, Tooltip } from '$lib';
+    import { Icon } from '$lib';
     import { PEN_SVG, RESTORE_ICON, SAVE_ICON } from '$lib/config/constants';
-    import { createEventDispatcher, onMount } from 'svelte';
 
-    export let value = '';
-    export let required = false;
-    export let disabled = false;
-    export let canSubmit = true;
-    export let placeholder = '';
-    export let error = '';
-    export let submitLabel = 'Submit';
-    export let restoreLabel = 'Restore';
-    export let editLabel = 'Edit';
+    interface Props {
+        value?: string;
+        required?: boolean;
+        disabled?: boolean;
+        canSubmit?: boolean;
+        placeholder?: string;
+        error?: string;
+        submitLabel?: string;
+        restoreLabel?: string;
+        editLabel?: string;
+        classes?: string;
+        classesForEditIcon?: string;
+        classesForRestoreIcon?: string;
+        classesForSubmitIcon?: string;
+        classesForInput?: string;
+        classesForButton?: string;
+        classesForError?: string;
+        submitIconTestId?: string;
+        restoreIconTestId?: string;
+        editIconTestId?: string;
+        testIdNonEditing?: string;
+        testIdInput?: string;
+        testIdError?: string;
+        onSubmit?: (value: any) => void;
+        onRestore?: () => void;
+        onInput?: (value: any) => void;
+        onInputChange?: (value: any) => void;
+    }
 
-    export let classes = '';
-    export let classesForEditIcon = '';
-    export let classesForRestoreIcon = '';
-    export let classesForSubmitIcon = '';
-    export let classesForInput = '';
-    export let classesForButton = '';
-    export let classesForError = '';
+    let {
+        value = $bindable(''),
+        required = false,
+        disabled = false,
+        canSubmit = true,
+        placeholder = '',
+        error = '',
+        submitLabel = 'Submit',
+        restoreLabel = 'Restore',
+        editLabel = 'Edit',
+        classes = '',
+        classesForEditIcon = '',
+        classesForRestoreIcon = '',
+        classesForSubmitIcon = '',
+        classesForInput = '',
+        classesForButton = '',
+        classesForError = '',
+        submitIconTestId = '',
+        restoreIconTestId = '',
+        editIconTestId = '',
+        testIdNonEditing = '',
+        testIdInput = '',
+        testIdError = '',
+        onSubmit,
+        onRestore,
+        onInput,
+        onInputChange
+    }: Props = $props();
 
-    export let submitLabelTooltipTestId = '';
-    export let submitIconTestId = '';
-    export let restoreLabelTooltipTestId = '';
-    export let restoreIconTestId = '';
-    export let editLabelTooltipTestId = '';
-    export let editIconTestId = '';
-    export let testIdNonEditing = '';
-    export let testIdInput = '';
-    export let testIdError = '';
-
-    let editing = false;
-    let original = '';
-
-    const dispatch = createEventDispatcher();
-
-    onMount(() => {
-        original = value;
-    });
+    let editing = $state(false);
+    // svelte-ignore non_reactive_update
+    let initialValueCapture = value;
 
     function edit() {
         editing = true;
     }
 
     function submit() {
-        if (value !== original) {
-            dispatch('Submit', value);
+        if (value !== initialValueCapture) {
+            onSubmit?.(value);
+            initialValueCapture = value;
+        } else {
+            console.warn('Identical value submitted');
         }
 
         editing = false;
     }
 
     function restore() {
-        value = original;
+        value = initialValueCapture;
         editing = false;
-        dispatch('Restore');
+        onRestore?.();
     }
 
     function keydown(event: KeyboardEvent) {
@@ -81,56 +108,37 @@
                 {placeholder}
                 {required}
                 bind:value
-                on:blur={() => {
-                    if (value.trim() === original) restore();
-                }}
-                on:input={() => dispatch('Input', value)}
-                on:change={() => dispatch('InputChanges', value)}
-                on:keydown={keydown}
+                oninput={() => onInput?.(value)}
+                onchange={() => onInputChange?.(value)}
+                onkeydown={keydown}
                 use:focus
                 data-cy-id={testIdInput}
             />
         </div>
-        <Tooltip
-            content={submitLabel}
-            position="left"
-            align="center"
-            animation="fade"
-            testId={submitLabelTooltipTestId}
-        >
+        <Icon
+            iconSVG={SAVE_ICON}
+            viewBox="0 0 32 32"
+            width={17}
+            height={17}
+            classes={classesForSubmitIcon}
+            fill={canSubmit ? 'var(--amadeus-color-blue)' : 'var(--amadeus-color-gray-200)'}
+            label={submitLabel}
+            clickLogic={() => {
+                if (canSubmit) submit();
+            }}
+            testId={submitIconTestId}
+        ></Icon>
+        {#if value !== initialValueCapture}
             <Icon
-                iconSVG={SAVE_ICON}
-                viewBox="0 0 32 32"
+                iconSVG={RESTORE_ICON}
+                viewBox="10 10 20 20"
                 width={17}
                 height={17}
-                classes={classesForSubmitIcon}
-                fill={canSubmit ? 'var(--amadeus-color-blue)' : 'var(--amadeus-color-gray-200)'}
-                label={submitLabel}
-                clickLogic={() => {
-                    if (canSubmit) submit();
-                }}
-                testId={submitIconTestId}
+                classes={classesForRestoreIcon}
+                label={restoreLabel}
+                clickLogic={restore}
+                testId={restoreIconTestId}
             ></Icon>
-        </Tooltip>
-        {#if value !== original}
-            <Tooltip
-                content={restoreLabel}
-                position="left"
-                align="center"
-                animation="fade"
-                testId={restoreLabelTooltipTestId}
-            >
-                <Icon
-                    iconSVG={RESTORE_ICON}
-                    viewBox="10 10 20 20"
-                    width={17}
-                    height={17}
-                    classes={classesForRestoreIcon}
-                    label={restoreLabel}
-                    clickLogic={restore}
-                    testId={restoreIconTestId}
-                ></Icon>
-            </Tooltip>
         {/if}
     </div>
     {#if error !== ''}
@@ -151,7 +159,7 @@
                 : 'border-b-amadeusgray200 hover:border-b-amadeusblue'} {value === ''
                 ? 'text-amadeusgray400'
                 : 'text-amadeusblack'} {classesForButton}"
-            on:click={() => {
+            onclick={() => {
                 if (!disabled) edit();
             }}
             data-cy-id={testIdNonEditing}
@@ -159,26 +167,16 @@
             {value === '' ? placeholder : value}
         </button>
         {#if !disabled}
-            <Tooltip
-                content={editLabel}
-                position="left"
-                align="center"
-                animation="fade"
-                testId={editLabelTooltipTestId}
-            >
-                <Icon
-                    iconSVG={PEN_SVG}
-                    classes={classesForEditIcon}
-                    width={17}
-                    height={17}
-                    fill={disabled ? 'var(--amadeus-color-gray-200)' : 'var(--amadeus-color-blue)'}
-                    label={editLabel}
-                    clickLogic={() => {
-                        edit();
-                    }}
-                    testId={editIconTestId}
-                ></Icon>
-            </Tooltip>
+            <Icon
+                iconSVG={PEN_SVG}
+                classes={classesForEditIcon}
+                width={17}
+                height={17}
+                fill={disabled ? 'var(--amadeus-color-gray-200)' : 'var(--amadeus-color-blue)'}
+                label={editLabel}
+                clickLogic={edit}
+                testId={editIconTestId}
+            ></Icon>
         {/if}
     </div>
 {/if}

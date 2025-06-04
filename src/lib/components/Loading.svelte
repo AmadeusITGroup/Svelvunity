@@ -1,15 +1,26 @@
 <script lang="ts">
-    import spinner from '$lib/assets/images/spinner.svg';
     import { LOADING_ANIMATION_DELAY_AND_DURATION } from '$lib/config/constants';
     import { fade } from 'svelte/transition';
 
-    export let width = '140px';
-    export let height = '140px';
-    export let loadingAnimationDuration = LOADING_ANIMATION_DELAY_AND_DURATION;
-    export let removeAnimation = false;
-    export let isScreenCentered = false;
-    export let classes = '';
-    export let testId = '';
+    interface Props {
+        width?: string;
+        height?: string;
+        loadingAnimationDuration?: any;
+        removeAnimation?: boolean;
+        isScreenCentered?: boolean;
+        classes?: string;
+        testId?: string;
+    }
+
+    let {
+        width = '140px',
+        height = '140px',
+        loadingAnimationDuration = LOADING_ANIMATION_DELAY_AND_DURATION,
+        removeAnimation = false,
+        isScreenCentered = false,
+        classes = '',
+        testId = ''
+    }: Props = $props();
 </script>
 
 {#if removeAnimation}
@@ -17,7 +28,7 @@
         class="{classes} {isScreenCentered ? 'am-c-loading__screen-center' : ''}"
         data-cy-id={testId !== '' ? testId : null}
     >
-        <img {width} {height} src={spinner} alt="Loading..." class="am-c-loading" />
+        <img {width} {height} src="/spinner.svg" alt="Loading..." class="am-c-loading" />
     </div>
 {:else}
     <div
@@ -25,7 +36,7 @@
         data-cy-id={testId !== '' ? testId : null}
         out:fade|global={{ duration: loadingAnimationDuration }}
     >
-        <img {width} {height} src={spinner} alt="Loading..." class="am-c-loading" />
+        <img {width} {height} src="/spinner.svg" alt="Loading..." class="am-c-loading" />
     </div>
 {/if}
 
