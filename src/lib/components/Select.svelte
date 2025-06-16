@@ -8,6 +8,7 @@
         placeholder?: string;
         testId?: string;
         options?: Array<any>;
+        isDisabled?: boolean;
         onSelectChange?: () => void;
         onInputBlur?: (event: FocusEvent) => void;
     }
@@ -21,6 +22,7 @@
         placeholder = '',
         testId = '',
         options = [],
+        isDisabled = false,
         onSelectChange,
         onInputBlur
     }: Props = $props();
@@ -38,6 +40,7 @@
                 {inputError ? 'svelvunity-input--on-error' : ''}
             "
             bind:value={inputValue}
+            disabled={isDisabled}
             onchange={() => onSelectChange?.()}
             onblur={(event) => onInputBlur?.(event)}
         >
@@ -116,5 +119,9 @@
 
     .svelvunity-select-wrapper-padding {
         padding-top: 0.5rem;
+    }
+
+    .svelvunity-input:disabled {
+        background-color: #f2f2f2;
     }
 </style>
