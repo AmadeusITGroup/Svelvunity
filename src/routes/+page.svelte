@@ -45,10 +45,10 @@
 
     let age = $state(18);
 
-    let items = [
+    let tabs = [
         { label: 'Applications', value: 1, component: Frame },
         { label: 'Header', value: 2, component: Frame },
-        { label: 'Tab 3', value: 3, component: Frame }
+        { label: 'Tab 3', value: 3, component: Frame, props: {} }
     ];
 
     let infiniteScrollData = $state([14, 15, 16, 17]);
@@ -765,7 +765,7 @@
 
             {#snippet bodySnippet()}
                 <div>
-                    <Tabs {items} />
+                    <Tabs {tabs} />
                 </div>
             {/snippet}
         </AccordionItem>

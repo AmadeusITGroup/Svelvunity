@@ -1,25 +1,32 @@
 <script lang="ts">
-    interface Props {
-        items?: any[];
+    import { type Component } from 'svelte';
+
+    interface TabsConfiguration<Props extends Record<string, any> = any> {
+        tabs?: {
+            label: string;
+            value: number;
+            component: Component<Props>;
+            props?: Record<string, any>;
+        }[];
         activeTabValue?: number;
     }
 
-    let { items = [], activeTabValue = $bindable(1) }: Props = $props();
+    let { tabs = [], activeTabValue = $bindable(tabs[0].value) }: TabsConfiguration = $props();
 
     const handleClick = (tabValue: number) => () => (activeTabValue = tabValue);
 </script>
 
 <ul class="tabs">
-    {#each items as item}
-        <li class="item {activeTabValue === item.value ? 'active active-item' : ''}">
-            <button onclick={handleClick(item.value)} aria-label={item.label}>{item.label}</button>
+    {#each tabs as tab}
+        <li class="item {activeTabValue === tab.value ? 'active active-item' : ''}">
+            <button onclick={handleClick(tab.value)} aria-label={tab.label}>{tab.label}</button>
         </li>
     {/each}
 </ul>
-{#each items as item}
-    {#if activeTabValue == item.value}
+{#each tabs as tab}
+    {#if activeTabValue == tab.value}
         <div class="box">
-            <item.component />
+            <tab.component {...tab.props} />
         </div>
     {/if}
 {/each}
