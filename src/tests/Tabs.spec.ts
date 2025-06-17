@@ -2,11 +2,12 @@ import { Button, Tabs } from '$lib';
 import { render, screen, fireEvent } from '@testing-library/svelte';
 
 describe('Tabs Component', () => {
+	const testLabel = 'test-label';
 	const tabs = {
 		tabs: [
 			{ label: 'Applications', value: 1, component: Button },
 			{ label: 'Header', value: 2, component: Button },
-			{ label: 'Tab 3', value: 3, component: Button }
+			{ label: 'Tab 3', value: 3, component: Button, props: { label: testLabel } }
 		]
 	};
 	test('renders tabs component correctly', () => {
@@ -28,5 +29,17 @@ describe('Tabs Component', () => {
 		expect(tab1).toBeInTheDocument();
 		expect(tab2).toBeInTheDocument();
 		expect(tab1).not.toHaveClass('active active-item');
+	});
+
+	test('applies custom properties', async () => {
+		const { getByText } = render(Tabs, {
+			props: tabs
+		});
+
+		const tab3 = getByText('Tab 3');
+		await fireEvent.click(tab3);
+
+		const button = getByText(testLabel);
+		expect(button).toBeInTheDocument();
 	});
 });
