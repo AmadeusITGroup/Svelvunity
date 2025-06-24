@@ -748,6 +748,7 @@
                     <Select
                         classes="w-1/2"
                         labelName="City"
+                        isDisabled={false}
                         options={cities}
                         placeholder="Select an option"
                         testId="nameInput"
