@@ -36,7 +36,9 @@
             name={inputName}
             aria-label={labelName}
             class="
-                svelvunity-input svelvunity-input--auto-min-width svelvunity-select
+                svelvunity-input svelvunity-input--auto-min-width {isDisabled
+                ? ''
+                : 'svelvunity-select'}
                 {inputError ? 'svelvunity-input--on-error' : ''}
             "
             bind:value={inputValue}
