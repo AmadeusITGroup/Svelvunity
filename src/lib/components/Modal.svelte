@@ -75,12 +75,9 @@
 
     $effect(() => {
         frameClass = twMerge(defaultClass, 'w-full divide-y', className);
-
         if (open) {
-            document.body.style.overflow = 'hidden';
             onOpen?.();
         } else {
-            document.body.style.overflow = '';
             onClose?.();
         }
     });
