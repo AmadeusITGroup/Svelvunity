@@ -194,7 +194,7 @@
         {...wrapperProps}
         role="dialog"
     >
-        <div class="flex relative {sizes[size]} w-full max-h-full">
+        <div class="flex relative {sizes[size]} {modalWrapperCls} w-full max-h-full">
             <!-- Modal content -->
 
             <Frame shadow classes={frameClass} tabindex={1} action={() => {}}>
