@@ -2,123 +2,100 @@
     import { twMerge } from 'tailwind-merge';
     import { trapFocus } from '$lib/utils/actions.svelte';
     import type { Snippet } from 'svelte';
-    import { CLOSE_SVG, Frame, Icon } from '$lib';
+    import { CLOSE_SVG, Frame, Icon, Size } from '$lib';
+    import { Position } from '$lib/enums/position.enum';
 
-    interface Sizes {
-        xs: string;
-        sm: string;
-        md: string;
-        lg: string;
-        xl: string;
-        [key: string]: string;
-    }
-
-    const sizes: Sizes = {
-        xs: 'max-w-md',
-        sm: 'max-w-lg',
-        md: 'max-w-2xl',
-        lg: 'max-w-4xl',
-        xl: 'max-w-7xl'
+    let sizes = {
+        [Size.XSmall]: 'max-w-md',
+        [Size.Small]: 'max-w-lg',
+        [Size.Medium]: 'max-w-2xl',
+        [Size.Large]: 'max-w-4xl',
+        [Size.XLarge]: 'max-w-7xl',
+        [Size.Unset]: ''
     };
 
     let {
         open = $bindable(false),
         title = '',
-        size = 'lg',
-        placement = 'center',
+        size = Size.Large,
+        position = Position.Center,
         autoclose = false,
         dismissable = true,
         dismissIconLabel = '',
-        backdropClass = 'fixed inset-0 z-40 bg-gray-900/50',
-        defaultClass = 'relative flex flex-col mx-auto',
         outsideclose = false,
-        dialogClass = 'fixed inset-0 z-50 flex p-4',
-        className = '',
-        classBackdrop = '',
-        classDialog = '',
+        frameClasses = '',
+        backdropClasses = '',
+        modalClasses = '',
         color = '',
-        bodyClass = '',
-        wrapperProps = {},
+        modalBodyClasses = '',
+        extraModalProps = {},
         headerSnippet,
         footerSnippet,
-        onOpen,
         onClose,
         children
     }: {
         open?: boolean;
         title?: string;
-        size?: string;
-        placement?: string;
+        size?: Size;
+        position?: Position;
         autoclose?: boolean;
         dismissable?: boolean;
         dismissIconLabel?: string;
-        backdropClass?: string;
-        defaultClass?: string;
         outsideclose?: boolean;
         dialogClass?: string;
-        className?: string;
-        classBackdrop?: string;
-        classDialog?: string;
+        frameClasses?: string;
+        backdropClasses?: string;
+        modalClasses?: string;
         color?: string;
-        bodyClass?: string;
-        wrapperProps?: Record<string, any>;
+        modalBodyClasses?: string;
+        extraModalProps?: Record<string, any>;
         headerSnippet?: Snippet;
         footerSnippet?: Snippet;
-        onOpen?: () => void;
         onClose?: () => void;
         children?: Snippet;
     } = $props();
 
-    let frameClass = $state<string>('');
-    let backdropCls: string = twMerge(backdropClass, classBackdrop);
-    let modalWrapperCls: string = twMerge(dialogClass, classDialog, ...getPlacementClasses());
+    let defaultBackdropClass = 'fixed inset-0 z-40 bg-gray-900/50',
+        defaultFrameClasses = 'relative flex flex-col mx-auto',
+        defaultDialogClasses = 'fixed inset-0 z-50 flex p-4',
+        frameCls = $state<string>(twMerge(defaultFrameClasses, 'w-full divide-y', frameClasses)),
+        backdropCls: string = twMerge(defaultBackdropClass, backdropClasses),
+        modalWrapperCls: string = twMerge(
+            defaultDialogClasses,
+            modalClasses,
+            ...getTailwindPositionClasses()
+        ),
+        previousOpenState = open;
 
     $effect(() => {
-        frameClass = twMerge(defaultClass, 'w-full divide-y', className);
-        if (open) {
-            onOpen?.();
-        } else {
+        frameCls = twMerge(defaultFrameClasses, 'w-full divide-y', frameClasses);
+        if (previousOpenState === true && !open) {
             onClose?.();
         }
+        previousOpenState = open;
     });
 
-    function prepareFocus(node: HTMLElement) {
-        const walker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT);
-        let n: Node | null;
-        while ((n = walker.nextNode())) {
-            if (n instanceof HTMLElement) {
-                const el = n as HTMLElement;
-                const [x, y] = isScrollable(el);
-                if (x || y) el.tabIndex = 0;
-            }
-        }
-        node.focus();
-    }
-
-    function getPlacementClasses() {
-        switch (placement) {
-            // top
-            case 'top-left':
+    function getTailwindPositionClasses() {
+        switch (position) {
+            case Position.TopLeft:
                 return ['justify-start', 'items-start'];
-            case 'top-center':
+            case Position.TopCenter:
                 return ['justify-center', 'items-start'];
-            case 'top-right':
+            case Position.TopRight:
                 return ['justify-end', 'items-start'];
 
-            // center
-            case 'center-left':
+            case Position.CenterLeft:
                 return ['justify-start', 'items-center'];
-            case 'center':
+            case Position.Center:
                 return ['justify-center', 'items-center'];
-            case 'center-right':
+            case Position.CenterRight:
                 return ['justify-end', 'items-center'];
 
-            // bottom
-            case 'bottom-left':
+            case Position.BottomLeft:
                 return ['justify-start', 'items-end'];
-            case 'bottom-center':
+            case Position.BottomCenter:
                 return ['justify-center', 'items-end'];
-            case 'bottom-right':
+            case Position.BottomRight:
                 return ['justify-end', 'items-end'];
 
             default:
@@ -126,15 +103,15 @@
         }
     }
 
-    function handleKeys(e: KeyboardEvent) {
+    function escapeKeyHandler(e: KeyboardEvent) {
         if (e.key === 'Escape' && dismissable) return hide(e);
     }
 
-    function wheelHandler(event: WheelEvent) {
-        event.preventDefault();
-    }
+    function wheelNonPassiveHandler(node: HTMLElement) {
+        const wheelHandler = function (event: WheelEvent) {
+            event.preventDefault();
+        };
 
-    function wheelNonPassive(node: HTMLElement) {
         node.addEventListener('wheel', wheelHandler, { passive: false });
 
         return {
@@ -145,20 +122,22 @@
     }
 
     const onAutoClose = (e: MouseEvent) => {
+        // close on any button click
         const target: Element = e.target as Element;
         if (autoclose && target?.tagName === 'BUTTON') {
-            hide(e); // close on any button click
+            hide(e);
         }
     };
 
     const onOutsideClose = (e: MouseEvent) => {
+        // close on click outside
         if (!outsideclose) {
             e.preventDefault();
         }
 
         const target: Element = e.target as Element;
         if (outsideclose && target === e.currentTarget) {
-            hide(e); // close on click outside
+            hide(e);
         }
     };
 
@@ -166,13 +145,6 @@
         e.preventDefault();
         open = false;
     };
-
-    const isScrollable = (e: HTMLElement): boolean[] => [
-        e.scrollWidth > e.clientWidth &&
-            ['scroll', 'auto'].indexOf(getComputedStyle(e).overflowX) >= 0,
-        e.scrollHeight > e.clientHeight &&
-            ['scroll', 'auto'].indexOf(getComputedStyle(e).overflowY) >= 0
-    ];
 </script>
 
 {#if open}
@@ -180,9 +152,8 @@
     <div class={backdropCls}></div>
     <!-- dialog -->
     <div
-        onkeydown={handleKeys}
-        use:wheelNonPassive
-        use:prepareFocus
+        onkeydown={escapeKeyHandler}
+        use:wheelNonPassiveHandler
         use:trapFocus
         onclick={onAutoClose}
         onmousedown={onOutsideClose}
@@ -191,13 +162,13 @@
         aria-modal="true"
         aria-hidden={!open}
         aria-label={title}
-        {...wrapperProps}
+        {...extraModalProps}
         role="dialog"
     >
         <div class="flex relative {sizes[size]} {modalWrapperCls} w-full max-h-full">
             <!-- Modal content -->
 
-            <Frame shadow classes={frameClass} tabindex={1} action={() => {}}>
+            <Frame shadow classes={frameCls} tabindex={1} action={() => {}}>
                 <!-- Modal header -->
                 {#if headerSnippet || title}
                     <Frame
@@ -234,7 +205,7 @@
                 <div
                     class={twMerge(
                         'p-6 space-y-6 flex-1 overflow-y-auto overscroll-contain',
-                        bodyClass
+                        modalBodyClasses
                     )}
                     role="document"
                 >

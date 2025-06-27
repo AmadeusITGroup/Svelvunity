@@ -1,48 +1,29 @@
 export function trapFocus(node: HTMLElement) {
-	const previous = document.activeElement;
-
-	function focusable() {
-		const selectorTabbable = `
-		  a[href], area[href], input:not([disabled]):not([tabindex='-1']),
-		  button:not([disabled]):not([tabindex='-1']),select:not([disabled]):not([tabindex='-1']),
-		  textarea:not([disabled]):not([tabindex='-1']),
-		  iframe, object, embed, *[tabindex]:not([tabindex='-1']):not([disabled]), *[contenteditable=true]
-		`;
-
-		return Array.from(node.querySelectorAll(selectorTabbable)) as HTMLElement[];
-	}
-
-	function handleKeydown(event: KeyboardEvent) {
-		const isTabPressed = event.key === 'Tab';
+	function handleFocusTrap(e) {
+		const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
 
 		if (!isTabPressed) {
 			return;
 		}
 
-		const current = document.activeElement;
+		const tabbable = Array.from(node.querySelectorAll(selectorTabbable));
 
-		const elements = focusable();
-		const first = elements.at(0);
-		const last = elements.at(-1);
-
-		if (event.shiftKey && current === first) {
-			last?.focus();
-			event.preventDefault();
+		let index = tabbable.indexOf(document.activeElement ?? node);
+		if (index === -1 && e.shiftKey) {
+			index = 0;
 		}
+		index += tabbable.length + (e.shiftKey ? -1 : 1);
+		index %= tabbable.length;
+		tabbable[index].focus();
 
-		if (!event.shiftKey && current === last) {
-			first?.focus();
-			event.preventDefault();
-		}
+		e.preventDefault();
 	}
 
-	$effect(() => {
-		focusable()[0]?.focus();
-		node.addEventListener('keydown', handleKeydown);
+	document.addEventListener('keydown', handleFocusTrap, true);
 
-		return () => {
-			node.removeEventListener('keydown', handleKeydown);
-			(previous as HTMLElement | null)?.focus();
-		};
-	});
+	return {
+		destroy() {
+			document.removeEventListener('keydown', handleFocusTrap, true);
+		}
+	};
 }
