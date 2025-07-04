@@ -71,6 +71,6 @@ export { ButtonType } from './enums/buttontype.enum';
 export { Direction } from './enums/direction.enum';
 export { InputTypes } from './enums/inputtypes.enum';
 export { Size } from './enums/size.enum';
-export { Position } from './enums/position.enum'
+export { Position } from './enums/position.enum';
 export { clickOutside } from './utils/clickOutside';
 export { formatDate } from './utils/date';

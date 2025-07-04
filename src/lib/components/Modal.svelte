@@ -42,7 +42,6 @@
         dismissable?: boolean;
         dismissIconLabel?: string;
         outsideclose?: boolean;
-        dialogClass?: string;
         frameClasses?: string;
         backdropClasses?: string;
         modalClasses?: string;
@@ -175,7 +174,7 @@
                         tabindex={1}
                         action={() => {}}
                         bgColor={color}
-                        classes="flex justify-between items-center p-4 rounded-t-lg border-b border-gray-300"
+                        classes="flex justify-between items-center p-4 rounded-t-lg border-b-2 border-gray-300"
                     >
                         {#if title}
                             <h3
@@ -194,6 +193,7 @@
                                 clickLogic={hide}
                                 height={24}
                                 width={24}
+                                viewBox="-70 0 448 512"
                                 classes="cursor-pointer !rotate-45 !min-h-[24px] !min-w-[24px]"
                                 fill="#000"
                             />
@@ -204,7 +204,7 @@
                 <!-- Modal body -->
                 <div
                     class={twMerge(
-                        'p-6 space-y-6 flex-1 overflow-y-auto overscroll-contain',
+                        'p-6 flex-1 overflow-y-auto overscroll-contain',
                         modalBodyClasses
                     )}
                     role="document"
@@ -215,6 +215,7 @@
                             clickLogic={hide}
                             height={24}
                             width={24}
+                            viewBox="-70 0 448 512"
                             classes="cursor-pointer !rotate-45 !min-h-[24px] !min-w-[24px]"
                             fill="#000"
                         />
@@ -229,7 +230,7 @@
                         bgColor={color}
                         tabindex={1}
                         action={() => {}}
-                        classes="flex items-center p-6 space-x-2 rtl:space-x-reverse rounded-b-lg justify-end !border-gray-300"
+                        classes="flex items-center p-6 space-x-2 rtl:space-x-reverse rounded-b-lg justify-end border-t !border-gray-300"
                     >
                         {@render footerSnippet()}
                     </Frame>
