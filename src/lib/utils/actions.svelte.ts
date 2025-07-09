@@ -1,5 +1,12 @@
+const selectorTabbable = `
+  a[href], area[href], input:not([disabled]):not([tabindex='-1']),
+  button:not([disabled]):not([tabindex='-1']),select:not([disabled]):not([tabindex='-1']),
+  textarea:not([disabled]):not([tabindex='-1']),
+  iframe, object, embed, *[tabindex]:not([tabindex='-1']):not([disabled]), *[contenteditable=true]
+`;
+
 export function trapFocus(node: HTMLElement) {
-	function handleFocusTrap(e) {
+	function handleFocusTrap(e: KeyboardEvent) {
 		const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
 
 		if (!isTabPressed) {
@@ -14,7 +21,12 @@ export function trapFocus(node: HTMLElement) {
 		}
 		index += tabbable.length + (e.shiftKey ? -1 : 1);
 		index %= tabbable.length;
-		tabbable[index].focus();
+
+		const element = tabbable[index];
+
+		if (element instanceof HTMLElement) {
+			element.focus();
+		}
 
 		e.preventDefault();
 	}
