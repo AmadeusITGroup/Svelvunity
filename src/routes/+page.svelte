@@ -26,6 +26,7 @@
     import InfiniteScroll from '$lib/components/InfiniteScroll.svelte';
     import Input from '$lib/components/Input.svelte';
     import Loading from '$lib/components/Loading.svelte';
+    import Modal from '$lib/components/Modal.svelte';
     import Pagination from '$lib/components/Pagination.svelte';
     import ProgressBar from '$lib/components/ProgressBar.svelte';
     import Popover from '$lib/components/Popover.svelte';
@@ -37,6 +38,7 @@
     import UserProfileMenu from '$lib/components/UserProfileMenu.svelte';
     import { formatDate } from '$lib/utils/date';
     import InlineEdit from '$lib/components/InlineEdit.svelte';
+    import { Position } from '$lib/enums/position.enum';
     let progress = $state(50);
     const PLUS_CIRCLE_SVG =
         'M384 250v12c0 6.6-5.4 12-12 12h-98v98c0 6.6-5.4 12-12 12h-12c-6.6 0-12-5.4-12-12v-98h-98c-6.6 0-12-5.4-12-12v-12c0-6.6 5.4-12 12-12h98v-98c0-6.6 5.4-12 12-12h12c6.6 0 12 5.4 12 12v98h98c6.6 0 12 5.4 12 12zm120 6c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-32 0c0-119.9-97.3-216-216-216-119.9 0-216 97.3-216 216 0 119.9 97.3 216 216 216 119.9 0 216-97.3 216-216z';
@@ -97,6 +99,7 @@
     let isOpenAlways = $state(false);
     let isOpenDisable = $state(false);
     let isOpenEnable = $state(false);
+    let showModal = $state(false);
 
     let formattedSelectedDate = $derived(formatDate(selectedDate, dateFormat));
     let formattedSelectedDateWithYears = $derived(formatDate(selectedDateWithYears, dateFormat));
@@ -596,6 +599,147 @@
             {#snippet bodySnippet()}
                 <div>
                     <Loading />
+                </div>
+            {/snippet}
+        </AccordionItem>
+
+        <AccordionItem>
+            {#snippet buttonSnippet()}
+                <div>
+                    <span>Modal component</span>
+                </div>
+            {/snippet}
+
+            {#snippet bodySnippet()}
+                <div>
+                    <Button
+                        label="Show Modal"
+                        isDisabled={false}
+                        type={ButtonType.OutlinePrimary}
+                        clickLogic={() => {
+                            showModal = true;
+                        }}
+                        testId="show-modal-button"
+                    ></Button>
+
+                    <Modal
+                        bind:open={showModal}
+                        title="Modal window's title"
+                        onClose={() => {
+                            console.info('Modal onClose');
+                        }}
+                        position={Position.Center}
+                    >
+                        {#snippet footerSnippet()}
+                            <Button
+                                label="Cancel"
+                                isDisabled={false}
+                                type={ButtonType.OutlinePrimary}
+                                clickLogic={() => {
+                                    console.info('Modal Cancel clicked');
+                                    showModal = false;
+                                }}
+                                testId="cancel-button"
+                            ></Button>
+
+                            <Button
+                                label="Apply Authorization"
+                                additionalClasses="min-w-[10rem]"
+                                isDisabled={false}
+                                clickLogic={() => {
+                                    console.info('Modal Apply Authorization clicked');
+                                    showModal = false;
+                                }}
+                                testId="apply-authorization-button"
+                            ></Button>
+                        {/snippet}
+
+                        <AccordionItem>
+                            {#snippet buttonSnippet()}
+                                <div>
+                                    <span>RadioInput component</span>
+                                </div>
+                            {/snippet}
+
+                            {#snippet bodySnippet()}
+                                <div>
+                                    <RadioInput
+                                        labelText="Do you agree?"
+                                        inputName="test radio button"
+                                        options={[
+                                            { name: 'Yes', value: true },
+                                            { name: 'No', value: false }
+                                        ]}
+                                        selectedOption="false"
+                                        testId="test-radio-button"
+                                        onOptionSelected={(option) => {
+                                            // handle option selection here
+                                            console.log('Selected option:', option);
+                                        }}
+                                    />
+                                </div>
+                            {/snippet}
+                        </AccordionItem>
+
+                        <AccordionItem>
+                            {#snippet buttonSnippet()}
+                                <div>
+                                    <span>Tabs component</span>
+                                </div>
+                            {/snippet}
+
+                            {#snippet bodySnippet()}
+                                <div>
+                                    <Tabs {tabs} />
+                                </div>
+                            {/snippet}
+                        </AccordionItem>
+
+                        <AccordionItem>
+                            {#snippet buttonSnippet()}
+                                <div>
+                                    <span>Toast component</span>
+                                </div>
+                            {/snippet}
+
+                            {#snippet bodySnippet()}
+                                <div>
+                                    <Icon
+                                        label="Warning"
+                                        iconSVG={TRIANGLE_SVG}
+                                        viewBox="0 0 580 512"
+                                        height={24}
+                                        width={24}
+                                        clickLogic={() => toast.warning('Attention please')}
+                                    />
+                                    <Icon
+                                        label="View"
+                                        iconSVG={EYE_SVG}
+                                        viewBox="0 0 580 512"
+                                        height={24}
+                                        width={24}
+                                        clickLogic={() => toast.success('Yuppi viewed')}
+                                    />
+                                    <Icon
+                                        label="Failure"
+                                        iconSVG={CIRCLE_X_SVG}
+                                        viewBox="0 0 580 512"
+                                        height={24}
+                                        width={24}
+                                        clickLogic={() => toast.failure('Sorry failed!')}
+                                    />
+                                    <Icon
+                                        label="Info"
+                                        iconSVG={INFO_SVG}
+                                        viewBox="0 0 580 512"
+                                        height={24}
+                                        width={24}
+                                        clickLogic={() => toast.info('For your information')}
+                                    />
+                                </div>
+                            {/snippet}
+                        </AccordionItem>
+                    </Modal>
                 </div>
             {/snippet}
         </AccordionItem>
