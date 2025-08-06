@@ -1,6 +1,7 @@
 <h1 align="center">Svelvunity - Where apps get alive</h1>
 
 ![build](https://github.com/AmadeusITGroup/Svelvunity/workflows/ci/badge.svg)
+[![codecov](https://codecov.io/gh/AmadeusITGroup/Svelvunity/branch/main/graph/badge.svg)](https://codecov.io/gh/AmadeusITGroup/Svelvunity)
 
 ## Introduction
 
