@@ -6,6 +6,7 @@
 
 [![npm](https://img.shields.io/npm/v/@amadeus-it-group/svelvunity)](https://www.npmjs.com/package/@amadeus-it-group/svelvunity)
 ![build](https://github.com/AmadeusITGroup/Svelvunity/workflows/ci/badge.svg)
+[![codecov](https://codecov.io/gh/AmadeusITGroup/Svelvunity/branch/main/graph/badge.svg)](https://codecov.io/gh/AmadeusITGroup/Svelvunity)
 
 ## Introduction
 
