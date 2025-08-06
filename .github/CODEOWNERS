@@ -1,0 +1,5 @@
+# Define Code Owners, which will get notified for new Pull Requests automatically
+# Syntax would allow for different owners per directory/file pattern, but we just use the whole team for this repo
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#codeowners-syntax
+
+* @mehtapcavdar @Aroosa-Batool @siderisltd
