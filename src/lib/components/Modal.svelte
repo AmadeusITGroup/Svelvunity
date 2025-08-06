@@ -1,16 +1,15 @@
 <script lang="ts">
-    import { twMerge } from 'tailwind-merge';
     import { trapFocus } from '$lib/utils/actions.svelte';
     import type { Snippet } from 'svelte';
     import { CLOSE_SVG, Frame, Icon, Size } from '$lib';
     import { Position } from '$lib/enums/position.enum';
 
     let sizes = {
-        [Size.XSmall]: 'max-w-md',
-        [Size.Small]: 'max-w-lg',
-        [Size.Medium]: 'max-w-2xl',
-        [Size.Large]: 'max-w-4xl',
-        [Size.XLarge]: 'max-w-7xl',
+        [Size.XSmall]: 'modal-xs',
+        [Size.Small]: 'modal-sm',
+        [Size.Medium]: 'modal-md',
+        [Size.Large]: 'modal-lg',
+        [Size.XLarge]: 'modal-xl',
         [Size.Unset]: ''
     };
 
@@ -54,51 +53,37 @@
         children?: Snippet;
     } = $props();
 
-    let defaultBackdropClass = 'fixed inset-0 z-40 bg-gray-900/50',
-        defaultFrameClasses = 'relative flex flex-col mx-auto',
-        defaultDialogClasses = 'fixed inset-0 z-50 flex p-4',
-        frameCls = $state<string>(twMerge(defaultFrameClasses, 'w-full divide-y', frameClasses)),
-        backdropCls: string = twMerge(defaultBackdropClass, backdropClasses),
-        modalWrapperCls: string = twMerge(
-            defaultDialogClasses,
-            modalClasses,
-            ...getTailwindPositionClasses()
-        ),
-        previousOpenState = open;
+    let previousOpenState = open;
 
     $effect(() => {
-        frameCls = twMerge(defaultFrameClasses, 'w-full divide-y', frameClasses);
         if (previousOpenState === true && !open) {
             onClose?.();
         }
         previousOpenState = open;
     });
 
-    function getTailwindPositionClasses() {
+    function positionToClass(position: Position) {
         switch (position) {
             case Position.TopLeft:
-                return ['justify-start', 'items-start'];
+                return 'modal--top-left';
             case Position.TopCenter:
-                return ['justify-center', 'items-start'];
+                return 'modal--top-center';
             case Position.TopRight:
-                return ['justify-end', 'items-start'];
-
+                return 'modal--top-right';
             case Position.CenterLeft:
-                return ['justify-start', 'items-center'];
+                return 'modal--center-left';
             case Position.Center:
-                return ['justify-center', 'items-center'];
+                return 'modal--center';
             case Position.CenterRight:
-                return ['justify-end', 'items-center'];
-
+                return 'modal--center-right';
             case Position.BottomLeft:
-                return ['justify-start', 'items-end'];
+                return 'modal--bottom-left';
             case Position.BottomCenter:
-                return ['justify-center', 'items-end'];
+                return 'modal--bottom-center';
             case Position.BottomRight:
-                return ['justify-end', 'items-end'];
-
+                return 'modal--bottom-right';
             default:
-                return ['justify-center', 'items-center'];
+                return 'modal--center';
         }
     }
 
@@ -110,9 +95,7 @@
         const wheelHandler = function (event: WheelEvent) {
             event.preventDefault();
         };
-
         node.addEventListener('wheel', wheelHandler, { passive: false });
-
         return {
             destroy() {
                 node.removeEventListener('wheel', wheelHandler);
@@ -121,7 +104,6 @@
     }
 
     const onAutoClose = (e: MouseEvent) => {
-        // close on any button click
         const target: Element = e.target as Element;
         if (autoclose && target?.tagName === 'BUTTON') {
             hide(e);
@@ -129,11 +111,9 @@
     };
 
     const onOutsideClose = (e: MouseEvent) => {
-        // close on click outside
         if (!outsideclose) {
             e.preventDefault();
         }
-
         const target: Element = e.target as Element;
         if (outsideclose && target === e.currentTarget) {
             hide(e);
@@ -147,16 +127,15 @@
 </script>
 
 {#if open}
-    <!-- backdrop -->
-    <div class={backdropCls}></div>
-    <!-- dialog -->
+    <div class="modal-backdrop {backdropClasses}"></div>
+
     <div
         onkeydown={escapeKeyHandler}
         use:wheelNonPassiveHandler
         use:trapFocus
         onclick={onAutoClose}
         onmousedown={onOutsideClose}
-        class={modalWrapperCls}
+        class="modal-dialog {positionToClass(position)} {modalClasses}"
         tabindex="-1"
         aria-modal="true"
         aria-hidden={!open}
@@ -164,28 +143,14 @@
         {...extraModalProps}
         role="dialog"
     >
-        <div class="flex relative {sizes[size]} {modalWrapperCls} w-full max-h-full">
-            <!-- Modal content -->
-
-            <Frame shadow classes={frameCls} tabindex={1} action={() => {}}>
-                <!-- Modal header -->
+        <div class="modal-content {sizes[size]} {modalClasses}">
+            <Frame shadow classes="modal-frame {frameClasses}" tabindex={1} action={() => {}}>
                 {#if headerSnippet || title}
-                    <Frame
-                        tabindex={1}
-                        action={() => {}}
-                        bgColor={color}
-                        classes="flex justify-between items-center p-4 rounded-t-lg border-b-2 border-gray-300"
-                    >
+                    <Frame tabindex={1} action={() => {}} bgColor={color} classes="modal-header">
                         {#if title}
-                            <h3
-                                class="text-lg xs:text-xl font-semibold p-0"
-                                class:text-gray-900={!color}
-                            >
-                                {title}
-                            </h3>
+                            <h3 class="modal-title" class:gray-900={!color}>{title}</h3>
                         {/if}
                         {@render headerSnippet?.()}
-
                         {#if dismissable}
                             <Icon
                                 iconSVG={CLOSE_SVG}
@@ -194,21 +159,14 @@
                                 height={24}
                                 width={24}
                                 viewBox="-70 0 448 512"
-                                classes="cursor-pointer !rotate-45 !min-h-[24px] !min-w-[24px]"
+                                classes="modal-close-icon"
                                 fill="#000"
                             />
                         {/if}
                     </Frame>
                 {/if}
 
-                <!-- Modal body -->
-                <div
-                    class={twMerge(
-                        'p-6 flex-1 overflow-y-auto overscroll-contain',
-                        modalBodyClasses
-                    )}
-                    role="document"
-                >
+                <div class="modal-body {modalBodyClasses}" role="document">
                     {#if dismissable && !headerSnippet && !title}
                         <Icon
                             iconSVG={CLOSE_SVG}
@@ -216,22 +174,15 @@
                             height={24}
                             width={24}
                             viewBox="-70 0 448 512"
-                            classes="cursor-pointer !rotate-45 !min-h-[24px] !min-w-[24px]"
+                            classes="modal-close-icon"
                             fill="#000"
                         />
                     {/if}
-
                     {@render children?.()}
                 </div>
 
-                <!-- Modal footer -->
                 {#if footerSnippet}
-                    <Frame
-                        bgColor={color}
-                        tabindex={1}
-                        action={() => {}}
-                        classes="flex items-center p-6 space-x-2 rtl:space-x-reverse rounded-b-lg justify-end border-t !border-gray-300"
-                    >
+                    <Frame bgColor={color} tabindex={1} action={() => {}} classes="modal-footer">
                         {@render footerSnippet()}
                     </Frame>
                 {/if}
@@ -239,3 +190,153 @@
         </div>
     </div>
 {/if}
+
+<style>
+    .modal--top-left {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .modal--top-center {
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .modal--top-right {
+        justify-content: flex-end;
+        align-items: flex-start;
+    }
+    .modal--center-left {
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .modal--center {
+        justify-content: center;
+        align-items: center;
+    }
+    .modal--center-right {
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .modal--bottom-left {
+        justify-content: flex-start;
+        align-items: flex-end;
+    }
+    .modal--bottom-center {
+        justify-content: center;
+        align-items: flex-end;
+    }
+    .modal--bottom-right {
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+    .modal-xs {
+        max-width: 28rem;
+    }
+    .modal-sm {
+        max-width: 32rem;
+    }
+    .modal-md {
+        max-width: 42rem;
+    }
+    .modal-lg {
+        max-width: 56rem;
+    }
+    .modal-xl {
+        max-width: 80rem;
+    }
+
+    .gray-900 {
+        color: #111827;
+    }
+
+    .modal-backdrop {
+        box-sizing: border-box;
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background-color: rgba(17, 24, 39, 0.5);
+        border: 0px solid;
+    }
+
+    :global(.modal-header) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 2px solid #d1d5db;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        background: inherit;
+    }
+
+    :global(.modal-close-icon) {
+        cursor: pointer;
+        min-height: 24px;
+        min-width: 24px;
+        rotate: 45deg;
+    }
+
+    :global(.modal-footer) {
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+        gap: 0.5rem;
+        justify-content: right;
+        border-top: 1px solid #d1d5db;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        background: inherit;
+        flex-wrap: wrap;
+        min-height: 66px;
+    }
+
+    .modal-frame {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+
+    .modal-frame > * + * {
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .modal-dialog {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        padding: 1rem;
+        width: 100%;
+        height: 100%;
+    }
+
+    .modal-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+        line-height: 1.75rem;
+        margin: 0;
+        color: #111827;
+        letter-spacing: -0.01em;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .modal-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        padding: 1rem;
+        width: 100%;
+        max-height: 100%;
+        background: none;
+        overflow: hidden;
+    }
+</style>
