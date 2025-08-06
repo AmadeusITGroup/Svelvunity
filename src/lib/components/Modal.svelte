@@ -127,7 +127,7 @@
 </script>
 
 {#if open}
-    <div class="modal-backdrop"></div>
+    <div class="modal-backdrop {backdropClasses}"></div>
 
     <div
         onkeydown={escapeKeyHandler}
@@ -135,7 +135,7 @@
         use:trapFocus
         onclick={onAutoClose}
         onmousedown={onOutsideClose}
-        class="modal-dialog {positionToClass(position)} {modalClasses} {backdropClasses}"
+        class="modal-dialog {positionToClass(position)} {modalClasses}"
         tabindex="-1"
         aria-modal="true"
         aria-hidden={!open}
@@ -143,7 +143,7 @@
         {...extraModalProps}
         role="dialog"
     >
-        <div class="modal-content {sizes[size]}">
+        <div class="modal-content {sizes[size]} {modalClasses}">
             <Frame shadow classes="modal-frame {frameClasses}" tabindex={1} action={() => {}}>
                 {#if headerSnippet || title}
                     <Frame tabindex={1} action={() => {}} bgColor={color} classes="modal-header">
@@ -249,7 +249,7 @@
         box-sizing: border-box;
         position: fixed;
         inset: 0;
-        z-index: 50;
+        z-index: 40;
         background-color: rgba(17, 24, 39, 0.5);
         border: 0px solid;
     }
@@ -260,8 +260,8 @@
         align-items: center;
         padding: 1rem;
         border-bottom: 2px solid #d1d5db;
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
         background: inherit;
     }
 
@@ -279,11 +279,24 @@
         gap: 0.5rem;
         justify-content: right;
         border-top: 1px solid #d1d5db;
-        border-bottom-left-radius: 1rem;
-        border-bottom-right-radius: 1rem;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
         background: inherit;
         flex-wrap: wrap;
         min-height: 66px;
+    }
+
+    .modal-frame {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+
+    .modal-frame > * + * {
+        border-top: 1px solid #e5e7eb;
     }
 
     .modal-dialog {
