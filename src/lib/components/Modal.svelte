@@ -148,7 +148,7 @@
                 {#if headerSnippet || title}
                     <Frame tabindex={1} action={() => {}} bgColor={color} classes="modal-header">
                         {#if title}
-                            <h3 class="modal-title">{title}</h3>
+                            <h3 class="modal-title" class:gray-900={!color}>{title}</h3>
                         {/if}
                         {@render headerSnippet?.()}
                         {#if dismissable}
@@ -228,7 +228,6 @@
         justify-content: flex-end;
         align-items: flex-end;
     }
-
     .modal-xs {
         max-width: 28rem;
     }
@@ -243,6 +242,10 @@
     }
     .modal-xl {
         max-width: 80rem;
+    }
+
+    .gray-900 {
+        color: #111827;
     }
 
     .modal-backdrop {
