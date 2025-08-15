@@ -111,11 +111,13 @@
     };
 
     const onOutsideClose = (e: MouseEvent) => {
+        const target = e.target as Element;
+        const isBackdropClick = target === e.currentTarget;
+        if (!isBackdropClick) return;
+
         if (!outsideclose) {
             e.preventDefault();
-        }
-        const target: Element = e.target as Element;
-        if (outsideclose && target === e.currentTarget) {
+        } else {
             hide(e);
         }
     };
@@ -155,7 +157,10 @@
                             <Icon
                                 iconSVG={CLOSE_SVG}
                                 label={dismissIconLabel}
-                                clickLogic={hide}
+                                clickLogic={(e) => {
+                                    onClose?.();
+                                    hide(e);
+                                }}
                                 height={24}
                                 width={24}
                                 viewBox="-70 0 448 512"

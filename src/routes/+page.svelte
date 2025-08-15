@@ -739,6 +739,24 @@
                                 </div>
                             {/snippet}
                         </AccordionItem>
+
+                        <AccordionItem>
+                            {#snippet buttonSnippet()}
+                                <div>
+                                    <span>Input component</span>
+                                </div>
+                            {/snippet}
+
+                            {#snippet bodySnippet()}
+                                <Input
+                                    placeholder="My placeholder"
+                                    inputName="searchInput"
+                                    inputValue="Some comment"
+                                    type="text"
+                                    isDisabled={false}
+                                />
+                            {/snippet}
+                        </AccordionItem>
                     </Modal>
                 </div>
             {/snippet}
