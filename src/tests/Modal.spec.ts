@@ -77,4 +77,22 @@ describe('Modal', () => {
 
 		expect(onClose).not.toHaveBeenCalled();
 	});
+
+	test('clicking the close icon calls onClose and hides the modal', async () => {
+		const onClose = vi.fn();
+		const { container, queryByRole } = render(Modal, {
+			open: true,
+			title: 'Update Comment',
+			dismissable: true,
+			onClose
+		});
+
+		const closeIcon = container.querySelector('.modal-close-icon') as HTMLElement;
+		expect(closeIcon).toBeTruthy();
+
+		await fireEvent.click(closeIcon);
+
+		expect(onClose).toHaveBeenCalledTimes(2);
+		expect(queryByRole('dialog')).not.toBeInTheDocument();
+	});
 });

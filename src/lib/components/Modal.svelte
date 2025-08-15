@@ -157,7 +157,10 @@
                             <Icon
                                 iconSVG={CLOSE_SVG}
                                 label={dismissIconLabel}
-                                clickLogic={hide}
+                                clickLogic={(e) => {
+                                    onClose?.();
+                                    hide(e);
+                                }}
                                 height={24}
                                 width={24}
                                 viewBox="-70 0 448 512"
