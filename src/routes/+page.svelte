@@ -110,6 +110,9 @@
 
     let InlineEditValue = $state('Max Musterman');
     let inlineEditValueDisabled = $state('George Costanza');
+
+    const MS_PER_DAY = 86_400_000;
+    const today = new Date();
 </script>
 
 <main aria-label="Svelvunity main content">
@@ -379,10 +382,11 @@
                         ariaLabelNextYear="Next Year"
                         alwaysShow={false}
                         align="right"
+                        $:
                         enabledDates={[
-                            formatDate(new Date(), dateFormat),
-                            formatDate(new Date().setDate(new Date().getDate() - 1), dateFormat),
-                            formatDate(new Date().setDate(new Date().getDate() + 1), dateFormat)
+                            formatDate(today, dateFormat), // today
+                            formatDate(new Date(today.getTime() - MS_PER_DAY), dateFormat), // yesterday
+                            formatDate(new Date(today.getTime() + MS_PER_DAY), dateFormat) // tomorrow
                         ]}
                     >
                         <div class="relative">

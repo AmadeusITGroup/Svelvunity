@@ -43,14 +43,14 @@ describe('Toast Store', () => {
 
 		toast.success(message, testId);
 
-		expect.stringContaining(message),
+		(expect.stringContaining(message),
 			expect.objectContaining({
 				theme: {
 					'--toastBackground': '#f2f9f5',
 					'--toastBorder': '1px solid #00854066',
 					'--toastLeftBorderColor': '#008540'
 				}
-			});
+			}));
 	});
 
 	test('success function without testId', () => {
@@ -58,14 +58,14 @@ describe('Toast Store', () => {
 
 		toast.success(message);
 
-		expect.stringContaining(message),
+		(expect.stringContaining(message),
 			expect.objectContaining({
 				theme: {
 					'--toastBackground': '#f2f9f5',
 					'--toastBorder': '1px solid #00854066',
 					'--toastLeftBorderColor': '#008540'
 				}
-			});
+			}));
 	});
 
 	test('failure function', () => {
@@ -74,14 +74,14 @@ describe('Toast Store', () => {
 
 		toast.failure(message, testId);
 
-		expect.stringContaining(message),
+		(expect.stringContaining(message),
 			expect.objectContaining({
 				theme: {
 					'--toastBackground': '#fcf2f2',
 					'--toastBorder': '1px solid #c6000066',
 					'--toastLeftBorderColor': '#c60000'
 				}
-			});
+			}));
 	});
 
 	test('failure function without testId', () => {
@@ -89,14 +89,14 @@ describe('Toast Store', () => {
 
 		toast.failure(message);
 
-		expect.stringContaining(message),
+		(expect.stringContaining(message),
 			expect.objectContaining({
 				theme: {
 					'--toastBackground': '#fcf2f2',
 					'--toastBorder': '1px solid #c6000066',
 					'--toastLeftBorderColor': '#c60000'
 				}
-			});
+			}));
 	});
 
 	test('warning function', () => {
@@ -105,14 +105,14 @@ describe('Toast Store', () => {
 
 		toast.warning(message, testId);
 
-		expect.stringContaining(message),
+		(expect.stringContaining(message),
 			expect.objectContaining({
 				theme: {
 					'--toastBackground': '#fffbf4',
 					'--toastBorder': '1px solid #f7a82766',
 					'--toastLeftBorderColor': '#f7a827'
 				}
-			});
+			}));
 	});
 
 	test('warning function without testId', () => {
@@ -120,14 +120,14 @@ describe('Toast Store', () => {
 
 		toast.warning(message);
 
-		expect.stringContaining(message),
+		(expect.stringContaining(message),
 			expect.objectContaining({
 				theme: {
 					'--toastBackground': '#fffbf4',
 					'--toastBorder': '1px solid #f7a82766',
 					'--toastLeftBorderColor': '#f7a827'
 				}
-			});
+			}));
 	});
 
 	test('info function', () => {
@@ -136,14 +136,14 @@ describe('Toast Store', () => {
 
 		toast.info(message, testId);
 
-		expect.stringContaining(message),
+		(expect.stringContaining(message),
 			expect.objectContaining({
 				theme: {
 					'--toastBackground': '#F4F9FB',
 					'--toastBorder': '1px solid #1a7ead66',
 					'--toastLeftBorderColor': '#1a7ead'
 				}
-			});
+			}));
 	});
 
 	test('info function without testId', () => {
@@ -151,14 +151,14 @@ describe('Toast Store', () => {
 
 		toast.info(message);
 
-		expect.stringContaining(message),
+		(expect.stringContaining(message),
 			expect.objectContaining({
 				theme: {
 					'--toastBackground': '#F4F9FB',
 					'--toastBorder': '1px solid #1a7ead66',
 					'--toastLeftBorderColor': '#1a7ead'
 				}
-			});
+			}));
 	});
 
 	test("should update a toast's message", () => {
