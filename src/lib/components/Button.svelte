@@ -12,9 +12,9 @@
         isDisabled: boolean;
         additionalClasses?: string;
         type: ButtonType;
-        buttonSize: Size;
-        testId: any;
-        loading: boolean;
+        buttonSize?: Size;
+        testId?: any;
+        loading?: boolean;
     }
 
     let {
