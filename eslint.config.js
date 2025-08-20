@@ -17,7 +17,6 @@ export default ts.config(
 	prettier,
 	...svelte.configs.prettier,
 	{
-		ignores: '/src/docs',
 		languageOptions: {
 			globals: { ...globals.browser, ...globals.node }
 		},
