@@ -9,10 +9,5 @@ export default {
     vitePreprocess(), 
     mdsvex(mdsvexConfig)
   ],
-  extensions: ['.svelte', '.svx', '.md'],
-  compilerOptions: {
-    compatibility: {
-      componentApi: 4
-    }
-  }
+  extensions: ['.svelte', '.svx', '.md']
 }
