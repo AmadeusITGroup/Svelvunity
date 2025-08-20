@@ -1,0 +1,21 @@
+Provides additional information or help about visual elements or actions within the UI.
+<br>
+
+## Props
+
+```typescript
+export let activeContent = false;                            // Indicates if the content is active
+export let arrow = true;                                     // Shows an arrow
+export let offset = 8;                                       // Sets the offset distance
+export let placement: Placement = 'top';                     // Determines the placement of the popover
+export let trigger: 'hover' | 'click' = 'hover';             // Specifies the trigger event
+export let triggeredBy: string | undefined = undefined;      // Identifies the element that triggers the popover
+export let reference: string | undefined = undefined;        // Sets a reference element
+export let strategy: 'absolute' | 'fixed' = 'absolute';      // Defines the positioning strategy
+export let open = false;                                     // Controls whether the popover is open
+export let yOnly = false;                                    // Restricts movement to the Y-axis only
+```
+<br>
+
+## Styling
+No styling required for the popover.

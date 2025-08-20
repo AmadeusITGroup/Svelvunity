@@ -1,0 +1,13 @@
+Shows the user different content depending on his choice of a tab.
+<br>
+
+## Props
+
+```typescript
+export let items: any[] = [];           // An array to be displayed as selectable options
+export let activeTabValue = 1;          // Sets the value of the preselected tab
+```
+<br>
+
+## Styling
+Branding guidelines have been implemented in this component.

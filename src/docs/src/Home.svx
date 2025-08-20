@@ -1,0 +1,40 @@
+<h1 align="center">Svelvunity - Where apps get alive</h1>
+
+## Introduction
+
+Welcome to Svelvunity, a **Svelte** library designed to provide developers with reusable components and utilities to accelerate the development of Svelte applications.
+
+Svelvunity is a library of Svelte web components designed to streamline your development process. With Svelvunity, you can integrate pre-built components into your projects without starting from scratch.
+<br>
+
+- **Reusable Components**: Leverage a suite of pre-built Svelte components designed for efficiency and ease of use.
+- **Customizable**: Easily theme and customize components to fit the branding and style of your application.
+- **Performance Optimized**: Built with performance in mind, ensuring your applications run smoothly.
+- **Fully Typed**: Take advantage of **TypeScript** support for type safety and an enhanced developer experience.
+- **Effortless Integration**: Seamlessly integrate components into your existing Svelte projects with minimal setup.
+
+<br>
+
+## Getting Started
+
+To start using Svelvunity in your project, install Svelvunity by running the following command in your project directory:
+
+```bash
+
+npm install @amadeus-it-group/svelvunity
+```
+
+<br>
+
+## Usage
+
+Import the components you need and start using them in your Svelte application:
+
+```typescript
+
+<script>
+  import { Datepicker } from '@amadeus-it-group/svelvunity';
+</script>
+
+<Datepicker />
+```

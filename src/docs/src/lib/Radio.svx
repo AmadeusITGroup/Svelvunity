@@ -1,0 +1,24 @@
+A set of checkable buttons, where no more than one of the buttons can be checked at a time.
+<br>
+
+## Props
+
+```typescript
+export let labelText = '';                            // Sets a label for the radio options
+export let inputName = '';                            // Sets the name attribute for the label and the input
+export let inputError = '';                           // Used to display validation errors below the radio buttons
+export let options: any = [];                         // An array to be displayed as selectable options
+export let classesForError = '';                      // Styles the validation errors
+export let classesForInput = '';                      // Styles the radio inputs
+export let classesForInputLabel = '';                 // Styles the radio labels
+export let classesForLabel = '';                      // Styles the radio main label/heading
+export let classesForRadioGroup = '';                 // Styles the whole container
+export let isRequired: boolean = false;               // Sets the required attribute
+export let isDisabled: boolean = false;               // Sets the disabled attribute
+export let testId: string;                            // Sets data-cy-id attribute's value for cypress e2e tests
+export let selectedOption: any;                       // Used to return the value of the selected radio button
+```
+<br>
+
+## Styling
+Branding guidelines have been implemented in this component.
