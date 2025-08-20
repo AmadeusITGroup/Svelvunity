@@ -1,7 +1,10 @@
-import type { SvelteComponent } from 'svelte';
+import type { Component, ComponentProps } from 'svelte';
 
 export interface ITabItem {
 	label: string;
 	value: number;
-	component: SvelteComponent;
+	component: Component;
+	disabled?: boolean;
+	testingId?: string;
+	props?: ComponentProps<Component>[];
 }

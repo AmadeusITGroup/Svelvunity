@@ -1,5 +1,5 @@
 @import url('./css/custom.css');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @media screen and (min-width: 1350px) {
 	html {
@@ -128,4 +128,3 @@
 .highlighting:hover {
 	@apply bg-amadeuslightblue dark:bg-amadeusdarkblue;
 }
-
