@@ -157,7 +157,7 @@
 			id="filter-sidebar"
 		>
 			<div class="grid grid-flow-col grid-rows-1 items-center">
-				<img src="/svelvunity/favicon.png" alt="svelte-logo" width="60px" height="60px" />
+				<img src="/favicon.png" alt="svelte-logo" width="60px" height="60px" />
 				<h1 class="font-bold text-2xl">Svelvunity</h1>
 			</div>
 			<div class="nav-links overflow-auto">
