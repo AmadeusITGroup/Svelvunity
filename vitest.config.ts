@@ -8,7 +8,8 @@ const excludeFiles = [
 	'.svelte-kit/**',
 	'dist/**',
 	'**/app.d.ts',
-	'**/node_modules/**'
+	'**/node_modules/**',
+	'src/docs/**'
 ];
 
 export default defineConfig(() =>
