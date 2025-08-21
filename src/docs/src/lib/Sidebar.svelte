@@ -50,7 +50,7 @@
         use:clickOutsideWrapper={handleClickOutside}
         {id}
         {...$$restProps}
-        class={'sidebar overflow-y-auto z-50 px-4 pb-4 border-x border-violet-500 w-60 fixed inset-y-0 left-0'}
+        class="sidebar overflow-y-auto z-50 px-4 pb-4 border-x border-violet-500 w-60 fixed inset-y-0 left-0"
         transition:multiple={transitionParams}
         tabindex="-1"
         aria-modal="true"

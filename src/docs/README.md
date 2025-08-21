@@ -52,9 +52,9 @@ This site is configured to be hosted under the `/svelvunity/` base path (see `vi
 1. Ensure the base path is correct in `vite.config.ts`:
    ```ts
    export default defineConfig({
-     base: '/svelvunity/',
-     plugins: [svelte()]
-   })
+   	base: '/Svelvunity/',
+   	plugins: [svelte()]
+   });
    ```
 2. Build the site and publish the `dist/` folder:
    ```bash
@@ -90,11 +90,11 @@ src/docs/
 2. Import it in `src/App.svelte` and add it to the `items` array to appear in the sidebar:
    ```svelte
    <script lang="ts">
-     import MyComponent from './lib/MyComponent.svx';
-     let items = $state([
-       // ...existing items
-       { label: 'My Component', value: 999, component: MyComponent }
-     ]);
+   	import MyComponent from './lib/MyComponent.svx';
+   	let items = $state([
+   		// ...existing items
+   		{ label: 'My Component', value: 999, component: MyComponent }
+   	]);
    </script>
    ```
 3. Use Tailwind utility classes in your page content or extend styles in `src/app.css` / `src/css/custom.css` as needed.
