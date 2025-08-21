@@ -164,9 +164,9 @@
                 {#each items as item}
                     <span class="item {activeTabValue === item.value ? 'active active-item' : ''}">
                         <button
-                            tabindex="0"
                             onclick={handleClick(item.value)}
                             class:focused={activeTabValue === item.value}
+                            class="cursor-pointer"
                         >
                             {item.label}
                         </button>

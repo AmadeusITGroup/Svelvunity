@@ -1,47 +1,124 @@
-# Svelte + TS + Vite
+# Svelvunity Docs
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+The Svelvunity Docs app is a standalone documentation site for the Svelvunity component library. It is built with Svelte 5, Vite, mdsvex, and Tailwind CSS, and showcases reusable UI components with live examples and usage snippets.
 
-## Recommended IDE Setup
+## Tech stack
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+- Svelte 5 + TypeScript
+- Vite 7
+- mdsvex (.svx pages)
+- Tailwind CSS 4 (via `@tailwindcss/postcss`)
 
-## Need an official Svelte framework?
+## Prerequisites
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+- Node.js 18+ (LTS recommended)
+- npm
 
-## Technical considerations
+## Getting started
 
-**Why use this over SvelteKit?**
+From the repository root:
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store';
-export default writable(0);
+```bash
+cd src/docs
+npm install
+npm run dev
 ```
+
+Then open the URL printed in the terminal (typically `http://localhost:5173`).
+
+## Available scripts
+
+```bash
+# Start the local dev server
+npm run dev
+
+# Type-check Svelte + TS
+npm run check
+
+# Build for production (outputs to dist/)
+npm run build
+
+# Preview the production build locally
+npm run preview
+
+# Deploy dist/ to GitHub Pages (gh-pages branch)
+npm run deploy
+```
+
+## Deployment (GitHub Pages)
+
+This site is configured to be hosted under the `/svelvunity/` base path (see `vite.config.ts`). If your repository or hosting base path differs, update the `base` option accordingly.
+
+1. Ensure the base path is correct in `vite.config.ts`:
+   ```ts
+   export default defineConfig({
+     base: '/svelvunity/',
+     plugins: [svelte()]
+   })
+   ```
+2. Build the site and publish the `dist/` folder:
+   ```bash
+   npm run build && npm run deploy
+   ```
+
+The `deploy` script uses `gh-pages` to push the contents of `dist/` to the `gh-pages` branch.
+
+## Project structure
+
+```
+src/docs/
+  ├─ src/
+  │  ├─ app.css
+  │  ├─ App.svelte            # Layout + sidebar navigation
+  │  ├─ Home.svx              # Getting started page
+  │  ├─ lib/                  # Component demo pages (.svx/.svelte)
+  │  ├─ css/custom.css
+  │  ├─ interfaces/
+  │  └─ utils/
+  ├─ public/
+  │  └─ favicon.png
+  ├─ svelte.config.js         # mdsvex + preprocessors
+  ├─ mdsvex.config.js
+  ├─ vite.config.ts           # base path + svelte plugin
+  ├─ package.json
+  └─ README.md
+```
+
+## Adding a new component page
+
+1. Create a new demo page under `src/lib`, e.g. `src/lib/MyComponent.svx`.
+2. Import it in `src/App.svelte` and add it to the `items` array to appear in the sidebar:
+   ```svelte
+   <script lang="ts">
+     import MyComponent from './lib/MyComponent.svx';
+     let items = $state([
+       // ...existing items
+       { label: 'My Component', value: 999, component: MyComponent }
+     ]);
+   </script>
+   ```
+3. Use Tailwind utility classes in your page content or extend styles in `src/app.css` / `src/css/custom.css` as needed.
+
+## Using the library in examples
+
+Examples in the docs import components from the published package:
+
+```svelte
+<script>
+  import { Datepicker } from '@amadeus-it-group/svelvunity';
+<\/script>
+
+<Datepicker />
+```
+
+Refer to the repository root `README.md` for the full library documentation and version compatibility notes.
+
+## Troubleshooting
+
+- 404s on GitHub Pages: verify the `base` path in `vite.config.ts` matches your hosting path.
+- Assets not loading: ensure asset URLs include the base (the app references `/svelvunity/favicon.png`).
+- Type errors: run `npm run check` for diagnostics.
+
+## License
+
+See the root `LICENSE` file of this repository.
