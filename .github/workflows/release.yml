@@ -9,6 +9,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   build:
     uses: './.github/workflows/build.yml'
@@ -37,3 +42,20 @@ jobs:
           git tag v${{ inputs.version }}
           git push origin v${{ inputs.version }}
         if: success()
+
+  deploy-docs:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - name: Install docs dependencies
+        run: cd src/docs && npm ci
+      - name: Build docs
+        run: cd src/docs && npm run build
+      - name: Deploy docs to GitHub Pages
+        run: cd src/docs && npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
