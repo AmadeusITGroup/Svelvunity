@@ -4,8 +4,8 @@ on:
     branches: [main, release/**]
 
 permissions:
-  contents: read
-  pull-requests: read
+  contents: write
+  id-token: write
 
 jobs:
   build:
