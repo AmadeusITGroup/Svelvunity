@@ -1,0 +1,16 @@
+This component provides you with a ADF compliant error page for your application.
+<br>
+
+## Props
+
+```typescript
+export let errorCode = 403;                                             // Sets a HTTP error code to display
+export let headMessage = 
+    "The page you're trying to reach has restricted access.";           // Sets the main heading of the page
+export let message = 'Please refer to your administrator.';             // Sets the description of the error code
+export let testId = '';                                                 // Sets data-cy-id attribute's value for e2e tests
+```
+<br>
+
+## Styling
+Branding guidelines have been implemented in this component.

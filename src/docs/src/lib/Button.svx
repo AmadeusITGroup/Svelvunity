@@ -1,0 +1,19 @@
+Communicate the action that will occur when the user touches it. It is an immediate call to action.
+<br>
+
+## Props
+
+```typescript
+export let clickLogic: Function = () => {};                         // Callback for button press
+export let label: string = '';                                      // Button text
+export let isDisabled: boolean = false;                             // Disable button
+export let additionalClasses: string = '';                          // Additional button classes
+export let type: ButtonType = ButtonType.Primary;                   // Button type: Primary, OutlinePrimary, Transparent
+export let buttonSize: Size = Size.Unset;                           // Button size: Unset, XSmall, Small, Medium, Large, XLarge
+export let testingId: string = `${TEST_IDS.ButtonId}-${label}`;     // Cypress ID for button
+export let loading: boolean = false;                                // Loading state with spinner
+```
+<br>
+
+## Styling
+The CSS for the buttons is pretty straightforward and if it should be modified, one should do it with a lot of caution, because the <code>ButtonType</code> and <code>Size</code> enums are also responsible for the size of the size of the <code>loading</code> spinner inside the button, when the loading variable is set to <code>true</code>. Otherwise, additional CSS classes can be passed in to the component using the <code>additionalClasses</code> prop.

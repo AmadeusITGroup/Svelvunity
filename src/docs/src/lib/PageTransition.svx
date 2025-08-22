@@ -1,0 +1,12 @@
+This component represents a simple fly-out and fly-in animation for a page transition.
+<br>
+
+## Props
+
+```typescript
+export let url = '';   // Recreates the PageTransition component on url change
+```
+<br>
+
+## Styling
+No styling required for the page transition.
