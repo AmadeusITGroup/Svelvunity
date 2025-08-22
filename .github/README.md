@@ -36,7 +36,7 @@ To start using Svelvunity in your project, install Svelvunity by running the fol
 npm install @amadeus-it-group/svelvunity
 ```
 
-For comprehensive information on each component and how to use it, see the [Documentation](https://mehtapcavdar.github.io/svelvunity/).
+For comprehensive information on each component and how to use it, see the [Documentation](https://amadeusitgroup.github.io/Svelvunity/).
 
 ### Svelte Compatibility
 
