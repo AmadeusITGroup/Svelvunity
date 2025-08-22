@@ -109,4 +109,59 @@ describe('Switch.svelte', () => {
 		await fireEvent.click(btn);
 		expect(btn).toHaveAttribute('aria-checked', 'false');
 	});
+
+	it('calls toggle with the inverted value and updates aria-checked on click', async () => {
+		const toggle = vi.fn();
+		const { getByRole, component } = render(Switch, {
+			props: { label: 'Airplane mode', value: false, toggle }
+		});
+
+		const btn = getByRole('switch', { name: 'Airplane mode' });
+
+		await fireEvent.click(btn);
+		expect(toggle).toHaveBeenCalledTimes(1);
+		expect(toggle).toHaveBeenCalledWith(true);
+		expect(btn).toHaveAttribute('aria-checked', 'true');
+
+		await fireEvent.click(btn);
+		expect(toggle).toHaveBeenCalledTimes(2);
+		expect(toggle).toHaveBeenLastCalledWith(false);
+		expect(btn).toHaveAttribute('aria-checked', 'false');
+	});
+
+	it('does nothing when disabled (no state change, no callback)', async () => {
+		const toggle = vi.fn();
+		const { getByRole } = render(Switch, {
+			props: { label: 'Notifications', value: true, disabled: true, toggle }
+		});
+
+		const btn = getByRole('switch', { name: 'Notifications' });
+
+		expect(btn).toHaveAttribute('aria-disabled', 'true');
+		expect(btn).toHaveAttribute('disabled');
+
+		await fireEvent.click(btn);
+		expect(toggle).not.toHaveBeenCalled();
+		expect(btn).toHaveAttribute('aria-checked', 'true');
+	});
+
+	it('applies fontSize as inline style on the root container', () => {
+		const { container, getByRole } = render(Switch, {
+			props: { label: 'Dark mode', value: false, fontSize: 20 }
+		});
+
+		const wrapper = container.querySelector('.switch') as HTMLElement;
+		expect(wrapper).toBeTruthy();
+		expect(wrapper.style.fontSize).toBe('20px');
+
+		expect(getByRole('switch', { name: 'Dark mode' })).toBeTruthy();
+	});
+
+	it('reflects the initial value in aria-checked', () => {
+		const { getByRole, rerender } = render(Switch, {
+			props: { label: 'Location', value: true }
+		});
+		let btn = getByRole('switch', { name: 'Location' });
+		expect(btn).toHaveAttribute('aria-checked', 'true');
+	});
 });
