@@ -112,7 +112,7 @@ describe('Switch.svelte', () => {
 
 	it('calls toggle with the inverted value and updates aria-checked on click', async () => {
 		const toggle = vi.fn();
-		const { getByRole, component } = render(Switch, {
+		const { getByRole } = render(Switch, {
 			props: { label: 'Airplane mode', value: false, toggle }
 		});
 
@@ -158,10 +158,10 @@ describe('Switch.svelte', () => {
 	});
 
 	it('reflects the initial value in aria-checked', () => {
-		const { getByRole, rerender } = render(Switch, {
+		const { getByRole } = render(Switch, {
 			props: { label: 'Location', value: true }
 		});
-		let btn = getByRole('switch', { name: 'Location' });
+		const btn = getByRole('switch', { name: 'Location' });
 		expect(btn).toHaveAttribute('aria-checked', 'true');
 	});
 });
