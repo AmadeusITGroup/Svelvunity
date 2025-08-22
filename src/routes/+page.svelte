@@ -32,6 +32,7 @@
     import Popover from '$lib/components/Popover.svelte';
     import RadioInput from '$lib/components/RadioInput.svelte';
     import Select from '$lib/components/Select.svelte';
+    import Switch from '$lib/components/Switch.svelte';
     import Tabs from '$lib/components/Tabs.svelte';
     import SvelteToast from '$lib/components/Toast/SvelteToast.svelte';
     import Tooltip from '$lib/components/Tooltip.svelte';
@@ -110,6 +111,10 @@
 
     let InlineEditValue = $state('Max Musterman');
     let inlineEditValueDisabled = $state('George Costanza');
+
+    let switchValue = $state(false);
+    let switchValueTrue = $state(true);
+    let switchValueDisable = $state(false);
 
     const MS_PER_DAY = 86_400_000;
     const today = new Date();
@@ -917,6 +922,67 @@
                         options={cities}
                         placeholder="Select an option"
                         testId="nameInput"
+                    />
+                </div>
+            {/snippet}
+        </AccordionItem>
+        <AccordionItem>
+            {#snippet buttonSnippet()}
+                <div>
+                    <span>Switch component</span>
+                </div>
+            {/snippet}
+
+            {#snippet bodySnippet()}
+                <div>
+                    <Switch
+                        label="Switch"
+                        fontSize={15}
+                        toggle={(state) => {
+                            switchValue = state;
+                        }}
+                        bind:value={switchValue}
+                        testId="switch-component"
+                        disabled={false}
+                    />
+                </div>
+                <div
+                    class="mt-4"
+                    style="--switch-checked-bg-true-color: #dd8383; --switch-checked-true-box-shadow-color: #23b30d; --switch-checked-false-btn-color: #c816dc"
+                >
+                    <Switch
+                        label="Switch"
+                        fontSize={15}
+                        toggle={(state) => {
+                            switchValue = state;
+                        }}
+                        bind:value={switchValue}
+                        testId="switch-component"
+                        disabled={false}
+                    />
+                </div>
+                <div class="mt-4">
+                    <Switch
+                        label="Switch disabled"
+                        fontSize={15}
+                        toggle={(state) => {
+                            switchValueDisable = state;
+                        }}
+                        bind:value={switchValueDisable}
+                        testId="switch-component-disabled"
+                        disabled={true}
+                    />
+                </div>
+                <div class="mt-4">
+                    <Switch
+                        label="Switch disabled"
+                        fontSize={15}
+                        toggle={(state) => {
+                            switchValueTrue = state;
+                        }}
+                        bind:value={switchValueTrue}
+                        testId="switch-component-disabled"
+                        disabled={true}
                     />
                 </div>
             {/snippet}
