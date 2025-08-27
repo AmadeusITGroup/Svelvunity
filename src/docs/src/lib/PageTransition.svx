@@ -4,7 +4,6 @@
     import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
 let propsCode=`export let url = '';   // Recreates the PageTransition component on url change
 `;
-let cssCode=``;
 </script>
 
 <svelte:head>

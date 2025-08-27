@@ -10,7 +10,6 @@ export let removeAnimation: boolean = false;              // Removes the fading 
 export let isScreenCentered: boolean = false;             // Centers the loading spinner in the middle of the screen
 export let classes: string = '';                          // Styles the spinner container
 export let testId: string = '';                           // Sets data-cy-id attribute's value for cypress e2e tests`;
-let cssCode=``;
 </script>
 
 <svelte:head>

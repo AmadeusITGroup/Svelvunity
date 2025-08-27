@@ -1,6 +1,7 @@
 <script>
     import Highlight from "svelte-highlight";
     import typescript from "svelte-highlight/languages/typescript";
+    import css from "svelte-highlight/languages/css";
     import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
 let propsCode=`export let selectedDate: any = null;                    // The currently selected date
 export let today: Date = new Date();                    // Today's date, used for highlighting
@@ -37,4 +38,4 @@ The Datepicker component is a versatile and customizable date picker built with 
 ## Styling
 The component supports extensive styling through CSS variables and custom classes. You can customize the appearance of the date picker by overriding these variables in your stylesheet. For responsive design, the component adapts to screen sizes below 800px width by changing the layout of the calendar card.
 
- <Highlight language={typescript} code={cssCode} />
+ <Highlight language={css} code={cssCode} />

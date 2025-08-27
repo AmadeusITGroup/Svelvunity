@@ -1,6 +1,7 @@
 <script>
     import Highlight from "svelte-highlight";
     import typescript from "svelte-highlight/languages/typescript";
+    import css from "svelte-highlight/languages/css";
     import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
 let propsCode=`export let open = false;                                        // Toggles accordion body visibility
 export let disabled = false;                                    // Disables accordion button click
@@ -73,4 +74,4 @@ An accordion is a vertically stacked list of headers that reveal or hide associa
 
 ## Styling
 You can either pass in CSS classes directly to overwrite the CSS for the button and the body using the props, or you can use the CSS variables from below:
- <Highlight language={typescript} code={cssCode} />
+ <Highlight language={css} code={cssCode} />

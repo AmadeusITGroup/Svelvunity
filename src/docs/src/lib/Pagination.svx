@@ -1,6 +1,7 @@
 <script>
     import Highlight from "svelte-highlight";
     import typescript from "svelte-highlight/languages/typescript";
+    import css from "svelte-highlight/languages/css";
     import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
 let propsCode=`export let rows: any = [];                  // An array, containing the whole content to be paged
 export let perPage = 20;                    // Sets how much items are shown per page
@@ -46,6 +47,6 @@ Separates long content into multiple pages to improve usability.
 ## Styling
 This is a pretty straightforward component with no special stylings. All of the extra styling, if needed, can be handled through the css variables below.
 
- <Highlight language={typescript} code={cssCode} />
+ <Highlight language={css} code={cssCode} />
 
 

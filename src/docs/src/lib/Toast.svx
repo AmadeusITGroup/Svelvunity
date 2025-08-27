@@ -1,6 +1,7 @@
 <script>
     import Highlight from "svelte-highlight";
     import typescript from "svelte-highlight/languages/typescript";
+    import css from "svelte-highlight/languages/css";
     import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
 let propsCode=``;
 let cssCode=`--toastContainerTop, 1.5rem
@@ -23,4 +24,4 @@ The toast component props are a bit different than the other components. You can
 
 ## Styling
  By default the toast messages are shown in the upper right corner of the webpage. This is the default behavior and changing it is not encouraged. Despite that, one can adjust where the message is show with the following CSS variables:
- <Highlight language={typescript} code={cssCode} />
+ <Highlight language={css} code={cssCode} />

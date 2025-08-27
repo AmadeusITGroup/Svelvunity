@@ -12,7 +12,6 @@ export let reference: string | undefined = undefined;        // Sets a reference
 export let strategy: 'absolute' | 'fixed' = 'absolute';      // Defines the positioning strategy
 export let open = false;                                     // Controls whether the popover is open
 export let yOnly = false;                                    // Restricts movement to the Y-axis only`;
-let cssCode=``;
 </script>
 
 <svelte:head>

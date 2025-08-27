@@ -15,7 +15,6 @@ export let isRequired: boolean = false;               // Sets the required attri
 export let isDisabled: boolean = false;               // Sets the disabled attribute
 export let testId: string;                            // Sets data-cy-id attribute's value for cypress e2e tests
 export let selectedOption: any;                       // Used to return the value of the selected radio button`;
-let cssCode=``;
 </script>
 
 <svelte:head>

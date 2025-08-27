@@ -4,7 +4,6 @@
     import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
 let propsCode=`export let items: any[] = [];           // An array to be displayed as selectable options
 export let activeTabValue = 1;          // Sets the value of the preselected tab`;
-let cssCode=``;
 </script>
 
 <svelte:head>
