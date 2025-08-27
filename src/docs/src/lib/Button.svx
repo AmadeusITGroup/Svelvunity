@@ -1,18 +1,24 @@
+<script>
+
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+
+  let propsCode=`export let clickLogic: Function = () => {};                         // Callback for button press
+  export let label: string = '';                                      // Button text
+  export let isDisabled: boolean = false;                             // Disable button
+  export let additionalClasses: string = '';                          // Additional button classes
+  export let type: ButtonType = ButtonType.Primary;                   // Button type: Primary, OutlinePrimary, Transparent
+  export let buttonSize: Size = Size.Unset;                           // Button size: Unset, XSmall, Small, Medium, Large, XLarge
+  export let testingId: string = \`\${TEST_IDS.ButtonId}-\${label}\`;     // Cypress ID for button
+  export let loading: boolean = false;                                // Loading state with spinner`;
+</script>
+
 Communicate the action that will occur when the user touches it. It is an immediate call to action.
 <br>
 
 ## Props
 
-```typescript
-export let clickLogic: Function = () => {};                         // Callback for button press
-export let label: string = '';                                      // Button text
-export let isDisabled: boolean = false;                             // Disable button
-export let additionalClasses: string = '';                          // Additional button classes
-export let type: ButtonType = ButtonType.Primary;                   // Button type: Primary, OutlinePrimary, Transparent
-export let buttonSize: Size = Size.Unset;                           // Button size: Unset, XSmall, Small, Medium, Large, XLarge
-export let testingId: string = `${TEST_IDS.ButtonId}-${label}`;     // Cypress ID for button
-export let loading: boolean = false;                                // Loading state with spinner
-```
+ <CodeBlock language={typescript} code={propsCode} />
 <br>
 
 ## Styling
