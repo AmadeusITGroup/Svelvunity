@@ -1,6 +1,5 @@
 <script>
   import CodeBlock from './CodeBlock.svelte';
-  import typescript from "svelte-highlight/languages/typescript";
   import css from "svelte-highlight/languages/css";
 
   let cssCode=`--toastContainerTop, 1.5rem
