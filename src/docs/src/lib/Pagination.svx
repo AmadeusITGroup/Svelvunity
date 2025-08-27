@@ -1,35 +1,37 @@
 <script>
-import CodeBlock from './CodeBlock.svelte';
-import typescript from "svelte-highlight/languages/typescript";
-import css from "svelte-highlight/languages/css";
-let propsCode=`export let rows: any = [];                  // An array, containing the whole content to be paged
-export let perPage = 20;                    // Sets how much items are shown per page
-export let trimmedRows;                     // Returns the sliced array with the defined length
-export let paginationTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests
-export let prevPageBtnTestId: string;       // Sets data-cy-id attribute's value for cypress e2e tests
-export let nextPageBtnTestId: string;       // Sets data-cy-id attribute's value for cypress e2e tests
-export let firstPageBtnTestId: string;      // Sets data-cy-id attribute's value for cypress e2e tests
-export let lastPageBtnTestId: string;       // Sets data-cy-id attribute's value for cypress e2e tests
-export let currPageTestId: string;          // Sets data-cy-id attribute's value for cypress e2e tests
-export let totalPagesTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests`;
-let cssCode=`--df-pagination-padding-x, 0.6rem
---df-pagination-padding-x, 0.125rem
---df-pagination-font-size, 1rem
---df-pagination-color, #000
---df-pagination-bg, #fff
---df-pagination-border-radius, 0.125rem
---df-pagination-hover-color, #000
---df-pagination-hover-bg, #ccc
---df-pagination-hover-border-color, #b3b3b3
---df-pagination-focus-color, #005eb8
---df-pagination-focus-bg, #ccc
---df-pagination-focus-box-shadow, 0 0 0 0.25rem rgba(0, 94, 184, 0.25)
---df-pagination-active-color, #fff
---df-pagination-active-bg, #005eb8
---df-pagination-active-border-color, #005eb8
---df-pagination-disabled-color, #b3b3b3
---df-pagination-disabled-bg, #fff
---df-pagination-disabled-border-color, #b3b3b3`;
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+  import css from "svelte-highlight/languages/css";
+
+  let propsCode=`export let rows: any = [];                  // An array, containing the whole content to be paged
+  export let perPage = 20;                    // Sets how much items are shown per page
+  export let trimmedRows;                     // Returns the sliced array with the defined length
+  export let paginationTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests
+  export let prevPageBtnTestId: string;       // Sets data-cy-id attribute's value for cypress e2e tests
+  export let nextPageBtnTestId: string;       // Sets data-cy-id attribute's value for cypress e2e tests
+  export let firstPageBtnTestId: string;      // Sets data-cy-id attribute's value for cypress e2e tests
+  export let lastPageBtnTestId: string;       // Sets data-cy-id attribute's value for cypress e2e tests
+  export let currPageTestId: string;          // Sets data-cy-id attribute's value for cypress e2e tests
+  export let totalPagesTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests`;
+  
+  let cssCode=`--df-pagination-padding-x, 0.6rem
+  --df-pagination-padding-x, 0.125rem
+  --df-pagination-font-size, 1rem
+  --df-pagination-color, #000
+  --df-pagination-bg, #fff
+  --df-pagination-border-radius, 0.125rem
+  --df-pagination-hover-color, #000
+  --df-pagination-hover-bg, #ccc
+  --df-pagination-hover-border-color, #b3b3b3
+  --df-pagination-focus-color, #005eb8
+  --df-pagination-focus-bg, #ccc
+  --df-pagination-focus-box-shadow, 0 0 0 0.25rem rgba(0, 94, 184, 0.25)
+  --df-pagination-active-color, #fff
+  --df-pagination-active-bg, #005eb8
+  --df-pagination-active-border-color, #005eb8
+  --df-pagination-disabled-color, #b3b3b3
+  --df-pagination-disabled-bg, #fff
+  --df-pagination-disabled-border-color, #b3b3b3`;
 </script>
 
 Separates long content into multiple pages to improve usability.

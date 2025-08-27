@@ -1,13 +1,13 @@
 <script>
-import CodeBlock from './CodeBlock.svelte';
-import typescript from "svelte-highlight/languages/typescript";
-import css from "svelte-highlight/languages/css";
-let propsCode=``;
-let cssCode=`--toastContainerTop, 1.5rem
---toastContainerRight, 2rem
---toastContainerBottom, auto
---toastContainerLeft, auto
---toastContainerZIndex, 9999`;
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+  import css from "svelte-highlight/languages/css";
+
+  let cssCode=`--toastContainerTop, 1.5rem
+  --toastContainerRight, 2rem
+  --toastContainerBottom, auto
+  --toastContainerLeft, auto
+  --toastContainerZIndex, 9999`;
 </script>
 
 Toasts provide feedback messages as notifications to the user. Goal is to mimic the push notifications available both on mobile and desktop operating systems.

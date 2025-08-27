@@ -1,8 +1,8 @@
 <script>
-import CodeBlock from './CodeBlock.svelte';
-import typescript from "svelte-highlight/languages/typescript";
-let propsCode=`export let url = '';   // Recreates the PageTransition component on url change
-`;
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+  
+  let propsCode=`export let url = '';   // Recreates the PageTransition component on url change`;
 </script>
 
 This component represents a simple fly-out and fly-in animation for a page transition.

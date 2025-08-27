@@ -1,8 +1,9 @@
 <script>
-import CodeBlock from './CodeBlock.svelte';
-import typescript from "svelte-highlight/languages/typescript";
-let propsCode=`export let items: any[] = [];           // An array to be displayed as selectable options
-export let activeTabValue = 1;          // Sets the value of the preselected tab`;
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+  
+  let propsCode=`export let items: any[] = [];           // An array to be displayed as selectable options
+  export let activeTabValue = 1;          // Sets the value of the preselected tab`;
 </script>
 
 

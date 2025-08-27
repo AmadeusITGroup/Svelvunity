@@ -1,95 +1,97 @@
 <script>
-import CodeBlock from './CodeBlock.svelte';
-import typescript from "svelte-highlight/languages/typescript";
-import css from "svelte-highlight/languages/css";
-let propsCode=`export let progressValue = 0;   //Represents the current progress percentage value`;
-let cssCode=`--pg-app-width, 100%
---pg-app-height, auto
---pg-app-pr, 15px
---pg-app-pl, 15px
---pg-app-pt, 15px
---pg-app-pb, 0px
---pg-app-margin-right, auto
---pg-app-margin-left, auto
---pg-app-margin-top, auto
---pg-app-margin-bottom, auto
---pg-app-bg-color, transparent
---pg-app-border-t, 1px
---pg-app-border-l, 1px
---pg-app-border-b, 1px
---pg-app-border-r, 1px
---pg-app-border-style, solid
---pg-app-border-color, transparent
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+  import css from "svelte-highlight/languages/css";
 
---pg-height, 7px
---pg-width, 100%
+  let propsCode=`export let progressValue = 0;   //Represents the current progress percentage value`;
+  
+  let cssCode=`--pg-app-width, 100%
+  --pg-app-height, auto
+  --pg-app-pr, 15px
+  --pg-app-pl, 15px
+  --pg-app-pt, 15px
+  --pg-app-pb, 0px
+  --pg-app-margin-right, auto
+  --pg-app-margin-left, auto
+  --pg-app-margin-top, auto
+  --pg-app-margin-bottom, auto
+  --pg-app-bg-color, transparent
+  --pg-app-border-t, 1px
+  --pg-app-border-l, 1px
+  --pg-app-border-b, 1px
+  --pg-app-border-r, 1px
+  --pg-app-border-style, solid
+  --pg-app-border-color, transparent
 
---pg-value-bg-color, #005eb8
---pg-value-color, transparent
---pg-value-border-radius, 1rem
---pg-value-transition, width 0.5s ease-in-
---pg-value-height, 7px
---pg-value-border-t, 0px
---pg-value-border-l, 0px
---pg-value-border-b, 0px
---pg-value-border-r, 0px
---pg-value-border-style, solid
---pg-value-border-color, transparent
+  --pg-height, 7px
+  --pg-width, 100%
 
---pg-bar-bg-color, #9bcaeb
---pg-bar-color, transparent
---pg-bar-height, 7px
---pg-bar-width, 100%
---pg-bar-border-t, 0px
---pg-bar-border-l, 0px
---pg-bar-border-b, 0px
---pg-bar-border-r, 0px
---pg-bar-border-style, solid
---pg-bar-border-color, transparent
---pg-bar-border-radius, 1rem
+  --pg-value-bg-color, #005eb8
+  --pg-value-color, transparent
+  --pg-value-border-radius, 1rem
+  --pg-value-transition, width 0.5s ease-in-
+  --pg-value-height, 7px
+  --pg-value-border-t, 0px
+  --pg-value-border-l, 0px
+  --pg-value-border-b, 0px
+  --pg-value-border-r, 0px
+  --pg-value-border-style, solid
+  --pg-value-border-color, transparent
 
---pg-badge-bg-color, #005eb8
---pg-badge-color, #fff
---pg-badge-text-transform, uppercase
---pg-badge-display, inline-block
---pg-badge-font-size, 16px
---pg-badge-font-style, normal
---pg-badge-font-weight, 500
---pg-badge-line-height, 1
---pg-badge-text-align, center
---pg-badge-white-space, nowrap
---pg-badge-vertical-align, baseline
---pg-badge-position, relative
---pg-badge-top, 5px
---pg-badge-margin-left, -25px
---pg-badge-width, auto
---pg-badge-height, auto
---pg-badge-pt, 0.38em
---pg-badge-pr, 0.86em
---pg-badge-pb, 0.38em
---pg-badge-pl, 0.86em
---pg-badge-border-t, 1px
---pg-badge-border-l, 1px
---pg-badge-border-b, 1px
---pg-badge-border-r, 1px
---pg-badge-border-style, solid
---pg-badge-border-color, #ccc
---pg-badge-border-radius, 0.25rem
---pg-badge-border, none
+  --pg-bar-bg-color, #9bcaeb
+  --pg-bar-color, transparent
+  --pg-bar-height, 7px
+  --pg-bar-width, 100%
+  --pg-bar-border-t, 0px
+  --pg-bar-border-l, 0px
+  --pg-bar-border-b, 0px
+  --pg-bar-border-r, 0px
+  --pg-bar-border-style, solid
+  --pg-bar-border-color, transparent
+  --pg-bar-border-radius, 1rem
 
---pg-badge-hover-color, #fff
---pg-badge-hover-bg-color, #00519f
---pg-badge-hover-text-decoration, none
---pg-badge-hover-font-style, normal
---pg-badge-hover-cursor, pointer
---pg-badge-hover-border-t, 1px
---pg-badge-hover-border-l, 1px
---pg-badge-hover-border-b, 1px
---pg-badge-hover-border-r, 1px
---pg-badge-hover-border-style, solid
---pg-badge-hover-border-color, #ccc
---pg-badge-hover-border-radius, 0.25rem
---pg-badge-hover-border, none`;
+  --pg-badge-bg-color, #005eb8
+  --pg-badge-color, #fff
+  --pg-badge-text-transform, uppercase
+  --pg-badge-display, inline-block
+  --pg-badge-font-size, 16px
+  --pg-badge-font-style, normal
+  --pg-badge-font-weight, 500
+  --pg-badge-line-height, 1
+  --pg-badge-text-align, center
+  --pg-badge-white-space, nowrap
+  --pg-badge-vertical-align, baseline
+  --pg-badge-position, relative
+  --pg-badge-top, 5px
+  --pg-badge-margin-left, -25px
+  --pg-badge-width, auto
+  --pg-badge-height, auto
+  --pg-badge-pt, 0.38em
+  --pg-badge-pr, 0.86em
+  --pg-badge-pb, 0.38em
+  --pg-badge-pl, 0.86em
+  --pg-badge-border-t, 1px
+  --pg-badge-border-l, 1px
+  --pg-badge-border-b, 1px
+  --pg-badge-border-r, 1px
+  --pg-badge-border-style, solid
+  --pg-badge-border-color, #ccc
+  --pg-badge-border-radius, 0.25rem
+  --pg-badge-border, none
+
+  --pg-badge-hover-color, #fff
+  --pg-badge-hover-bg-color, #00519f
+  --pg-badge-hover-text-decoration, none
+  --pg-badge-hover-font-style, normal
+  --pg-badge-hover-cursor, pointer
+  --pg-badge-hover-border-t, 1px
+  --pg-badge-hover-border-l, 1px
+  --pg-badge-hover-border-b, 1px
+  --pg-badge-hover-border-r, 1px
+  --pg-badge-hover-border-style, solid
+  --pg-badge-hover-border-color, #ccc
+  --pg-badge-hover-border-radius, 0.25rem
+  --pg-badge-hover-border, none`;
 </script>
 
 This component displays a horizontal bar that visually represents the progress of a task with a percentage badge indicating the completion status.

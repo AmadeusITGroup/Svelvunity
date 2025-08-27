@@ -1,13 +1,14 @@
 <script>
-import CodeBlock from './CodeBlock.svelte';
-import typescript from "svelte-highlight/languages/typescript";
-let propsCode=`export let testId = '';                                     // Sets data-cy-id attribute's value for cypress e2e tests
-export let classes = '';                                    // Styles the UserProfileMenu container
-export let classesForDropdownButton = '';                   // Styles the button for the dropdown
-export let dropdownLabel: string;                           // Sets label for the dropdown button
-export let options: { link: string; label: string }[];      // An array to be displayed as selectable options
-export let funcLabel: string;                               // Places a label for the last option
-export let func: any;                                       // Define a function, which logs the user out`;
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+  
+  let propsCode=`export let testId = '';                                     // Sets data-cy-id attribute's value for cypress e2e tests
+  export let classes = '';                                    // Styles the UserProfileMenu container
+  export let classesForDropdownButton = '';                   // Styles the button for the dropdown
+  export let dropdownLabel: string;                           // Sets label for the dropdown button
+  export let options: { link: string; label: string }[];      // An array to be displayed as selectable options
+  export let funcLabel: string;                               // Places a label for the last option
+  export let func: any;                                       // Define a function, which logs the user out`;
 </script>
 
 A dropdown menu for user selecting actions.
