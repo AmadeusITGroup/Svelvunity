@@ -24,6 +24,7 @@
       --datepicker-calendar-day-background-hover: #eee;
       --datepicker-calendar-day-color-hover: #333;
   }`;
+
 </script>
 
 The Datepicker component is a versatile and customizable date picker built with Svelte. It allows users to select dates with various features such as disabling past or future dates, enabling specific dates, and customizing the appearance.

@@ -1,7 +1,7 @@
 <script>
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
-  
+
   let propsCode=`
   export let errorCode = 403;                                             // Sets a HTTP error code to display
   export let headMessage = 

@@ -4,7 +4,7 @@
   import css from "svelte-highlight/languages/css";
 
   let propsCode=`export let progressValue = 0;   //Represents the current progress percentage value`;
-  
+
   let cssCode=`
   --pg-app-width, 100%
   --pg-app-height, auto

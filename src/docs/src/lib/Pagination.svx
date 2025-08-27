@@ -14,7 +14,7 @@
   export let lastPageBtnTestId: string;       // Sets data-cy-id attribute's value for cypress e2e tests
   export let currPageTestId: string;          // Sets data-cy-id attribute's value for cypress e2e tests
   export let totalPagesTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests`;
-  
+
   let cssCode=`
   --df-pagination-padding-x, 0.6rem
   --df-pagination-padding-x, 0.125rem

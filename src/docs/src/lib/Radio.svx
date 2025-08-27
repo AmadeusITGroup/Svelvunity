@@ -1,7 +1,7 @@
 <script>
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
-  
+
   let propsCode=`
   export let labelText = '';                            // Sets a label for the radio options
   export let inputName = '';                            // Sets the name attribute for the label and the input
