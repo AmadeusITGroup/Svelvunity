@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 import css from "svelte-highlight/languages/css";
 let propsCode=`export let open = false;                                        // Toggles accordion body visibility
@@ -65,9 +65,9 @@ An accordion is a vertically stacked list of headers that reveal or hide associa
 <br>
 
 ## Props
- <Highlight language={typescript} code={propsCode} />
+ <CodeBlock language={typescript} code={propsCode} />
 <br>
 
 ## Styling
 You can either pass in CSS classes directly to overwrite the CSS for the button and the body using the props, or you can use the CSS variables from below:
- <Highlight language={css} code={cssCode} />
+ <CodeBlock language={css} code={cssCode} />

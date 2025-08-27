@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let errorCode = 403;                                             // Sets a HTTP error code to display
 export let headMessage = 
@@ -12,7 +12,7 @@ This component provides you with a ADF compliant error page for your application
 <br>
 
 ## Props
- <Highlight language={typescript} code={propsCode} />
+ <CodeBlock language={typescript} code={propsCode} />
 <br>
 
 ## Styling

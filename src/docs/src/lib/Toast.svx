@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 import css from "svelte-highlight/languages/css";
 let propsCode=``;
@@ -20,4 +20,4 @@ The toast component props are a bit different than the other components. You can
 
 ## Styling
  By default the toast messages are shown in the upper right corner of the webpage. This is the default behavior and changing it is not encouraged. Despite that, one can adjust where the message is show with the following CSS variables:
- <Highlight language={css} code={cssCode} />
+ <CodeBlock language={css} code={cssCode} />

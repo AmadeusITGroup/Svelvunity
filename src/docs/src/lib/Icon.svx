@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let iconSVG: string;                         // Renders an icon from a given path d
 export let viewBox: string = '0 0 448 512';         // Sets the viewBox attribute for the SVG
@@ -18,7 +18,7 @@ Shows information visually and reinforces the user's understanding of it.
 <br>
 
 ## Props
- <Highlight language={typescript} code={propsCode} />
+ <CodeBlock language={typescript} code={propsCode} />
 <br>
 
 ## Styling

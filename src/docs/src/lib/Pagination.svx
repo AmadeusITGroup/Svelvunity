@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 import css from "svelte-highlight/languages/css";
 let propsCode=`export let rows: any = [];                  // An array, containing the whole content to be paged
@@ -37,12 +37,12 @@ Separates long content into multiple pages to improve usability.
 
 ## Props
 
- <Highlight language={typescript} code={propsCode} />
+ <CodeBlock language={typescript} code={propsCode} />
 <br>
 
 ## Styling
 This is a pretty straightforward component with no special stylings. All of the extra styling, if needed, can be handled through the css variables below.
 
- <Highlight language={css} code={cssCode} />
+ <CodeBlock language={css} code={cssCode} />
 
 

@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let testId = '';                                     // Sets data-cy-id attribute's value for cypress e2e tests
 export let classes = '';                                    // Styles the UserProfileMenu container

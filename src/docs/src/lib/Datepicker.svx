@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 import css from "svelte-highlight/languages/css";
 let propsCode=`export let selectedDate: any = null;                    // The currently selected date
@@ -27,11 +27,11 @@ The Datepicker component is a versatile and customizable date picker built with 
 
 ## Props
 
- <Highlight language={typescript} code={propsCode} />
+ <CodeBlock language={typescript} code={propsCode} />
 
 <br>
 
 ## Styling
 The component supports extensive styling through CSS variables and custom classes. You can customize the appearance of the date picker by overriding these variables in your stylesheet. For responsive design, the component adapts to screen sizes below 800px width by changing the layout of the calendar card.
 
- <Highlight language={css} code={cssCode} />
+ <CodeBlock language={css} code={cssCode} />

@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let activeContent = false;                            // Indicates if the content is active
 export let arrow = true;                                     // Shows an arrow
@@ -18,7 +18,7 @@ Provides additional information or help about visual elements or actions within 
 
 ## Props
 
- <Highlight language={typescript} code={propsCode} />
+ <CodeBlock language={typescript} code={propsCode} />
 
 <br>
 

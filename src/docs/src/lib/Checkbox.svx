@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let inputName = '';                  //Sets checkbox id and label's for attribute 
 export let labelName = '';                  // Optional label
@@ -14,7 +14,7 @@ export let testId: string;                  // Cypress ID for checkbox`;
 
 Allows users to select one or more items from a set.
 <br>
- <Highlight language={typescript} code={propsCode} />
+ <CodeBlock language={typescript} code={propsCode} />
 <br>
 
 Except the props, there are also an event that fires:

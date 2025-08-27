@@ -1,5 +1,5 @@
 <script>
-import Highlight from "svelte-highlight";
+import CodeBlock from './CodeBlock.svelte';
 import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let content = '';                // Sets the content to be displayed in the tooltip
 export let align = 'left';              // Sets the text-align CSS property for the content
