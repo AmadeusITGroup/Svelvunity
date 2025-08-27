@@ -1,16 +1,22 @@
+<script>
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+  
+  let propsCode=`export let threshold: number | undefined = 0;           // Sets the scroll threshold to trigger a callback
+  export let horizontal: boolean | undefined = false;     // Sets Infinite scroll to listen for horizontal scroll
+  export let elementScroll: HTMLElement | null = null;    // Binds the scroll listener to a HTML element
+  export let hasMore: boolean | undefined = true;         // A flag for available pages
+  export let reverse: boolean | undefined = false;        // Reverts the scroll direction
+  export let window: boolean | undefined = false;         // Binds the scroll listener to the window object`;
+</script>
+
 Infinite Scroll automatically adds the next page, saving users from a full page load.
 <br>
 
 ## Props
 
-```typescript
-export let threshold: number | undefined = 0;           // Sets the scroll threshold to trigger a callback
-export let horizontal: boolean | undefined = false;     // Sets Infinite scroll to listen for horizontal scroll
-export let elementScroll: HTMLElement | null = null;    // Binds the scroll listener to a HTML element
-export let hasMore: boolean | undefined = true;         // A flag for available pages
-export let reverse: boolean | undefined = false;        // Reverts the scroll direction
-export let window: boolean | undefined = false;         // Binds the scroll listener to the window object
-```
+ <CodeBlock language={typescript} code={propsCode} />
+
 <br>
 
 ## Styling

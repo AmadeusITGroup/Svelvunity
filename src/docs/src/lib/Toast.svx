@@ -1,3 +1,14 @@
+<script>
+  import CodeBlock from './CodeBlock.svelte';
+  import css from "svelte-highlight/languages/css";
+
+  let cssCode=`--toastContainerTop, 1.5rem
+  --toastContainerRight, 2rem
+  --toastContainerBottom, auto
+  --toastContainerLeft, auto
+  --toastContainerZIndex, 9999`;
+</script>
+
 Toasts provide feedback messages as notifications to the user. Goal is to mimic the push notifications available both on mobile and desktop operating systems.
 <br>
 
@@ -8,12 +19,4 @@ The toast component props are a bit different than the other components. You can
 
 ## Styling
  By default the toast messages are shown in the upper right corner of the webpage. This is the default behavior and changing it is not encouraged. Despite that, one can adjust where the message is show with the following CSS variables:
-
-```CSS
-
---toastContainerTop, 1.5rem
---toastContainerRight, 2rem
---toastContainerBottom, auto
---toastContainerLeft, auto
---toastContainerZIndex, 9999
-```
+ <CodeBlock language={css} code={cssCode} />

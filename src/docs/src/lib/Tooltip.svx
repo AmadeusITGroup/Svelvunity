@@ -1,19 +1,23 @@
+<script>
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+
+  let propsCode=`export let content = '';                // Sets the content to be displayed in the tooltip
+  export let align = 'left';              // Sets the text-align CSS property for the content
+  export let position = 'top';            // Places the tooltip relative to the triggering element
+  export let maxWidth = 200;              // Sets the max width of the tooltip itself
+  export let style = null;                // Styles the tooltip component
+  export let animation = '';              // Sets the animation for the showing/hiding of the tooltip
+  export let arrow = true;                // Displays arrow for the tooltip
+  export let autoPosition = false;        // Determines the position for the tooltip automatically
+  export let testId = '';                 // Sets data-cy-id attribute's value for cypress e2e tests`;
+</script>
+
 Appears when users interact with an element, and includes a short informative message to guide them.
 <br>
 
 ## Props
-
-```typescript
-export let content = '';                // Sets the content to be displayed in the tooltip
-export let align = 'left';              // Sets the text-align CSS property for the content
-export let position = 'top';            // Places the tooltip relative to the triggering element
-export let maxWidth = 200;              // Sets the max width of the tooltip itself
-export let style = null;                // Styles the tooltip component
-export let animation = '';              // Sets the animation for the showing/hiding of the tooltip
-export let arrow = true;                // Displays arrow for the tooltip
-export let autoPosition = false;        // Determines the position for the tooltip automatically
-export let testId = '';                 // Sets data-cy-id attribute's value for cypress e2e tests
-```
+<CodeBlock language={typescript} code={propsCode} />
 <br>
 
 ## Styling

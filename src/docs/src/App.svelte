@@ -25,6 +25,8 @@
     import UserProfileMenu from './lib/UserProfileMenu.svx';
     import Sidebar from './lib/Sidebar.svelte';
     import Switch from './lib/Switch.svx';
+    import shadesOfPurple from 'svelte-highlight/styles/shades-Of-Purple';
+
 
     let items: ITabItem[] = [
         {
@@ -153,6 +155,8 @@
     };
 </script>
 
+<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+<svelte:head>{@html shadesOfPurple}</svelte:head>
 <main>
     <div class="layout">
         <Sidebar
