@@ -3,7 +3,8 @@
   import typescript from "svelte-highlight/languages/typescript";
   import css from "svelte-highlight/languages/css";
 
-  let propsCode=`export let rows: any = [];                  // An array, containing the whole content to be paged
+  let propsCode=`
+  export let rows: any = [];                  // An array, containing the whole content to be paged
   export let perPage = 20;                    // Sets how much items are shown per page
   export let trimmedRows;                     // Returns the sliced array with the defined length
   export let paginationTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests
@@ -14,7 +15,8 @@
   export let currPageTestId: string;          // Sets data-cy-id attribute's value for cypress e2e tests
   export let totalPagesTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests`;
   
-  let cssCode=`--df-pagination-padding-x, 0.6rem
+  let cssCode=`
+  --df-pagination-padding-x, 0.6rem
   --df-pagination-padding-x, 0.125rem
   --df-pagination-font-size, 1rem
   --df-pagination-color, #000

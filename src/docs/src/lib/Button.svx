@@ -3,7 +3,8 @@
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
 
-  let propsCode=`export let clickLogic: Function = () => {};                         // Callback for button press
+  let propsCode=`
+  export let clickLogic: Function = () => {};                         // Callback for button press
   export let label: string = '';                                      // Button text
   export let isDisabled: boolean = false;                             // Disable button
   export let additionalClasses: string = '';                          // Additional button classes

@@ -2,7 +2,8 @@
   import CodeBlock from './CodeBlock.svelte';
   import css from "svelte-highlight/languages/css";
 
-  let cssCode=`--toastContainerTop, 1.5rem
+  let cssCode=`
+  --toastContainerTop, 1.5rem
   --toastContainerRight, 2rem
   --toastContainerBottom, auto
   --toastContainerLeft, auto

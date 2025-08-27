@@ -2,7 +2,8 @@
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
 
-  let propsCode=`export let testId = '';                                     // Sets data-cy-id attribute's value for cypress e2e tests
+  let propsCode=`
+  export let testId = '';                                     // Sets data-cy-id attribute's value for cypress e2e tests
   export let classes = '';                                    // Styles the UserProfileMenu container
   export let classesForDropdownButton = '';                   // Styles the button for the dropdown
   export let dropdownLabel: string;                           // Sets label for the dropdown button

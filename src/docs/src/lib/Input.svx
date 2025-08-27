@@ -2,7 +2,8 @@
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
   
-  let propsCode=`export let classes = '';                        // Styles the container
+  let propsCode=`
+  export let classes = '';                        // Styles the container
   export let classesForInput = '';                // Styles the input
   export let labelName = '';                      // Sets the label text
   export let inputName = '';                      // Sets id, name, and for attributes

@@ -3,7 +3,8 @@
     import typescript from "svelte-highlight/languages/typescript";
     import css from "svelte-highlight/languages/css";
 
-    let propsCode=`export let open = false;                                        // Toggles accordion body visibility
+    let propsCode=`
+    export let open = false;                                        // Toggles accordion body visibility
     export let disabled = false;                                    // Disables accordion button click
     export let showBody = true;                                     // Shows body if true
     export let fillEmptyChevronSpace = false;                       // Adds space before button text if body is empty
@@ -15,7 +16,8 @@
     export let buttonClasses = '';                                  // CSS classes for accordion button
     export let bodyClasses = '';                                    // CSS classes for accordion body`;
 
-    let cssCode=`--accordion-button-align-items, center
+    let cssCode=`
+    --accordion-button-align-items, center
     --accordion-button-width, 100%
     --accordion-button-font-size, 1rem
     --accordion-button-color, #1a1a1a

@@ -2,7 +2,8 @@
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
   
-  let propsCode=`export let iconSVG: string;                         // Renders an icon from a given path d
+  let propsCode=`
+  export let iconSVG: string;                         // Renders an icon from a given path d
   export let viewBox: string = '0 0 448 512';         // Sets the viewBox attribute for the SVG
   export let height: number = 22;                     // Sets the icon's height
   export let width: number = 22;                      // Sets the icon's width

@@ -2,7 +2,8 @@
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
   
-  let propsCode=`export let activeContent = false;                            // Indicates if the content is active
+  let propsCode=`
+  export let activeContent = false;                            // Indicates if the content is active
   export let arrow = true;                                     // Shows an arrow
   export let offset = 8;                                       // Sets the offset distance
   export let placement: Placement = 'top';                     // Determines the placement of the popover
