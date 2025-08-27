@@ -29,8 +29,8 @@
     const handleClickOutside = () => activateClickOutside && !hidden && handleSidebar();
 
     let backdropDivClass = activateClickOutside
-    ? 'fixed top-0 left-0 z-50 w-full h-full bg-opacity-50'
-    : 'fixed top-0 left-0 z-50 w-full h-full bg-opacity-50 pointer-events-none';
+        ? 'fixed top-0 left-0 z-50 w-full h-full bg-opacity-50'
+        : 'fixed top-0 left-0 z-50 w-full h-full bg-opacity-50 pointer-events-none';
 
     function clickOutsideWrapper(node: HTMLElement, callback: () => void) {
         return activateClickOutside ? clickOutside(node, callback) : undefined;
