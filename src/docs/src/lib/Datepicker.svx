@@ -1,8 +1,7 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
-    import css from "svelte-highlight/languages/css";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+import Highlight from "svelte-highlight";
+import typescript from "svelte-highlight/languages/typescript";
+import css from "svelte-highlight/languages/css";
 let propsCode=`export let selectedDate: any = null;                    // The currently selected date
 export let today: Date = new Date();                    // Today's date, used for highlighting
 export let isOpen: boolean = false;                     // Controls the visibility of the calendar
@@ -23,9 +22,6 @@ let cssCode=`.datepicker .calendar-card {
 }`;
 </script>
 
-<svelte:head>
-  {@html shadesOfPurple}
-</svelte:head>
 The Datepicker component is a versatile and customizable date picker built with Svelte. It allows users to select dates with various features such as disabling past or future dates, enabling specific dates, and customizing the appearance.
 <br>
 

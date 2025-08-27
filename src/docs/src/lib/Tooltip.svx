@@ -1,7 +1,6 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+import Highlight from "svelte-highlight";
+import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let content = '';                // Sets the content to be displayed in the tooltip
 export let align = 'left';              // Sets the text-align CSS property for the content
 export let position = 'top';            // Places the tooltip relative to the triggering element
@@ -13,9 +12,6 @@ export let autoPosition = false;        // Determines the position for the toolt
 export let testId = '';                 // Sets data-cy-id attribute's value for cypress e2e tests`;
 </script>
 
-<svelte:head>
-  {@html shadesOfPurple}
-</svelte:head>
 Appears when users interact with an element, and includes a short informative message to guide them.
 <br>
 

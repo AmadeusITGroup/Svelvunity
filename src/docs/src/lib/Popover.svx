@@ -1,7 +1,6 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+import Highlight from "svelte-highlight";
+import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let activeContent = false;                            // Indicates if the content is active
 export let arrow = true;                                     // Shows an arrow
 export let offset = 8;                                       // Sets the offset distance
@@ -14,9 +13,6 @@ export let open = false;                                     // Controls whether
 export let yOnly = false;                                    // Restricts movement to the Y-axis only`;
 </script>
 
-<svelte:head>
-  {@html shadesOfPurple}
-</svelte:head>
 Provides additional information or help about visual elements or actions within the UI.
 <br>
 

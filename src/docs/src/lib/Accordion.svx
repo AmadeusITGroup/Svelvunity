@@ -1,8 +1,7 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
-    import css from "svelte-highlight/languages/css";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+import Highlight from "svelte-highlight";
+import typescript from "svelte-highlight/languages/typescript";
+import css from "svelte-highlight/languages/css";
 let propsCode=`export let open = false;                                        // Toggles accordion body visibility
 export let disabled = false;                                    // Disables accordion button click
 export let showBody = true;                                     // Shows body if true
@@ -61,9 +60,6 @@ let cssCode=`--accordion-button-align-items, center
 --accordion-body-border-color, #ccc`;
 </script>
 
-<svelte:head>
-  {@html shadesOfPurple}
-</svelte:head>
 
 An accordion is a vertically stacked list of headers that reveal or hide associated sections of content. The AccordionItem component represents one of these sections.
 <br>

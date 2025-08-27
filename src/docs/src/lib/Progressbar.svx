@@ -1,8 +1,7 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
-    import css from "svelte-highlight/languages/css";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+import Highlight from "svelte-highlight";
+import typescript from "svelte-highlight/languages/typescript";
+import css from "svelte-highlight/languages/css";
 let propsCode=`export let progressValue = 0;   //Represents the current progress percentage value`;
 let cssCode=`--pg-app-width, 100%
 --pg-app-height, auto
@@ -93,9 +92,6 @@ let cssCode=`--pg-app-width, 100%
 --pg-badge-hover-border, none`;
 </script>
 
-<svelte:head>
-  {@html shadesOfPurple}
-</svelte:head>
 This component displays a horizontal bar that visually represents the progress of a task with a percentage badge indicating the completion status.
 <br>
 

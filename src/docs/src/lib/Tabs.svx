@@ -1,14 +1,11 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+import Highlight from "svelte-highlight";
+import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let items: any[] = [];           // An array to be displayed as selectable options
 export let activeTabValue = 1;          // Sets the value of the preselected tab`;
 </script>
 
-<svelte:head>
-  {@html shadesOfPurple}
-</svelte:head>
+
 Shows the user different content depending on his choice of a tab.
 <br>
 

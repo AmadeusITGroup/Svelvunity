@@ -1,7 +1,6 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+import Highlight from "svelte-highlight";
+import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let classes = '';                        // Styles the container
 export let classesForInput = '';                // Styles the input
 export let labelName = '';                      // Sets the label text
@@ -21,9 +20,6 @@ export let resizableTextarea = true;            // Allows textarea resizing
 export let testId: string = '';                 // Sets data-cy-id for Cypress tests`;
 </script>
 
-<svelte:head>
-  {@html shadesOfPurple}
-</svelte:head>
 Allows the user to enter data in a single line.
 <br>
 

@@ -1,7 +1,6 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+import Highlight from "svelte-highlight";
+import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let width: string = '140px';                       // Sets the width of the loading spinner
 export let height: string = '140px';                      // Sets the height of the loading spinner
 export let loadingAnimationDuration: number = 
@@ -11,10 +10,6 @@ export let isScreenCentered: boolean = false;             // Centers the loading
 export let classes: string = '';                          // Styles the spinner container
 export let testId: string = '';                           // Sets data-cy-id attribute's value for cypress e2e tests`;
 </script>
-
-<svelte:head>
-  {@html shadesOfPurple}
-</svelte:head>
 
 Used for indication a loading state.
 <br>

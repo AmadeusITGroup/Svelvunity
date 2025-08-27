@@ -24,6 +24,7 @@
     import Tooltip from './lib/Tooltip.svx';
     import UserProfileMenu from './lib/UserProfileMenu.svx';
     import Sidebar from './lib/Sidebar.svelte';
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
 
     let items: ITabItem[] = [
         {
@@ -146,7 +147,7 @@
         easing: sineIn
     };
 </script>
-
+<svelte:head>  {@html shadesOfPurple} </svelte:head> 
 <main>
     <div class="layout">
         <Sidebar

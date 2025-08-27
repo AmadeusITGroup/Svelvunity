@@ -1,7 +1,6 @@
 <script>
-    import Highlight from "svelte-highlight";
-    import typescript from "svelte-highlight/languages/typescript";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+import Highlight from "svelte-highlight";
+import typescript from "svelte-highlight/languages/typescript";
 let propsCode=`export let errorCode = 403;                                             // Sets a HTTP error code to display
 export let headMessage = 
     "The page you're trying to reach has restricted access.";           // Sets the main heading of the page
@@ -9,9 +8,6 @@ export let message = 'Please refer to your administrator.';             // Sets 
 export let testId = '';                                                 // Sets data-cy-id attribute's value for e2e tests`;
 </script>
 
-<svelte:head>
-  {@html shadesOfPurple}
-</svelte:head>
 This component provides you with a ADF compliant error page for your application.
 <br>
 
