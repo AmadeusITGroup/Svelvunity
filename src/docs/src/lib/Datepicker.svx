@@ -1,10 +1,8 @@
-The Datepicker component is a versatile and customizable date picker built with Svelte. It allows users to select dates with various features such as disabling past or future dates, enabling specific dates, and customizing the appearance.
-<br>
-
-## Props
-
-```typescript
-export let selectedDate: any = null;                    // The currently selected date
+<script>
+    import Highlight from "svelte-highlight";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+let propsCode=`export let selectedDate: any = null;                    // The currently selected date
 export let today: Date = new Date();                    // Today's date, used for highlighting
 export let isOpen: boolean = false;                     // Controls the visibility of the calendar
 export let align: string = 'left';                      // Alignment of the calendar ('left' or 'right')
@@ -14,20 +12,29 @@ export let alwaysShow: boolean = false;                 // If true, the calendar
 export let disableDatesBefore: string | null = null;    // Disable all dates before this date
 export let disableDatesAfter: string | null = null;     // Disable all dates after this date
 export let showYears: boolean = false;                  // Allows navigation to different years directly
-export let classes:string = '';                         // Custom CSS classes for styling the component
-```
-<br>
-
-## Styling
-The component supports extensive styling through CSS variables and custom classes. You can customize the appearance of the date picker by overriding these variables in your stylesheet. For responsive design, the component adapts to screen sizes below 800px width by changing the layout of the calendar card.
-
-```CSS
-
-.datepicker .calendar-card {
+export let classes:string = '';                         // Custom CSS classes for styling the component`;
+let cssCode=`.datepicker .calendar-card {
     --datepicker-calendar-day-padding: 10px;
     --datepicker-calendar-day-text-align: center;
     --datepicker-calendar-day-width: 40px;
     --datepicker-calendar-day-background-hover: #eee;
     --datepicker-calendar-day-color-hover: #333;
-}
-```
+}`;
+</script>
+
+<svelte:head>
+  {@html shadesOfPurple}
+</svelte:head>
+The Datepicker component is a versatile and customizable date picker built with Svelte. It allows users to select dates with various features such as disabling past or future dates, enabling specific dates, and customizing the appearance.
+<br>
+
+## Props
+
+ <Highlight language={typescript} code={propsCode} />
+
+<br>
+
+## Styling
+The component supports extensive styling through CSS variables and custom classes. You can customize the appearance of the date picker by overriding these variables in your stylesheet. For responsive design, the component adapts to screen sizes below 800px width by changing the layout of the calendar card.
+
+ <Highlight language={typescript} code={cssCode} />

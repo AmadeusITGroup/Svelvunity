@@ -1,10 +1,8 @@
-Allows users to select one or more items from a set.
-<br>
-
-## Props
-
-```typescript
-export let inputName = '';                  // Sets checkbox id and label's for attribute
+<script>
+    import Highlight from "svelte-highlight";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+let propsCode=`export let inputName = '';                  //Sets checkbox id and label's for attribute 
 export let labelName = '';                  // Optional label
 export let classes = '';                    // Styles checkbox container
 export let classesForInput = '';            // Styles input
@@ -12,8 +10,16 @@ export let classesForLabel = '';            // Styles label
 export let inputValue: boolean;             // Input value
 export let required = false;                // Checkbox required status
 export let isDisabled = false;              // Disable checkbox
-export let testId: string;                  // Cypress ID for checkbox
-```
+export let testId: string;                  // Cypress ID for checkbox`;
+</script>
+
+<svelte:head>
+  {@html shadesOfPurple}
+</svelte:head>
+
+Allows users to select one or more items from a set.
+<br>
+ <Highlight language={typescript} code={propsCode} />
 <br>
 
 Except the props, there are also an event that fires:

@@ -1,10 +1,8 @@
-Allows the user to select a single or multiple items from a list of options.
-<br>
-
-## Props
-
-```typescript
-export let classes?: string;                    // Styles the component's container
+<script>
+    import Highlight from "svelte-highlight";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+let propsCode=`export let classes?: string;                    // Styles the component's container
 export let labelName?: string;                  // Sets label for the select input
 export let inputName?: string;                  // Sets the name attribute for the label and the select input
 export let inputError?: string;                 // Displays validation error below the select input
@@ -12,8 +10,18 @@ export let inputValue?: string;                 // Stores the selected value in 
 export let placeholder?: string;                // Used to display a disabled preselected option in the select input
 export let testId?: string;                     // Sets data-cy-id attribute's value for cypress e2e tests
 export let options?: Array<any>;                // An array to be displayed as selectable options
-export let isDisabled?: boolean;                // Disables the select input when true
-```
+export let isDisabled?: boolean;                // Disables the select input when true`;
+let cssCode=``;
+</script>
+
+<svelte:head>
+  {@html shadesOfPurple}
+</svelte:head>
+Allows the user to select a single or multiple items from a list of options.
+<br>
+
+## Props
+ <Highlight language={typescript} code={propsCode} />
 <br>
 
 ## Styling

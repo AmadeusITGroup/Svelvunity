@@ -1,11 +1,22 @@
+<script>
+    import Highlight from "svelte-highlight";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+let propsCode=`export let url = '';   // Recreates the PageTransition component on url change
+`;
+let cssCode=``;
+</script>
+
+<svelte:head>
+  {@html shadesOfPurple}
+</svelte:head>
 This component represents a simple fly-out and fly-in animation for a page transition.
 <br>
 
 ## Props
 
-```typescript
-export let url = '';   // Recreates the PageTransition component on url change
-```
+ <Highlight language={typescript} code={propsCode} />
+
 <br>
 
 ## Styling

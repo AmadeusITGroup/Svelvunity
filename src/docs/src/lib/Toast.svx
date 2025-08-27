@@ -1,3 +1,18 @@
+<script>
+    import Highlight from "svelte-highlight";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+let propsCode=``;
+let cssCode=`--toastContainerTop, 1.5rem
+--toastContainerRight, 2rem
+--toastContainerBottom, auto
+--toastContainerLeft, auto
+--toastContainerZIndex, 9999`;
+</script>
+
+<svelte:head>
+  {@html shadesOfPurple}
+</svelte:head>
 Toasts provide feedback messages as notifications to the user. Goal is to mimic the push notifications available both on mobile and desktop operating systems.
 <br>
 
@@ -8,12 +23,4 @@ The toast component props are a bit different than the other components. You can
 
 ## Styling
  By default the toast messages are shown in the upper right corner of the webpage. This is the default behavior and changing it is not encouraged. Despite that, one can adjust where the message is show with the following CSS variables:
-
-```CSS
-
---toastContainerTop, 1.5rem
---toastContainerRight, 2rem
---toastContainerBottom, auto
---toastContainerLeft, auto
---toastContainerZIndex, 9999
-```
+ <Highlight language={typescript} code={cssCode} />

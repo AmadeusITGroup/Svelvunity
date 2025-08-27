@@ -1,10 +1,8 @@
-Shows information visually and reinforces the user's understanding of it.
-<br>
-
-## Props
-
-```typescript
-export let iconSVG: string;                         // Renders an icon from a given path d
+<script>
+    import Highlight from "svelte-highlight";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+let propsCode=`export let iconSVG: string;                         // Renders an icon from a given path d
 export let viewBox: string = '0 0 448 512';         // Sets the viewBox attribute for the SVG
 export let height: number = 22;                     // Sets the icon's height
 export let width: number = 22;                      // Sets the icon's width
@@ -14,7 +12,17 @@ export let clickLogic: Function | null = null;      // Defines a click callback 
 export let classes: string = '';                    // Styles the SVG
 export let testId: string = '';                     // Sets the data-cy-id attribute for Cypress tests
 export let tabIndex: number = 0;                    // Sets the tabindex attribute for the SVG (changing is not recommended)
-```
+`;
+</script>
+
+<svelte:head>
+  {@html shadesOfPurple}
+</svelte:head>
+Shows information visually and reinforces the user's understanding of it.
+<br>
+
+## Props
+ <Highlight language={typescript} code={propsCode} />
 <br>
 
 ## Styling

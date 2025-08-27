@@ -1,16 +1,25 @@
+<script>
+    import Highlight from "svelte-highlight";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+let propsCode=`export let threshold: number | undefined = 0;           // Sets the scroll threshold to trigger a callback
+export let horizontal: boolean | undefined = false;     // Sets Infinite scroll to listen for horizontal scroll
+export let elementScroll: HTMLElement | null = null;    // Binds the scroll listener to a HTML element
+export let hasMore: boolean | undefined = true;         // A flag for available pages
+export let reverse: boolean | undefined = false;        // Reverts the scroll direction
+export let window: boolean | undefined = false;         // Binds the scroll listener to the window object`;
+</script>
+
+<svelte:head>
+  {@html shadesOfPurple}
+</svelte:head>
 Infinite Scroll automatically adds the next page, saving users from a full page load.
 <br>
 
 ## Props
 
-```typescript
-export let threshold: number | undefined = 0;           // Sets the scroll threshold to trigger a callback
-export let horizontal: boolean | undefined = false;     // Sets Infinite scroll to listen for horizontal scroll
-export let elementScroll: HTMLElement | null = null;    // Binds the scroll listener to a HTML element
-export let hasMore: boolean | undefined = true;         // A flag for available pages
-export let reverse: boolean | undefined = false;        // Reverts the scroll direction
-export let window: boolean | undefined = false;         // Binds the scroll listener to the window object
-```
+ <Highlight language={typescript} code={propsCode} />
+
 <br>
 
 ## Styling

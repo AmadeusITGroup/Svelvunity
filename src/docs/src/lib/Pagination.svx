@@ -1,10 +1,8 @@
-Separates long content into multiple pages to improve usability.
-<br>
-
-## Props
-
-```typescript
-export let rows: any = [];                  // An array, containing the whole content to be paged
+<script>
+    import Highlight from "svelte-highlight";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+let propsCode=`export let rows: any = [];                  // An array, containing the whole content to be paged
 export let perPage = 20;                    // Sets how much items are shown per page
 export let trimmedRows;                     // Returns the sliced array with the defined length
 export let paginationTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests
@@ -13,16 +11,8 @@ export let nextPageBtnTestId: string;       // Sets data-cy-id attribute's value
 export let firstPageBtnTestId: string;      // Sets data-cy-id attribute's value for cypress e2e tests
 export let lastPageBtnTestId: string;       // Sets data-cy-id attribute's value for cypress e2e tests
 export let currPageTestId: string;          // Sets data-cy-id attribute's value for cypress e2e tests
-export let totalPagesTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests
-```
-<br>
-
-## Styling
-This is a pretty straightforward component with no special stylings. All of the extra styling, if needed, can be handled through the css variables below.
-
-```CSS
-
---df-pagination-padding-x, 0.6rem
+export let totalPagesTestId: string;        // Sets data-cy-id attribute's value for cypress e2e tests`;
+let cssCode=`--df-pagination-padding-x, 0.6rem
 --df-pagination-padding-x, 0.125rem
 --df-pagination-font-size, 1rem
 --df-pagination-color, #000
@@ -39,6 +29,23 @@ This is a pretty straightforward component with no special stylings. All of the 
 --df-pagination-active-border-color, #005eb8
 --df-pagination-disabled-color, #b3b3b3
 --df-pagination-disabled-bg, #fff
---df-pagination-disabled-border-color, #b3b3b3
-```
+--df-pagination-disabled-border-color, #b3b3b3`;
+</script>
+
+<svelte:head>
+  {@html shadesOfPurple}
+</svelte:head>
+Separates long content into multiple pages to improve usability.
+<br>
+
+## Props
+
+ <Highlight language={typescript} code={propsCode} />
+<br>
+
+## Styling
+This is a pretty straightforward component with no special stylings. All of the extra styling, if needed, can be handled through the css variables below.
+
+ <Highlight language={typescript} code={cssCode} />
+
 

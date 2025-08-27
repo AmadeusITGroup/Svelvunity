@@ -1,18 +1,29 @@
-Used for indication a loading state.
-<br>
-
-## Props
-
-```typescript
-export let width: string = '140px';                       // Sets the width of the loading spinner
+<script>
+    import Highlight from "svelte-highlight";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+let propsCode=`export let width: string = '140px';                       // Sets the width of the loading spinner
 export let height: string = '140px';                      // Sets the height of the loading spinner
 export let loadingAnimationDuration: number = 
     LOADING_ANIMATION_DELAY_AND_DURATION;                 // Sets the duration for which the loading spinner fades in 
 export let removeAnimation: boolean = false;              // Removes the fading in animation
 export let isScreenCentered: boolean = false;             // Centers the loading spinner in the middle of the screen
 export let classes: string = '';                          // Styles the spinner container
-export let testId: string = '';                           // Sets data-cy-id attribute's value for cypress e2e tests
-```
+export let testId: string = '';                           // Sets data-cy-id attribute's value for cypress e2e tests`;
+let cssCode=``;
+</script>
+
+<svelte:head>
+  {@html shadesOfPurple}
+</svelte:head>
+
+Used for indication a loading state.
+<br>
+
+## Props
+
+ <Highlight language={typescript} code={propsCode} />
+
 <br>
 
 ## Styling
