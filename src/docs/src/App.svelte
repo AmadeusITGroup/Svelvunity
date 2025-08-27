@@ -27,7 +27,6 @@
     import Switch from './lib/Switch.svx';
     import shadesOfPurple from 'svelte-highlight/styles/shades-Of-Purple';
 
-
     let items: ITabItem[] = [
         {
             label: 'Getting Started',
