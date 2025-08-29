@@ -2,7 +2,8 @@
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
   
-  let propsCode=`export let classes?: string;                    // Styles the component's container
+  let propsCode=`
+  export let classes?: string;                    // Styles the component's container
   export let labelName?: string;                  // Sets label for the select input
   export let inputName?: string;                  // Sets the name attribute for the label and the select input
   export let inputError?: string;                 // Displays validation error below the select input

@@ -1,8 +1,9 @@
 <script>
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
-  
-  let propsCode=`export let width: string = '140px';                       // Sets the width of the loading spinner
+
+  let propsCode=`
+  export let width: string = '140px';                       // Sets the width of the loading spinner
   export let height: string = '140px';                      // Sets the height of the loading spinner
   export let loadingAnimationDuration: number = 
       LOADING_ANIMATION_DELAY_AND_DURATION;                 // Sets the duration for which the loading spinner fades in 

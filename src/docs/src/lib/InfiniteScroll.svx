@@ -1,8 +1,9 @@
 <script>
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
-  
-  let propsCode=`export let threshold: number | undefined = 0;           // Sets the scroll threshold to trigger a callback
+
+  let propsCode=`
+  export let threshold: number | undefined = 0;           // Sets the scroll threshold to trigger a callback
   export let horizontal: boolean | undefined = false;     // Sets Infinite scroll to listen for horizontal scroll
   export let elementScroll: HTMLElement | null = null;    // Binds the scroll listener to a HTML element
   export let hasMore: boolean | undefined = true;         // A flag for available pages

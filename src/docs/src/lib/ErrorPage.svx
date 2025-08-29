@@ -1,8 +1,9 @@
 <script>
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
-  
-  let propsCode=`export let errorCode = 403;                                             // Sets a HTTP error code to display
+
+  let propsCode=`
+  export let errorCode = 403;                                             // Sets a HTTP error code to display
   export let headMessage = 
       "The page you're trying to reach has restricted access.";           // Sets the main heading of the page
   export let message = 'Please refer to your administrator.';             // Sets the description of the error code

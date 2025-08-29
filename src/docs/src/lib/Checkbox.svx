@@ -2,7 +2,8 @@
   import CodeBlock from './CodeBlock.svelte';
   import typescript from "svelte-highlight/languages/typescript";
 
-  let propsCode=`export let inputName = '';                  //Sets checkbox id and label's for attribute 
+  let propsCode=`
+  export let inputName = '';                  //Sets checkbox id and label's for attribute 
   export let labelName = '';                  // Optional label
   export let classes = '';                    // Styles checkbox container
   export let classesForInput = '';            // Styles input

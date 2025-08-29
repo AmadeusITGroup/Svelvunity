@@ -24,6 +24,7 @@
     import Tooltip from './lib/Tooltip.svx';
     import UserProfileMenu from './lib/UserProfileMenu.svx';
     import Sidebar from './lib/Sidebar.svelte';
+    import Switch from './lib/Switch.svx';
     import shadesOfPurple from 'svelte-highlight/styles/shades-Of-Purple';
 
     let items: ITabItem[] = [
@@ -108,23 +109,28 @@
             component: Select
         },
         {
-            label: 'Tabs',
+            label: 'Switch',
             value: 17,
+            component: Switch
+        },
+        {
+            label: 'Tabs',
+            value: 18,
             component: Tabs
         },
         {
             label: 'Toast',
-            value: 18,
+            value: 19,
             component: Toast
         },
         {
             label: 'Tooltip',
-            value: 19,
+            value: 20,
             component: Tooltip
         },
         {
             label: 'User Profile Menu',
-            value: 20,
+            value: 21,
             component: UserProfileMenu
         }
     ];
