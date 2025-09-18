@@ -24,7 +24,7 @@
 		"url": "git+https://github.com/AmadeusITGroup/Svelvunity.git"
 	},
 	"engines": {
-		"npm": "^10.9.2",
+		"npm": "^11.2.0",
 		"node": "^22.15.0"
 	},
 	"exports": {
