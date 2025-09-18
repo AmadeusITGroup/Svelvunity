@@ -26,6 +26,7 @@ jobs:
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
       - run: npm install -g npm@11.2.0
+      - run: npm cache clean --force
       - run: npm ci
       - run: npm run format
       - run: npm run lint -- --quiet
