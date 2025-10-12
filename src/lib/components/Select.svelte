@@ -35,6 +35,7 @@
             data-cy-id={testId}
             name={inputName}
             aria-label={labelName}
+            required={placeholder ? true : false}
             class="
                 svelvunity-input svelvunity-input--auto-min-width {isDisabled
                 ? ''
@@ -75,9 +76,9 @@
         border-color: #005eb8;
         z-index: 10;
     }
-    ::placeholder {
+    .svelvunity-select:invalid {
         font-style: italic;
-        color: #808080;
+        color: #808080; 
     }
 
     .svelvunity-input--auto-min-width {
