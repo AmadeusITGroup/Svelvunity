@@ -77,7 +77,7 @@
     }
     .svelvunity-select:invalid {
         font-style: italic;
-        color: #808080; 
+        color: #808080;
     }
 
     .svelvunity-input--auto-min-width {
