@@ -1,0 +1,26 @@
+<script>
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+
+  let propsCode=`
+  export let width: string = '140px';                       // Sets the width of the loading spinner
+  export let height: string = '140px';                      // Sets the height of the loading spinner
+  export let loadingAnimationDuration: number = 
+      LOADING_ANIMATION_DELAY_AND_DURATION;                 // Sets the duration for which the loading spinner fades in 
+  export let removeAnimation: boolean = false;              // Removes the fading in animation
+  export let isScreenCentered: boolean = false;             // Centers the loading spinner in the middle of the screen
+  export let classes: string = '';                          // Styles the spinner container
+  export let testId: string = '';                           // Sets data-cy-id attribute's value for cypress e2e tests`;
+</script>
+
+Used for indication a loading state.
+<br>
+
+## Props
+
+ <CodeBlock language={typescript} code={propsCode} />
+
+<br>
+
+## Styling
+Branding guidelines have been implemented in this component.

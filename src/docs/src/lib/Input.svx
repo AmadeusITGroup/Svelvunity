@@ -1,0 +1,33 @@
+<script>
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+  
+  let propsCode=`
+  export let classes = '';                        // Styles the container
+  export let classesForInput = '';                // Styles the input
+  export let labelName = '';                      // Sets the label text
+  export let inputName = '';                      // Sets id, name, and for attributes
+  export let inputError = '';                     // Displays an error message
+  export let inputValue = '';                     // Sets the input value
+  export let placeholder = '';                    // Sets the placeholder text
+  export let min: string | number = '';           // Sets the minimum value (for type Number)
+  export let max: string | number = '';           // Sets the maximum value (for type Number)
+  export let type: string = InputTypes.Text;      // Sets the input type
+  export let extraSign: string = '';              // Displays a sign in the input (e.g., $)
+  export let required: boolean = false;           // Makes the input required
+  export let isReadOnly: boolean = false;         // Sets the input to read-only
+  export let isDisabled: boolean = false;         // Disables the input
+  export let textareaInput: boolean = false;      // Returns a textarea
+  export let resizableTextarea = true;            // Allows textarea resizing
+  export let testId: string = '';                 // Sets data-cy-id for Cypress tests`;
+</script>
+
+Allows the user to enter data in a single line.
+<br>
+
+## Props
+<CodeBlock language={typescript} code={propsCode} />
+<br>
+
+## Styling
+This is a pretty straightforward component with no special stylings. All of the extra styling, if needed, can be handled through the props.

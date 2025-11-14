@@ -1,5 +1,4 @@
 {
-	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
 		"allowJs": true,
 		"checkJs": true,
@@ -9,12 +8,8 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"types": ["svelte", "vitest/globals", "@testing-library/jest-dom"],
-		"moduleResolution": "node",
-		"allowSyntheticDefaultImports": true
-	},
-	"include": ["src/**/*", "tests/**/*"],
-	"exclude": ["src/docs/**/*"]
+		"types": ["vitest/globals", "@testing-library/jest-dom"]
+	}
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
 	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes

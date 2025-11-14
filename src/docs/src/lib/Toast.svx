@@ -1,0 +1,23 @@
+<script>
+  import CodeBlock from './CodeBlock.svelte';
+  import css from "svelte-highlight/languages/css";
+
+  let cssCode=`
+  --toastContainerTop, 1.5rem
+  --toastContainerRight, 2rem
+  --toastContainerBottom, auto
+  --toastContainerLeft, auto
+  --toastContainerZIndex, 9999`;
+</script>
+
+Toasts provide feedback messages as notifications to the user. Goal is to mimic the push notifications available both on mobile and desktop operating systems.
+<br>
+
+## Props
+
+The toast component props are a bit different than the other components. You can import the toast component by using the <code>SvelteToast</code> component, usually in the <code>+layout.svelte</code>. This will ensure that the component is shown in the DOM. Each toast is then triggered programmatically by importing toast in the file and using its success, warning and failure method, which display a green, yellow or red toast message respectively. These methods take 2 arguments each, with the first being the message to display and the second a test ID, which sets <code>data-cy-id</code> attribute's value for cypress e2e tests.
+<br>
+
+## Styling
+ By default the toast messages are shown in the upper right corner of the webpage. This is the default behavior and changing it is not encouraged. Despite that, one can adjust where the message is show with the following CSS variables:
+ <CodeBlock language={css} code={cssCode} />

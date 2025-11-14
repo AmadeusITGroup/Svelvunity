@@ -1,0 +1,78 @@
+<script>
+    import CodeBlock from './CodeBlock.svelte';
+    import typescript from "svelte-highlight/languages/typescript";
+    import css from "svelte-highlight/languages/css";
+
+    let propsCode=`
+    export let open = false;                                        // Toggles accordion body visibility
+    export let disabled = false;                                    // Disables accordion button click
+    export let showBody = true;                                     // Shows body if true
+    export let fillEmptyChevronSpace = false;                       // Adds space before button text if body is empty
+    export let clickLogic: null | ((...args: any) => any) = null;   // Callback for accordion button click
+    export let animationDurationForShowingBody = 200;               // Show animation duration (ms)
+    export let animationDurationForHidingBody = 0;                  // Hide animation duration (ms)
+    export let buttonTestId = '';                                   // Cypress ID for accordion button
+    export let bodyTestId = '';                                     // Cypress ID for accordion body
+    export let buttonClasses = '';                                  // CSS classes for accordion button
+    export let bodyClasses = '';                                    // CSS classes for accordion body`;
+
+    let cssCode=`
+    --accordion-button-align-items, center
+    --accordion-button-width, 100%
+    --accordion-button-font-size, 1rem
+    --accordion-button-color, #1a1a1a
+    --accordion-button-text-align, left
+    --accordion-button-bg-color, #fff
+    --accordion-button-cursor, pointer
+    --accordion-button-pt, 0.75rem
+    --accordion-button-pr, 1rem
+    --accordion-button-pb, 0.75rem
+    --accordion-button-pl, 1rem
+    --accordion-button-border-t, 1px
+    --accordion-button-border-l, 1px
+    --accordion-button-border-b, 1px
+    --accordion-button-border-r, 1px
+    --accordion-button-border-style, solid
+    --accordion-button-border-color, #ccc
+    
+    -button-hover-bg-color, #f4f9fb
+    
+    --accordion-button-disabled-color, #b3b3b3
+    --accordion-button-disabled-bg-color, #e6e6e6
+    --accordion-button-disabled-opacity, 1
+    --accordion-button-disabled-cursor, not-allowed
+    
+    --accordion-button-focus-box-shadow, 0 0 0 0.25rem rgba(0, 94, 184, 0.25)
+    --accordion-button-focus-shadow-z-index, 1
+    
+    --accordion-button-chevron-pt, 0rem
+    --accordion-button-chevron-pr, 0.75rem
+    --accordion-button-chevron-pb, 0rem
+    --accordion-button-chevron-pl, 0rem
+    --accordion-button-chevron-space-filler-size, 29px
+    
+    --accordion-body-bg-color, #fff
+    --accordion-body-pt, 0.75rem
+    --accordion-body-pr, 1rem
+    --accordion-body-pb, 0.75rem
+    --accordion-body-pl, 1rem
+    --accordion-body-border-t, 0px
+    --accordion-body-border-l, 1px
+    --accordion-body-border-b, 1px
+    --accordion-body-border-r, 1px
+    --accordion-body-border-style, solid
+    --accordion-body-border-color, #ccc`;
+
+</script>
+
+
+An accordion is a vertically stacked list of headers that reveal or hide associated sections of content. The AccordionItem component represents one of these sections.
+<br>
+
+## Props
+ <CodeBlock language={typescript} code={propsCode} />
+<br>
+
+## Styling
+You can either pass in CSS classes directly to overwrite the CSS for the button and the body using the props, or you can use the CSS variables from below:
+ <CodeBlock language={css} code={cssCode} />

@@ -1,0 +1,32 @@
+<script>
+    import CodeBlock from "./CodeBlock.svelte";
+    import typescript from "svelte-highlight/languages/typescript";
+    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+    let propsCode=`
+    export let label?: string;                                   // Text label shown to the right; also referenced by aria-labelledby
+    export let fontSize: number = 16;                            // Base font-size in px; scales the whole control
+    export let value: boolean;                                   // Current state of the switch (true = on)
+    export let toggle: (newValue: boolean) => void = () => {};   // Callback fired on click with the next value
+    export let disabled: boolean = false;                        // Disables interaction and applies muted styles`;
+    let cssCode=`
+    --switch-checked-true-btn-color:   #ffffff;
+    --switch-checked-false-btn-color:  #1a1a1a;
+    --switch-checked-bg-true-color:    #0c66e1;
+    --switch-checked-false-bg-color:   #ffffff;
+    --switch-checked-false-border-color:#1a1a1a;
+    --switch-checked-true-box-shadow-color:  #0c66e1;
+    --switch-checked-false-box-shadow-color: #808080;`;
+</script>
+Allows the user to toggle between two distinct states, such as on/off, active/inactive, or enabled/disabled, providing a clear visual representation of the current status.
+<br>
+
+## Props
+
+ <CodeBlock language={typescript} code={propsCode} />
+<br>
+
+## Styling
+Branding guidelines have been implemented in this component.
+
+ <CodeBlock language={typescript} code={cssCode} />
+

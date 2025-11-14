@@ -1,0 +1,30 @@
+<script>
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+
+  let propsCode=`
+  export let inputName = '';                  //Sets checkbox id and label's for attribute 
+  export let labelName = '';                  // Optional label
+  export let classes = '';                    // Styles checkbox container
+  export let classesForInput = '';            // Styles input
+  export let classesForLabel = '';            // Styles label
+  export let inputValue: boolean;             // Input value
+  export let required = false;                // Checkbox required status
+  export let isDisabled = false;              // Disable checkbox
+  export let testId: string;                  // Cypress ID for checkbox`;
+</script>
+
+Allows users to select one or more items from a set.
+<br>
+ <CodeBlock language={typescript} code={propsCode} />
+<br>
+
+Except the props, there are also an event that fires:
+<br>
+
+- **onInputChanges**: It fires each time a checkbox is (un-)checked. It sends an event.
+
+<br>
+
+## Styling
+This is a pretty straightforward component with no special stylings. All of the extra styling, if needed, can be handled through the props.

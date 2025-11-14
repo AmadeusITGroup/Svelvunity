@@ -1,0 +1,26 @@
+<script>
+  import CodeBlock from './CodeBlock.svelte';
+  import typescript from "svelte-highlight/languages/typescript";
+
+  let propsCode=`
+  export let iconSVG: string;                         // Renders an icon from a given path d
+  export let viewBox: string = '0 0 448 512';         // Sets the viewBox attribute for the SVG
+  export let height: number = 22;                     // Sets the icon's height
+  export let width: number = 22;                      // Sets the icon's width
+  export let fill: string = '#005eb8';                // Sets the icon's color
+  export let direction: Direction = Direction.Up;     // Sets the icon's orientation (Left, Right, Up, Down)
+  export let clickLogic: Function | null = null;      // Defines a click callback for the icon
+  export let classes: string = '';                    // Styles the SVG
+  export let testId: string = '';                     // Sets the data-cy-id attribute for Cypress tests
+  export let tabIndex: number = 0;                    // Sets the tabindex attribute for the SVG (changing is not recommended)`;
+</script>
+
+Shows information visually and reinforces the user's understanding of it.
+<br>
+
+## Props
+ <CodeBlock language={typescript} code={propsCode} />
+<br>
+
+## Styling
+This is a pretty straightforward component with no special stylings. All of the extra styling, if needed, can be handled through the props.
