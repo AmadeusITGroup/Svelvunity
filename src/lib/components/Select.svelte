@@ -37,11 +37,10 @@
             aria-label={labelName}
             required={placeholder ? true : false}
             class="
-                svelvunity-input svelvunity-input--auto-min-width {isDisabled
-                ? ''
-                : 'svelvunity-select'}
+                svelvunity-input svelvunity-input--auto-min-width
                 {inputError ? 'svelvunity-input--on-error' : ''}
             "
+            class:svelvunity-select={!isDisabled}
             bind:value={inputValue}
             disabled={isDisabled}
             onchange={() => onSelectChange?.()}
