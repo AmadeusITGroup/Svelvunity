@@ -35,7 +35,7 @@
             data-cy-id={testId}
             name={inputName}
             aria-label={labelName}
-            required={placeholder ? true : false}
+            required={!!placeholder}
             class="
                 svelvunity-input svelvunity-input--auto-min-width
                 {inputError ? 'svelvunity-input--on-error' : ''}
