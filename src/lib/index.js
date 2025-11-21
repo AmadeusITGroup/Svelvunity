@@ -14,6 +14,7 @@ export { default as Pagination } from './components/Pagination.svelte';
 export { default as ProgressBar } from './components/ProgressBar.svelte';
 export { default as Popover } from './components/Popover.svelte';
 export { default as RadioInput } from './components/RadioInput.svelte';
+export { default as Search } from './components/Search.svelte';
 export { default as Select } from './components/Select.svelte';
 export { default as SvelteToast } from './components/Toast/SvelteToast.svelte';
 export { default as SymbolIcon } from './components/SymbolIcon.svelte';
