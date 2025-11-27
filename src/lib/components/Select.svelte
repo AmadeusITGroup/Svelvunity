@@ -35,12 +35,12 @@
             data-cy-id={testId}
             name={inputName}
             aria-label={labelName}
+            required={!!placeholder}
             class="
-                svelvunity-input svelvunity-input--auto-min-width {isDisabled
-                ? ''
-                : 'svelvunity-select'}
+                svelvunity-input svelvunity-input--auto-min-width
                 {inputError ? 'svelvunity-input--on-error' : ''}
             "
+            class:svelvunity-select={!isDisabled}
             bind:value={inputValue}
             disabled={isDisabled}
             onchange={() => onSelectChange?.()}
@@ -75,7 +75,7 @@
         border-color: #005eb8;
         z-index: 10;
     }
-    ::placeholder {
+    .svelvunity-select:invalid {
         font-style: italic;
         color: #808080;
     }
