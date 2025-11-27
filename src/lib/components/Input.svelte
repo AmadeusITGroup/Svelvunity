@@ -10,7 +10,7 @@
         labelName?: string;
         inputName?: string;
         inputError?: string;
-        inputValue?: string | number;
+        inputValue?: string | number | null;
         placeholder?: string;
         min?: string | number;
         max?: string | number;
