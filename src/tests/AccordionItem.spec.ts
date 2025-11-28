@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import AccordionItem from '$lib/components/AccordionItem.svelte';
 import { createRawSnippet, type ComponentProps } from 'svelte';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { waitFor } from '@testing-library/svelte';
 
 const g = globalThis as any;
 if (g.HTMLElement && !g.HTMLElement.prototype.animate) {
@@ -207,5 +208,35 @@ describe('Accordion Component', () => {
 		expect(button).toHaveClass('my-button-class');
 		expect(body).toHaveClass('my-body-class');
 		expect(body).toHaveAttribute('data-cy-id', 'testAccordionItemBody');
+	});
+
+	it('renders and hides the body with slide transitions and data-cy-id', async () => {
+		const user = userEvent.setup();
+
+		// Start closed, but with valid bodySnippet + showBody so the block can render
+		accordionItemOptions.open = false;
+		accordionItemOptions.showBody = true;
+		accordionItemOptions.bodyTestId = 'testAccordionItemBody';
+
+		const { container } = render(AccordionItem, { props: accordionItemOptions });
+
+		const button = screen.getByText('Click');
+
+		await user.click(button);
+
+		const bodyOpen = container.querySelector(
+			'[data-cy-id="testAccordionItemBody"]'
+		) as HTMLDivElement | null;
+
+		expect(bodyOpen).not.toBeNull();
+		expect(bodyOpen).toHaveClass('accordion-body');
+		expect(bodyOpen).toHaveTextContent('Clicked');
+
+		await user.click(button);
+
+		await waitFor(() => {
+			const bodyClosed = container.querySelector('[data-cy-id="testAccordionItemBody"]');
+			expect(bodyClosed).toBeNull();
+		});
 	});
 });
