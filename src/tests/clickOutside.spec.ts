@@ -5,7 +5,6 @@ describe('clickOutside', () => {
 	beforeEach(() => {
 		node = document.createElement('div');
 		mockDispatchEvent = vi.fn();
-		node.dispatchEvent = mockDispatchEvent;
 	});
 	afterEach(() => {
 		node = null;

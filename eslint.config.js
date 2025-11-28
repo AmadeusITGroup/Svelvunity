@@ -21,6 +21,12 @@ export default ts.config(
 			globals: { ...globals.browser, ...globals.node }
 		},
 		rules: {
+			'svelte/no-navigation-without-resolve': [
+				'error',
+				{
+					ignoreLinks: true
+				}
+			],
 			'no-undef': 'off',
 			'@typescript-eslint/no-explicit-any': 'warn',
 			'svelte/require-each-key': 'warn',
