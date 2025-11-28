@@ -6,7 +6,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 const g = globalThis as any;
 if (g.HTMLElement && !g.HTMLElement.prototype.animate) {
 	g.HTMLElement.prototype.animate = () => ({
-		onfinish: null,
+		onfinish: undefined,
 		cancel() {}
 	});
 }

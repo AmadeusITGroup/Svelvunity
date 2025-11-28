@@ -26,7 +26,6 @@ describe('ToastItem (single toast)', () => {
 	beforeEach(() => {
 		mockPop.mockClear();
 	});
-
 	const baseItem = {
 		id: 1,
 		initial: 0,
@@ -35,12 +34,12 @@ describe('ToastItem (single toast)', () => {
 		pausable: true,
 		dismissable: true,
 		msg: 'Hello world',
-		component: null,
+		component: undefined,
 		onpop: undefined
 	};
 
 	it('renders the message when no custom component is provided', () => {
-		const { container } = renderItem({ item: { ...baseItem, component: null } });
+		const { container } = renderItem({ item: { ...baseItem, component: undefined } });
 
 		const msgDiv = container.querySelector('._toastMsg');
 		expect(msgDiv).not.toBeNull();
@@ -68,7 +67,6 @@ describe('ToastItem (single toast)', () => {
 		await fireEvent.keyDown(button!, { key: 'Enter' });
 		await fireEvent.keyDown(button!, { key: ' ' });
 
-		// could be 2 calls (Enter + Space) depending on your expectations
 		expect(mockPop).toHaveBeenCalled();
 		expect(mockPop).toHaveBeenCalledWith(baseItem.id);
 	});
@@ -79,7 +77,7 @@ describe('ToastItem (single toast)', () => {
 			item: { ...baseItem, onpop }
 		});
 
-		unmount(); // triggers onDestroy in the component
+		unmount();
 
 		expect(onpop).toHaveBeenCalledTimes(1);
 		expect(onpop).toHaveBeenCalledWith(baseItem.id);
