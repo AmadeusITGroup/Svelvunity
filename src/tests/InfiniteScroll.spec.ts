@@ -88,8 +88,7 @@ describe('InfiniteScroll Component', () => {
 		render(InfiniteScroll, {
 			props: {
 				elementScroll: scrollEl,
-				hasMore: false,
-				onLoadMore: onLoadMoreMock
+				hasMore: false
 			}
 		});
 

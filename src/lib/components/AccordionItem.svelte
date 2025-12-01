@@ -87,7 +87,7 @@
 
 {#if isOpened && bodySnippet && showBody}
     <div
-        class="accordion-body {!bodySnippet && !showBody ? 'no-before' : ''} {bodyClasses}"
+        class="accordion-body {bodyClasses}"
         in:slide|local={{ duration: animationDurationForShowingBody }}
         out:slide|local={{ duration: animationDurationForHidingBody }}
         data-cy-id={bodyTestId}
