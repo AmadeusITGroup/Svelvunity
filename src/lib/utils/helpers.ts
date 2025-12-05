@@ -1,6 +1,8 @@
-export function removeLeadingZero(input: string): string {
-	return input.replace(/^0+/, '');
+export function removeLeadingZero(input: unknown): string {
+	const str = String(input ?? '');
+	return str.replace(/^0+/, '');
 }
+
 export const formatVariableKey = (str: string) => {
 	return str
 		.replace(/-_$/g, '')
