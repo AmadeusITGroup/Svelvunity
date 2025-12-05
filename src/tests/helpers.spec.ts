@@ -65,6 +65,8 @@ describe('Helper functions', () => {
 		expect(removeLeadingZero('0101')).toBe('101');
 		expect(removeLeadingZero('101')).toBe('101');
 		expect(removeLeadingZero('0101 0101')).toBe('101 0101');
+		expect(removeLeadingZero('0')).toBe('');
+		expect(removeLeadingZero('000')).toBe('');
 	});
 
 	test('should test formatVariableKey', () => {
