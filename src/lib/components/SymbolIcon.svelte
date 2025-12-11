@@ -63,4 +63,7 @@
     .-rotate-90 {
         transform: rotate(-90deg);
     }
+    .rotate-180 {
+        transform: rotate(180deg);
+    }
 </style>
