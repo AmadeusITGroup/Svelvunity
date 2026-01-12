@@ -24,7 +24,7 @@ describe('Icon Component', () => {
 		const svgIcon = container.querySelector("[data-cy-id='test-icon']") as HTMLImageElement;
 
 		expect(svgIcon).toBeInTheDocument();
-		expect(svgIcon).toHaveClass('-rotate-90 test-class');
+		expect(svgIcon.getAttribute('style')).toEqual(expect.stringContaining('rotate(-90deg)'));
 		expect(svgIcon).toHaveAttribute('viewBox', iconProps.viewBox);
 		expect(svgIcon).toHaveAttribute('fill', iconProps.fill);
 		expect(svgIcon).toHaveAttribute('width', iconProps.width.toString());
