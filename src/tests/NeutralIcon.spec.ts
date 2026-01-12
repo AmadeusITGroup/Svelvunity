@@ -5,8 +5,8 @@ import { FILTER_SVG } from '$lib/config/constants';
 import { SymbolIcon } from '$lib';
 
 describe('SymbolIcon Component', () => {
-	const iconProps = {
-		iconSVG: 'string',
+	const baseProps = {
+		iconSVG: FILTER_SVG,
 		viewBox: '0 0 448 512',
 		height: 22,
 		width: 22,
@@ -16,13 +16,22 @@ describe('SymbolIcon Component', () => {
 		testId: 'test-icon'
 	};
 
-	test('should render a symbolIcon with all props', async () => {
-		iconProps.iconSVG = FILTER_SVG;
-		const { container } = render(SymbolIcon, { props: iconProps });
-		const svgIcon = container.querySelector("[data-cy-id='test-icon']") as HTMLImageElement;
+	test('should render a SymbolIcon with all props', async () => {
+		const { container } = render(SymbolIcon, { props: { ...baseProps } });
+		const svgIcon = container.querySelector("[data-cy-id='test-icon']") as SVGElement;
 
 		expect(svgIcon).toBeInTheDocument();
-		expect(svgIcon).toHaveClass('-rotate-90 test-class');
+
+		expect(svgIcon).toHaveClass('test-class');
+
+		expect(svgIcon.getAttribute('style')).toEqual(expect.stringContaining('rotate(-90deg)'));
+		expect(svgIcon.getAttribute('style')).toEqual(
+			expect.stringContaining('transform-origin: center')
+		);
+		expect(svgIcon.getAttribute('style')).toEqual(
+			expect.stringContaining('transform-box: fill-box')
+		);
+
 		expect(svgIcon).toHaveAttribute('viewBox', '0 0 448 512');
 		expect(svgIcon).toHaveAttribute('fill', 'fill-amadeustest');
 		expect(svgIcon).toHaveAttribute('width', '22');
@@ -30,17 +39,50 @@ describe('SymbolIcon Component', () => {
 		expect(svgIcon).toHaveAttribute('data-cy-id', 'test-icon');
 	});
 
-	test('should render a symbolIcon with direction right prop', async () => {
-		iconProps.direction = Direction.Right;
-		const { container } = render(SymbolIcon, { props: iconProps });
-		const svgIcon = container.querySelector("[data-cy-id='test-icon']") as HTMLImageElement;
+	test('should render a SymbolIcon with direction right prop', async () => {
+		const { container } = render(SymbolIcon, {
+			props: { ...baseProps, direction: Direction.Right }
+		});
+
+		const svgIcon = container.querySelector("[data-cy-id='test-icon']") as SVGElement;
 
 		expect(svgIcon).toBeInTheDocument();
-		expect(svgIcon).toHaveClass('rotate-90 test-class');
+		expect(svgIcon).toHaveClass('test-class');
+
+		expect(svgIcon.getAttribute('style')).toEqual(expect.stringContaining('rotate(90deg)'));
+		expect(svgIcon.getAttribute('style')).toEqual(
+			expect.stringContaining('transform-origin: center')
+		);
+		expect(svgIcon.getAttribute('style')).toEqual(
+			expect.stringContaining('transform-box: fill-box')
+		);
+
 		expect(svgIcon).toHaveAttribute('viewBox', '0 0 448 512');
 		expect(svgIcon).toHaveAttribute('fill', 'fill-amadeustest');
 		expect(svgIcon).toHaveAttribute('width', '22');
 		expect(svgIcon).toHaveAttribute('height', '22');
 		expect(svgIcon).toHaveAttribute('data-cy-id', 'test-icon');
+	});
+
+	test('should render a SymbolIcon with direction down prop', async () => {
+		const { container } = render(SymbolIcon, {
+			props: { ...baseProps, direction: Direction.Down }
+		});
+
+		const svgIcon = container.querySelector("[data-cy-id='test-icon']") as SVGElement;
+
+		expect(svgIcon).toBeInTheDocument();
+		expect(svgIcon.getAttribute('style')).toEqual(expect.stringContaining('rotate(180deg)'));
+	});
+
+	test('should render a SymbolIcon with direction up prop (default)', async () => {
+		const { container } = render(SymbolIcon, {
+			props: { ...baseProps, direction: Direction.Up }
+		});
+
+		const svgIcon = container.querySelector("[data-cy-id='test-icon']") as SVGElement;
+
+		expect(svgIcon).toBeInTheDocument();
+		expect(svgIcon.getAttribute('style')).toEqual(expect.stringContaining('rotate(0deg)'));
 	});
 });
