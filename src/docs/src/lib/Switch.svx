@@ -1,7 +1,7 @@
 <script>
     import CodeBlock from "./CodeBlock.svelte";
     import typescript from "svelte-highlight/languages/typescript";
-    import shadesOfPurple from "svelte-highlight/styles/shades-Of-Purple";
+    import shadesOfPurple from "svelte-highlight/styles/shades-of-purple";
     let propsCode=`
     export let label?: string;                                   // Text label shown to the right; also referenced by aria-labelledby
     export let fontSize: number = 16;                            // Base font-size in px; scales the whole control
