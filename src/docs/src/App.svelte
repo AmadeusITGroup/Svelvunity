@@ -25,8 +25,7 @@
     import UserProfileMenu from './lib/UserProfileMenu.svx';
     import Sidebar from './lib/Sidebar.svelte';
     import Switch from './lib/Switch.svx';
-    import shadesOfPurple from 'svelte-highlight/styles/shades-Of-Purple';
-
+    import shadesOfPurple from 'svelte-highlight/styles/shades-of-purple';
     let items: ITabItem[] = [
         {
             label: 'Getting Started',
