@@ -23,19 +23,17 @@
         testId = ''
     }: Props = $props();
 
-    function getIconDirection(direction: Direction): string {
-        switch (direction) {
+    function rotationDeg(dir: Direction): number {
+        switch (dir) {
             case Direction.Left:
-                return '-rotate-90';
+                return -90;
             case Direction.Right:
-                return 'rotate-90';
-            case Direction.Up:
-                return 'rotate-0';
+                return 90;
             case Direction.Down:
-                return 'rotate-180';
-
+                return 180;
+            case Direction.Up:
             default:
-                return 'rotate-0';
+                return 0;
         }
     }
 </script>
@@ -45,10 +43,13 @@
     {height}
     {width}
     xmlns="http://www.w3.org/2000/svg"
-    class="{getIconDirection(direction)} {classes}"
+    class={classes}
     {fill}
     data-cy-id={testId}
     {viewBox}
+    style:transform={`rotate(${rotationDeg(direction)}deg)`}
+    style:transform-origin="center"
+    style:transform-box="fill-box"
 >
     <path d={iconSVG} />
 </svg>
