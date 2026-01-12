@@ -19,8 +19,6 @@ jobs:
     uses: './.github/workflows/build.yml'
     with:
       version: ${{ inputs.version }}
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish:
     needs: build
@@ -34,8 +32,6 @@ jobs:
       - run: npm ci
       - run: npm version ${{ inputs.version }} --no-git-tag-version
       - run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
