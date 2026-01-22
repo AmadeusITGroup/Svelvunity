@@ -61,8 +61,8 @@
 		"@testing-library/user-event": "14.6.1",
 		"@typescript-eslint/eslint-plugin": "^8.48.1",
 		"@typescript-eslint/parser": "^8.48.1",
-		"@vitest/coverage-v8": "^4.0.10",
-		"@vitest/ui": "^4.0.10",
+		"@vitest/coverage-v8": "^4.0.15",
+		"@vitest/ui": "^4.0.15",
 		"autoprefixer": "^10.4.21",
 		"eslint": "^9.38.0",
 		"eslint-config-prettier": "^10.1.8",
@@ -79,7 +79,7 @@
 		"tslib": "^2.8.1",
 		"typescript": "^5.9.2",
 		"vite": "^7.1.12",
-		"vitest": "^4.0.10"
+		"vitest": "^4.0.15"
 	},
 	"scripts": {
 		"dev": "svelte-kit sync && vite dev",
