@@ -1,0 +1,37 @@
+name: build
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version number (x.y.z) to set before executing the build'
+        type: string
+        default: ''
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm run format
+      - run: npm run lint -- --quiet
+      - run: npm run check
+      - run: npm run test
+      - run: npm run coverage
+      - uses: codecov/codecov-action@v4
+        with:
+          files: coverage/lcov.info
+          flags: unit
+          disable_search: true
+          fail_ci_if_error: false
+          use_oidc: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork) }}
+      - run: npm run build
