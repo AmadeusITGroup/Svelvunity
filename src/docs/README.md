@@ -11,7 +11,7 @@ The Svelvunity Docs app is a standalone documentation site for the Svelvunity co
 
 ## Prerequisites
 
-- Node.js 18+ (LTS recommended)
+- Node.js 20+ (LTS recommended)
 - npm
 
 ## Getting started
