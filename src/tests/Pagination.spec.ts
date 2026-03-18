@@ -2,7 +2,6 @@ import { Pagination } from '$lib';
 import { render, fireEvent } from '@testing-library/svelte';
 
 describe('Pagination Component', () => {
-	let values: unknown;
 	const rows = [
 		'hi',
 		'bye',
@@ -32,7 +31,7 @@ describe('Pagination Component', () => {
 		lastPageBtnTestId: 'last-page-button',
 		rows: rows,
 		perPage: 1,
-		trimmedRows: values
+		trimmedRows: []
 	};
 
 	test('should render without error', () => {

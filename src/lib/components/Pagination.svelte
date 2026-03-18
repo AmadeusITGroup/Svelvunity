@@ -40,8 +40,20 @@
     let start = $derived(currentPage * perPage);
     let end = $derived(currentPage === totalPages - 1 ? totalRows - 1 : start + perPage - 1);
 
+    const shallowArrayEqual = (a: any[], b: any[]) => {
+        if (a.length !== b.length) return false;
+        return a.every((value, index) => value === b[index]);
+    };
+
+    const setTrimmedRows = (nextRows: any) => {
+        trimmedRows = nextRows;
+    };
+
     $effect(() => {
-        trimmedRows = rows.slice(start, end + 1);
+        const nextRows = rows.slice(start, end + 1);
+        if (!Array.isArray(trimmedRows) || !shallowArrayEqual(trimmedRows, nextRows)) {
+            setTrimmedRows(nextRows);
+        }
     });
 
     function setCurrentPage(newPage: number) {
