@@ -75,7 +75,6 @@
     let prev: number[][];
     let next: number[][];
 
-    let tempEndDate: any;
     let prevSelectedDate: any;
     let prevEndDate: any;
     const handleCalendarClickOutside = () => {
@@ -145,13 +144,11 @@
     };
     const isFirstInDateRange = (day: number, month: number, year: number) => {
         const currentTimestamp = createTimestamp(year, month, day);
-        const startCompare = normalizeTimestamp(selectedDate);
-        const tempEndCompare = normalizeTimestamp(tempEndDate);
         const currentCompare = normalizeTimestamp(currentTimestamp);
-        if (startCompare) {
-            return startCompare === currentCompare;
+        if (selectedDate == null) {
+            return false;
         }
-        return tempEndCompare === currentCompare;
+        return normalizeTimestamp(selectedDate) === currentCompare;
     };
     const isLastInDateRange = (day: number, month: number, year: number) => {
         const currentTimestamp = createTimestamp(year, month, day);

@@ -27,12 +27,10 @@ export const calendarize = (target: any, offset: number) => {
 
 	let first = new Date(year, month, 1 - (offset | 0)).getDay();
 	let i = 0;
-	let j = 0;
-	let week: number[] = [];
 
 	while (i < days) {
-		week = [];
-		for (j = 0; j < 7; j++) {
+		const week: number[] = [];
+		for (let j = 0; j < 7; j++) {
 			if (j < first) {
 				week.push(0);
 			} else {
