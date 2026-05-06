@@ -21,7 +21,7 @@ describe('Helper functions', () => {
 				height: 0,
 				x: 0,
 				y: 0,
-				toJSON() { },
+				toJSON() {},
 				...rect
 			})
 		} as HTMLElement;
@@ -210,5 +210,4 @@ describe('Helper functions', () => {
 		// Due to extraCharPadding of 2, the minimum width will be 2
 		expect(result).toBe(2);
 	});
-
 });
