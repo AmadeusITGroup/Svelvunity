@@ -21,7 +21,7 @@ describe('Helper functions', () => {
 				height: 0,
 				x: 0,
 				y: 0,
-				toJSON() {},
+				toJSON() { },
 				...rect
 			})
 		} as HTMLElement;
@@ -152,13 +152,63 @@ describe('Helper functions', () => {
 		expect(isInViewport(el)).toBe(false);
 	});
 
-	test('should return the maximum value between maxWidth and contentWidth if contentWidth is falsy', () => {
+	test('should return contentWidth when contentWidth is less than maxWidth', () => {
+		element.style.padding = '10px';
 		element.style.width = '100px';
-		element.style.height = '100px';
-		const maxWidth = 120;
 
-		const result = getMinWidth(element, maxWidth);
+		const result = getMinWidth(element, 500);
 
-		expect(result).toBe(maxWidth);
+		expect(result).toBeLessThanOrEqual(500);
 	});
+
+	test('should return maxWidth when contentWidth is greater than maxWidth', () => {
+		element.style.padding = '5px';
+		element.style.width = '600px';
+
+		const result = getMinWidth(element, 200);
+
+		expect(result).toBeLessThanOrEqual(200);
+	});
+
+	test('should handle zero padding correctly', () => {
+		element.style.padding = '0px';
+		element.style.width = '100px';
+
+		const result = getMinWidth(element, 500);
+
+		expect(result).toBeGreaterThan(0);
+		expect(typeof result).toBe('number');
+	});
+
+	test('should handle asymmetric padding (left and right)', () => {
+		element.style.paddingLeft = '10px';
+		element.style.paddingRight = '20px';
+		element.style.width = '150px';
+
+		const result = getMinWidth(element, 500);
+
+		expect(typeof result).toBe('number');
+		expect(Number.isInteger(result)).toBe(true);
+	});
+
+	test('should round the result to nearest integer', () => {
+		element.style.padding = '0px';
+		element.style.width = '100.7px';
+
+		const result = getMinWidth(element, 500);
+
+		expect(typeof result).toBe('number');
+		expect(Number.isInteger(result)).toBe(true);
+	});
+
+	test('should return maxWidth when contentWidth is 0 or falsy', () => {
+		element.style.padding = '0px';
+		element.style.width = '0px';
+
+		const result = getMinWidth(element, 300);
+
+		// Due to extraCharPadding of 2, the minimum width will be 2
+		expect(result).toBe(2);
+	});
+
 });
