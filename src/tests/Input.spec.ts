@@ -214,4 +214,163 @@ describe('Input Component', () => {
 
 		expect(input.value).toEqual('test value');
 	});
+
+	test('should strip leading zeros from a numeric input on blur', async () => {
+		render(Input, {
+			props: { ...inputProps, type: InputTypes.Number, inputValue: '007' }
+		});
+		const input = screen.getByPlaceholderText(inputProps.placeholder) as HTMLInputElement;
+
+		fireEvent.blur(input);
+		await tick();
+
+		expect(input.value).toEqual('7');
+	});
+
+	test('should clamp to min when value below min on blur (numeric input)', async () => {
+		render(Input, {
+			props: { ...inputProps, type: InputTypes.Number, min: '5', inputValue: '2' }
+		});
+		const input = screen.getByPlaceholderText(inputProps.placeholder) as HTMLInputElement;
+
+		fireEvent.blur(input);
+		await tick();
+
+		expect(input.value).toEqual('5');
+	});
+
+	test('should clamp to max when value above max on blur (numeric input)', async () => {
+		render(Input, {
+			props: { ...inputProps, type: InputTypes.Number, max: '10', inputValue: '99' }
+		});
+		const input = screen.getByPlaceholderText(inputProps.placeholder) as HTMLInputElement;
+
+		fireEvent.blur(input);
+		await tick();
+
+		expect(input.value).toEqual('10');
+	});
+
+	test('should keep value untouched on blur when within min/max range', async () => {
+		render(Input, {
+			props: {
+				...inputProps,
+				type: InputTypes.Number,
+				min: '0',
+				max: '100',
+				inputValue: '42'
+			}
+		});
+		const input = screen.getByPlaceholderText(inputProps.placeholder) as HTMLInputElement;
+
+		fireEvent.blur(input);
+		await tick();
+
+		expect(input.value).toEqual('42');
+	});
+
+	test('should not run handleNumbers on blur when input is not numeric', async () => {
+		render(Input, {
+			props: { ...inputProps, type: InputTypes.Text, min: '5', inputValue: '0abc' }
+		});
+		const input = screen.getByPlaceholderText(inputProps.placeholder) as HTMLInputElement;
+
+		fireEvent.blur(input);
+		await tick();
+
+		expect(input.value).toEqual('0abc');
+	});
+
+	test('should invoke onInput callback when typing', async () => {
+		const onInput = vi.fn();
+		render(Input, { props: { ...inputProps, onInput } });
+		const input = screen.getByPlaceholderText(inputProps.placeholder) as HTMLInputElement;
+
+		fireEvent.input(input, { target: { value: 'hello' } });
+		await tick();
+
+		expect(onInput).toHaveBeenCalledTimes(1);
+	});
+
+	test('should invoke onInputBlur callback on blur', async () => {
+		const onInputBlur = vi.fn();
+		render(Input, { props: { ...inputProps, onInputBlur } });
+		const input = screen.getByPlaceholderText(inputProps.placeholder) as HTMLInputElement;
+
+		fireEvent.blur(input);
+		await tick();
+
+		expect(onInputBlur).toHaveBeenCalledTimes(1);
+	});
+
+	test('should invoke onInputChange callback on change', async () => {
+		const onInputChange = vi.fn();
+		render(Input, { props: { ...inputProps, onInputChange } });
+		const input = screen.getByPlaceholderText(inputProps.placeholder) as HTMLInputElement;
+
+		fireEvent.change(input, { target: { value: 'changed' } });
+		await tick();
+
+		expect(onInputChange).toHaveBeenCalledTimes(1);
+	});
+
+	test('should also invoke onInputBlur on numeric blur (in addition to handleNumbers)', async () => {
+		const onInputBlur = vi.fn();
+		render(Input, {
+			props: {
+				...inputProps,
+				type: InputTypes.Number,
+				min: '0',
+				max: '10',
+				inputValue: '99',
+				onInputBlur
+			}
+		});
+		const input = screen.getByPlaceholderText(inputProps.placeholder) as HTMLInputElement;
+
+		fireEvent.blur(input);
+		await tick();
+
+		expect(onInputBlur).toHaveBeenCalledTimes(1);
+		expect(input.value).toEqual('10');
+	});
+
+	test('should render textarea as non-resizable when resizableTextarea is false', () => {
+		const { container } = render(Input, {
+			props: { ...inputProps, textareaInput: true, resizableTextarea: false }
+		});
+		const textarea = container.querySelector('textarea') as HTMLTextAreaElement;
+
+		expect(textarea).toHaveClass('svelvunity-input-textarea-non-resizable');
+	});
+
+	test('should hide error wrapper when showError is false and no error message', () => {
+		const { container } = render(Input, {
+			props: { ...inputProps, showError: false, inputError: '' }
+		});
+
+		const errorDiv = container.querySelector("[data-cy-id='errormessage']");
+
+		expect(errorDiv).not.toBeInTheDocument();
+	});
+
+	test('should still show error wrapper when showError is false but error message present', () => {
+		const { container } = render(Input, {
+			props: { ...inputProps, showError: false, inputError: 'oops' }
+		});
+
+		const errorDiv = container.querySelector("[data-cy-id='errormessage']") as HTMLDivElement;
+
+		expect(errorDiv).toBeInTheDocument();
+		expect(errorDiv).toHaveTextContent('oops');
+	});
+
+	test('should render extraSign element when extraSign prop is provided', () => {
+		const { container } = render(Input, { props: { ...inputProps, extraSign: '€' } });
+
+		const extraSignDiv = container.querySelector('.svelvunity-input--extra-sign');
+
+		expect(extraSignDiv).toBeInTheDocument();
+		expect(extraSignDiv).toHaveTextContent('€');
+	});
 });
