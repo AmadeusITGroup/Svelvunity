@@ -60,8 +60,6 @@
     }
 
     function handleNumbers() {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         inputValue = removeLeadingZero(inputValue);
         if (min !== '' && +min > +inputValue) {
             inputValue = min.toString();
