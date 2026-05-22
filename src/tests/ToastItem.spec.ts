@@ -130,8 +130,8 @@ describe('ToastItem (single toast)', () => {
 			}
 		});
 
-		const callArgs = SrcComponent.mock.calls[0];
-		const passedProps = callArgs[1] as Record<string, unknown>;
+		const callArgs = SrcComponent.mock.calls[0] as unknown as [unknown, Record<string, unknown>];
+		const passedProps = callArgs[1];
 
 		expect(passedProps).toMatchObject({ greeting: 'hi', toastId: baseItem.id });
 	});
@@ -148,8 +148,8 @@ describe('ToastItem (single toast)', () => {
 			}
 		});
 
-		const callArgs = SrcComponent.mock.calls[0];
-		const passedProps = callArgs[1] as Record<string, unknown>;
+		const callArgs = SrcComponent.mock.calls[0] as unknown as [unknown, Record<string, unknown>];
+		const passedProps = callArgs[1];
 
 		expect(passedProps).toMatchObject({ greeting: 'hi' });
 		expect(passedProps).not.toHaveProperty('toastId');
