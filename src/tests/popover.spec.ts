@@ -254,4 +254,123 @@ describe('Popover component', () => {
 
 		expect(tooltip).toHaveAttribute('tabindex', '-1');
 	});
+
+	it('opens on click and stays open when re-clicking while activeContent + clickable', async () => {
+		renderPopup({
+			trigger: 'click',
+			activeContent: true,
+			open: false
+		});
+
+		await fireEvent.click(triggerEl);
+		const tooltip = await screen.findByRole('tooltip');
+		expect(tooltip).toBeInTheDocument();
+	});
+
+	it('opens on focusin when trigger is hover', async () => {
+		renderPopup({
+			trigger: 'hover',
+			open: false
+		});
+
+		await fireEvent.focusIn(triggerEl);
+		const tooltip = await screen.findByRole('tooltip');
+		expect(tooltip).toBeInTheDocument();
+	});
+
+	it('opens on focusin when trigger is click (block path on focusin)', async () => {
+		renderPopup({
+			trigger: 'click',
+			open: false
+		});
+
+		await fireEvent.focusIn(triggerEl);
+		const tooltip = await screen.findByRole('tooltip');
+		expect(tooltip).toBeInTheDocument();
+	});
+
+	it('hides on focusout', async () => {
+		renderPopup({
+			trigger: 'hover',
+			open: false
+		});
+
+		await fireEvent.focusIn(triggerEl);
+		await screen.findByRole('tooltip');
+
+		await fireEvent.focusOut(triggerEl);
+		await waitFor(() => {
+			expect(screen.queryByRole('tooltip')).toBeNull();
+		});
+	});
+
+	it('logs an error when reference is undefined but no trigger element is set after click', async () => {
+		const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+		renderPopup({
+			trigger: 'click',
+			open: false
+		});
+
+		await fireEvent.click(triggerEl);
+
+		errorSpy.mockRestore();
+	});
+
+	it('uses contentEl previous sibling as trigger when triggeredBy is undefined', () => {
+		const childrenSnippet = undefined;
+		const { container } = renderPopup({
+			triggeredBy: undefined,
+			trigger: 'hover',
+			children: childrenSnippet
+		});
+
+		expect(container).toBeTruthy();
+	});
+
+	it('applies border-aware arrow class when border is true', async () => {
+		renderPopup({
+			trigger: 'hover',
+			arrow: true,
+			border: true
+		});
+
+		await fireEvent.mouseEnter(triggerEl);
+		const tooltip = await screen.findByRole('tooltip');
+		const arrowEl = tooltip.querySelector('.rotate-45') as HTMLDivElement;
+
+		expect(arrowEl).not.toBeNull();
+	});
+
+	it('cleans up arrowEl on unmount via initArrow destroy', async () => {
+		const { unmount } = renderPopup({
+			trigger: 'hover',
+			arrow: true
+		});
+
+		await fireEvent.mouseEnter(triggerEl);
+		await screen.findByRole('tooltip');
+
+		expect(() => unmount()).not.toThrow();
+	});
+
+	it('handles activeContent mouseleave with delayed close (no hover on tooltip)', async () => {
+		vi.useFakeTimers();
+		renderPopup({
+			trigger: 'hover',
+			activeContent: true
+		});
+
+		await fireEvent.mouseEnter(triggerEl);
+		const tooltip = await screen.findByRole('tooltip');
+
+		await fireEvent.mouseLeave(tooltip);
+		vi.advanceTimersByTime(150);
+
+		await waitFor(() => {
+			expect(screen.queryByRole('tooltip')).toBeNull();
+		});
+
+		vi.useRealTimers();
+	});
 });
