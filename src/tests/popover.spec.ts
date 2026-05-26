@@ -1,5 +1,5 @@
 import { render, fireEvent, screen, waitFor } from '@testing-library/svelte';
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest';
 import type { ComponentProps } from 'svelte';
 
 import Popover from '$lib/components/Popover.svelte';
