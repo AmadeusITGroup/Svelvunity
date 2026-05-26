@@ -94,14 +94,14 @@ describe('Popover component', () => {
 		document.body.innerHTML = '';
 	});
 
-	it('calls onShow with the initial open state', () => {
+	test('calls onShow with the initial open state', () => {
 		const { onShow } = renderPopup({ open: false });
 
 		expect(onShow).toHaveBeenCalledTimes(1);
 		expect(onShow).toHaveBeenCalledWith(false);
 	});
 
-	it('opens on hover when trigger="hover" and closes on mouseleave', async () => {
+	test('opens on hover when trigger="hover" and closes on mouseleave', async () => {
 		renderPopup({
 			trigger: 'hover',
 			open: false
@@ -119,7 +119,7 @@ describe('Popover component', () => {
 		});
 	});
 
-	it('toggles open/closed on click when trigger="click"', async () => {
+	test('toggles open/closed on click when trigger="click"', async () => {
 		renderPopup({
 			trigger: 'click',
 			open: false
@@ -138,7 +138,7 @@ describe('Popover component', () => {
 		});
 	});
 
-	it('renders the arrow by default when arrow=true and positions it', async () => {
+	test('renders the arrow by default when arrow=true and positions it', async () => {
 		renderPopup({
 			trigger: 'hover',
 			arrow: true
@@ -155,7 +155,7 @@ describe('Popover component', () => {
 		expect(arrowEl.style.bottom).toBe('0px');
 	});
 
-	it('does not render the arrow when arrow=false', async () => {
+	test('does not render the arrow when arrow=false', async () => {
 		renderPopup({
 			trigger: 'hover',
 			arrow: false
@@ -168,7 +168,7 @@ describe('Popover component', () => {
 		expect(arrowEl).toBeNull();
 	});
 
-	it('positions only vertically when yOnly is true', async () => {
+	test('positions only vertically when yOnly is true', async () => {
 		renderPopup({
 			trigger: 'hover',
 			yOnly: true
@@ -181,7 +181,7 @@ describe('Popover component', () => {
 		expect(tooltip.style.top).toBe('20px');
 	});
 
-	it('logs an error when no triggers are found', () => {
+	test('logs an error when no triggers are found', () => {
 		const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
 		renderPopup({
@@ -193,7 +193,7 @@ describe('Popover component', () => {
 		errorSpy.mockRestore();
 	});
 
-	it('logs an error when reference selector is not found', () => {
+	test('logs an error when reference selector is not found', () => {
 		const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
 		renderPopup({
@@ -205,7 +205,7 @@ describe('Popover component', () => {
 		errorSpy.mockRestore();
 	});
 
-	it('attaches and cleans up event listeners on trigger and reference elements', () => {
+	test('attaches and cleans up event listeners on trigger and reference elements', () => {
 		const ref = document.createElement('div');
 		ref.className = 'popup-ref';
 		document.body.appendChild(ref);
@@ -243,7 +243,7 @@ describe('Popover component', () => {
 		refRemoveSpy.mockRestore();
 	});
 
-	it('sets tabindex to -1 on the tooltip when activeContent is true', async () => {
+	test('sets tabindex to -1 on the tooltip when activeContent is true', async () => {
 		renderPopup({
 			trigger: 'hover',
 			activeContent: true
@@ -255,7 +255,7 @@ describe('Popover component', () => {
 		expect(tooltip).toHaveAttribute('tabindex', '-1');
 	});
 
-	it('opens on click and stays open when re-clicking while activeContent + clickable', async () => {
+	test('opens on click and stays open when re-clicking while activeContent + clickable', async () => {
 		renderPopup({
 			trigger: 'click',
 			activeContent: true,
@@ -267,7 +267,7 @@ describe('Popover component', () => {
 		expect(tooltip).toBeInTheDocument();
 	});
 
-	it('opens on focusin when trigger is hover', async () => {
+	test('opens on focusin when trigger is hover', async () => {
 		renderPopup({
 			trigger: 'hover',
 			open: false
@@ -278,7 +278,7 @@ describe('Popover component', () => {
 		expect(tooltip).toBeInTheDocument();
 	});
 
-	it('opens on focusin when trigger is click (block path on focusin)', async () => {
+	test('opens on focusin when trigger is click (block path on focusin)', async () => {
 		renderPopup({
 			trigger: 'click',
 			open: false
@@ -289,7 +289,7 @@ describe('Popover component', () => {
 		expect(tooltip).toBeInTheDocument();
 	});
 
-	it('hides on focusout', async () => {
+	test('hides on focusout', async () => {
 		renderPopup({
 			trigger: 'hover',
 			open: false
@@ -304,7 +304,7 @@ describe('Popover component', () => {
 		});
 	});
 
-	it('logs an error when reference is undefined but no trigger element is set after click', async () => {
+	test('logs an error when reference is undefined but no trigger element is set after click', async () => {
 		const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
 		renderPopup({
@@ -317,7 +317,7 @@ describe('Popover component', () => {
 		errorSpy.mockRestore();
 	});
 
-	it('uses contentEl previous sibling as trigger when triggeredBy is undefined', () => {
+	test('uses contentEl previous sibling as trigger when triggeredBy is undefined', () => {
 		const childrenSnippet = undefined;
 		const { container } = renderPopup({
 			triggeredBy: undefined,
@@ -328,7 +328,7 @@ describe('Popover component', () => {
 		expect(container).toBeTruthy();
 	});
 
-	it('applies border-aware arrow class when border is true', async () => {
+	test('applies border-aware arrow class when border is true', async () => {
 		renderPopup({
 			trigger: 'hover',
 			arrow: true,
@@ -342,7 +342,7 @@ describe('Popover component', () => {
 		expect(arrowEl).not.toBeNull();
 	});
 
-	it('cleans up arrowEl on unmount via initArrow destroy', async () => {
+	test('cleans up arrowEl on unmount via initArrow destroy', async () => {
 		const { unmount } = renderPopup({
 			trigger: 'hover',
 			arrow: true
@@ -354,7 +354,7 @@ describe('Popover component', () => {
 		expect(() => unmount()).not.toThrow();
 	});
 
-	it('handles activeContent mouseleave with delayed close (no hover on tooltip)', async () => {
+	test('handles activeContent mouseleave with delayed close (no hover on tooltip)', async () => {
 		vi.useFakeTimers();
 		renderPopup({
 			trigger: 'hover',
