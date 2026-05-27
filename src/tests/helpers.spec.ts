@@ -67,6 +67,46 @@ describe('Helper functions', () => {
 		expect(removeLeadingZero('0101 0101')).toBe('101 0101');
 	});
 
+	test('removeLeadingZero returns empty string for null', () => {
+		expect(removeLeadingZero(null)).toBe('');
+	});
+
+	test('removeLeadingZero returns empty string for undefined', () => {
+		expect(removeLeadingZero(undefined)).toBe('');
+	});
+
+	test('removeLeadingZero coerces a positive number to its string form', () => {
+		expect(removeLeadingZero(42)).toBe('42');
+	});
+
+	test('removeLeadingZero coerces zero to empty string (single 0 stripped)', () => {
+		expect(removeLeadingZero(0)).toBe('');
+	});
+
+	test('removeLeadingZero coerces negative numbers without stripping the minus sign', () => {
+		expect(removeLeadingZero(-7)).toBe('-7');
+	});
+
+	test('removeLeadingZero handles an empty string (no leading zeros to strip)', () => {
+		expect(removeLeadingZero('')).toBe('');
+	});
+
+	test('removeLeadingZero strips multiple leading zeros from a string of only zeros', () => {
+		expect(removeLeadingZero('0000')).toBe('');
+	});
+
+	test('removeLeadingZero leaves numeric input untouched when there is no string leading zero', () => {
+		expect(removeLeadingZero(100)).toBe('100');
+	});
+
+	test('removeLeadingZero coerces a float to its string form', () => {
+		expect(removeLeadingZero(3.14)).toBe('3.14');
+	});
+
+	test('removeLeadingZero preserves trailing zero in a number that has no leading zero', () => {
+		expect(removeLeadingZero(10)).toBe('10');
+	});
+
 	test('should test formatVariableKey', () => {
 		expect(formatVariableKey('camelCase')).toBe('camel-case');
 		expect(formatVariableKey('kebab-case')).toBe('kebab-case');
