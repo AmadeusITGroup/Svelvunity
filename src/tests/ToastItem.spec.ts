@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/svelte';
 import ToastItem from '$lib/components/Toast/ToastItem.svelte';
 import type { ComponentProps } from 'svelte';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
 
 const { mockPop } = vi.hoisted(() => ({
 	mockPop: vi.fn()
@@ -38,7 +38,7 @@ describe('ToastItem (single toast)', () => {
 		onpop: undefined
 	};
 
-	it('renders the message when no custom component is provided', () => {
+	test('renders the message when no custom component is provided', () => {
 		const { container } = renderItem({ item: { ...baseItem, component: undefined } });
 
 		const msgDiv = container.querySelector('._toastMsg');
@@ -46,7 +46,7 @@ describe('ToastItem (single toast)', () => {
 		expect(msgDiv!.innerHTML).toContain('Hello world');
 	});
 
-	it('calls toast.pop when the dismiss button is clicked', async () => {
+	test('calls toast.pop when the dismiss button is clicked', async () => {
 		const { container } = renderItem({ item: { ...baseItem, dismissable: true } });
 
 		const button = container.querySelector('._toastBtn');
@@ -58,7 +58,7 @@ describe('ToastItem (single toast)', () => {
 		expect(mockPop).toHaveBeenCalledWith(baseItem.id);
 	});
 
-	it('calls toast.pop when pressing Enter/Space on the dismiss button', async () => {
+	test('calls toast.pop when pressing Enter/Space on the dismiss button', async () => {
 		const { container } = renderItem({ item: { ...baseItem, dismissable: true } });
 
 		const button = container.querySelector('._toastBtn');
@@ -71,7 +71,7 @@ describe('ToastItem (single toast)', () => {
 		expect(mockPop).toHaveBeenCalledWith(baseItem.id);
 	});
 
-	it('calls item.onpop when the component is destroyed', () => {
+	test('calls item.onpop when the component is destroyed', () => {
 		const onpop = vi.fn();
 		const { unmount } = renderItem({
 			item: { ...baseItem, onpop }
@@ -83,13 +83,13 @@ describe('ToastItem (single toast)', () => {
 		expect(onpop).toHaveBeenCalledWith(baseItem.id);
 	});
 
-	it('does not render dismiss button when dismissable is false', () => {
+	test('does not render dismiss button when dismissable is false', () => {
 		const { container } = renderItem({ item: { ...baseItem, dismissable: false } });
 
 		expect(container.querySelector('._toastBtn')).toBeNull();
 	});
 
-	it('does not call close on non-Enter/Space keys on the dismiss button', async () => {
+	test('does not call close on non-Enter/Space keys on the dismiss button', async () => {
 		const { container } = renderItem({ item: { ...baseItem, dismissable: true } });
 
 		const button = container.querySelector('._toastBtn');
@@ -99,7 +99,7 @@ describe('ToastItem (single toast)', () => {
 		expect(mockPop).not.toHaveBeenCalled();
 	});
 
-	it('renders a custom component when item.component.src is provided', () => {
+	test('renders a custom component when item.component.src is provided', () => {
 		const SrcComponent = vi.fn(() => null);
 		const { container } = renderItem({
 			item: {
@@ -117,7 +117,7 @@ describe('ToastItem (single toast)', () => {
 		expect(msgDiv?.innerHTML).not.toContain('Hello world');
 	});
 
-	it('passes props and sendIdTo onto the custom component', () => {
+	test('passes props and sendIdTo onto the custom component', () => {
 		const SrcComponent = vi.fn(() => null);
 		renderItem({
 			item: {
@@ -136,7 +136,7 @@ describe('ToastItem (single toast)', () => {
 		expect(passedProps).toMatchObject({ greeting: 'hi', toastId: baseItem.id });
 	});
 
-	it('omits sendIdTo key when not provided', () => {
+	test('omits sendIdTo key when not provided', () => {
 		const SrcComponent = vi.fn(() => null);
 		renderItem({
 			item: {
@@ -155,7 +155,7 @@ describe('ToastItem (single toast)', () => {
 		expect(passedProps).not.toHaveProperty('toastId');
 	});
 
-	it('does not pause on mouseenter when pausable is false', async () => {
+	test('does not pause on mouseenter when pausable is false', async () => {
 		const { container } = renderItem({ item: { ...baseItem, pausable: false } });
 		const toastItem = container.querySelector('._toastItem') as HTMLElement;
 
@@ -166,14 +166,14 @@ describe('ToastItem (single toast)', () => {
 		expect(mockPop).not.toHaveBeenCalled();
 	});
 
-	it('adds the pe class when pausable is true', () => {
+	test('adds the pe class when pausable is true', () => {
 		const { container } = renderItem({ item: { ...baseItem, pausable: true } });
 		const toastItem = container.querySelector('._toastItem') as HTMLElement;
 
 		expect(toastItem).toHaveClass('pe');
 	});
 
-	it('responds to mouseenter/mouseleave without throwing when pausable is true', async () => {
+	test('responds to mouseenter/mouseleave without throwing when pausable is true', async () => {
 		const { container } = renderItem({ item: { ...baseItem, pausable: true } });
 		const toastItem = container.querySelector('._toastItem') as HTMLElement;
 
@@ -181,7 +181,7 @@ describe('ToastItem (single toast)', () => {
 		await expect(fireEvent.mouseLeave(toastItem)).resolves.toBeDefined();
 	});
 
-	it('registers and unregisters a visibilitychange listener on document', () => {
+	test('registers and unregisters a visibilitychange listener on document', () => {
 		const addSpy = vi.spyOn(document, 'addEventListener');
 		const removeSpy = vi.spyOn(document, 'removeEventListener');
 
@@ -199,7 +199,7 @@ describe('ToastItem (single toast)', () => {
 		removeSpy.mockRestore();
 	});
 
-	it('does not throw if no onpop function is provided on destroy', () => {
+	test('does not throw if no onpop function is provided on destroy', () => {
 		const { unmount } = renderItem({ item: { ...baseItem, onpop: undefined } });
 		expect(() => unmount()).not.toThrow();
 	});
