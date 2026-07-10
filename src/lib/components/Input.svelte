@@ -126,8 +126,7 @@
                 {placeholder}
                 name={inputName}
                 id={inputName}
-                autocomplete="off"
-            ></textarea>
+                autocomplete="off"></textarea>
         {/if}
     </div>
     {#if showError || inputError}
