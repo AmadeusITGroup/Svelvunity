@@ -93,6 +93,14 @@
     let selectedDateCalendar = $derived(
         calendarize(new Date(selectedDateYear, selectedDateMonth), 1)
     );
+    // Show the month of selectedDate when it changes from outside (e.g. typed in the input)
+    $effect(() => {
+        const date = new Date(selectedDate);
+        if (selectedDate && !isNaN(date.getTime())) {
+            selectedDateYear = date.getFullYear();
+            selectedDateMonth = date.getMonth();
+        }
+    });
     const goToPreviousMonth = () => {
         [selectedDateCalendar, next] = [prev, selectedDateCalendar];
         if (--selectedDateMonth < 0) {

@@ -112,6 +112,23 @@
     let formattedSelectedDateDisable = $derived(formatDate(selectedDateDisable, dateFormat));
     let formattedSelectedDateEnable = $derived(formatDate(selectedDateEnable, dateFormat));
 
+    // Returns the typed date only when it is complete, matches the display format and is not disabled
+    const parseTypedDate = (
+        event: Event,
+        format: string,
+        isEnabled: (date: Date) => boolean = () => true
+    ) => {
+        const value = (event.target as HTMLInputElement).value;
+        const tokens = format.match(/yyyy|yy|MM|dd/g) ?? [];
+        const parts = value.match(/\d+/g) ?? [];
+        const part = (token: string) => Number(parts[tokens.indexOf(token)]);
+        const year = tokens.includes('yyyy')
+            ? part('yyyy')
+            : part('yy') + (part('yy') < 50 ? 2000 : 1900);
+        const date = new Date(year, part('MM') - 1, part('dd'));
+        return formatDate(date, format) === value && isEnabled(date) ? date : null;
+    };
+
     let InlineEditValue = $state('Max Musterman');
     let inlineEditValueDisabled = $state('George Costanza');
 
@@ -121,6 +138,11 @@
 
     const MS_PER_DAY = 86_400_000;
     const today = new Date();
+    const enabledDates = [
+        formatDate(today, dateFormat), // today
+        formatDate(new Date(today.getTime() - MS_PER_DAY), dateFormat), // yesterday
+        formatDate(new Date(today.getTime() + MS_PER_DAY), dateFormat) // tomorrow
+    ];
 </script>
 
 <main aria-label="Svelvunity main content">
@@ -244,8 +266,11 @@
                                 showError={false}
                                 labelName="Basic"
                                 bind:inputValue={formattedSelectedDate}
-                                on:onInputChanges={() =>
-                                    (selectedDate = new Date(formattedSelectedDate))}
+                                onInput={(event) =>
+                                    (selectedDate =
+                                        parseTypedDate(event, dateFormat) ?? selectedDate)}
+                                onInputChange={() =>
+                                    (formattedSelectedDate = formatDate(selectedDate, dateFormat))}
                             />
                             <div class="absolute top-9 right-1 z-10">
                                 <Icon
@@ -273,9 +298,13 @@
                                 showError={false}
                                 labelName="With years"
                                 bind:inputValue={formattedSelectedDateWithYears}
-                                on:onInputChanges={() =>
-                                    (selectedDateWithYears = new Date(
-                                        formattedSelectedDateWithYears
+                                onInput={(event) =>
+                                    (selectedDateWithYears =
+                                        parseTypedDate(event, dateFormat) ?? selectedDateWithYears)}
+                                onInputChange={() =>
+                                    (formattedSelectedDateWithYears = formatDate(
+                                        selectedDateWithYears,
+                                        dateFormat
                                     ))}
                             />
                             <div class="absolute top-9 right-1 z-10">
@@ -306,8 +335,14 @@
                                 showError={false}
                                 labelName="With culture [DE]"
                                 bind:inputValue={formattedSelectedDateDE}
-                                on:onInputChanges={() =>
-                                    (selectedDateDE = new Date(formattedSelectedDateDE))}
+                                onInput={(event) =>
+                                    (selectedDateDE =
+                                        parseTypedDate(event, dateFormatDE) ?? selectedDateDE)}
+                                onInputChange={() =>
+                                    (formattedSelectedDateDE = formatDate(
+                                        selectedDateDE,
+                                        dateFormatDE
+                                    ))}
                             />
                             <div class="absolute top-9 right-1 z-10">
                                 <Icon
@@ -336,8 +371,14 @@
                                 showError={false}
                                 labelName="Always shown"
                                 bind:inputValue={formattedSelectedDateAlways}
-                                on:onInputChanges={() =>
-                                    (selectedDateAlways = new Date(formattedSelectedDateAlways))}
+                                onInput={(event) =>
+                                    (selectedDateAlways =
+                                        parseTypedDate(event, dateFormat) ?? selectedDateAlways)}
+                                onInputChange={() =>
+                                    (formattedSelectedDateAlways = formatDate(
+                                        selectedDateAlways,
+                                        dateFormat
+                                    ))}
                             />
                             <div class="absolute top-9 right-1 z-10">
                                 <Icon
@@ -366,8 +407,19 @@
                                 showError={false}
                                 labelName="Disabled dates in past"
                                 bind:inputValue={formattedSelectedDateDisable}
-                                on:onInputChanges={() =>
-                                    (selectedDateDisable = new Date(formattedSelectedDateDisable))}
+                                onInput={(event) =>
+                                    (selectedDateDisable =
+                                        parseTypedDate(
+                                            event,
+                                            dateFormat,
+                                            (date) =>
+                                                date >= new Date(selectedDateAlways.toDateString())
+                                        ) ?? selectedDateDisable)}
+                                onInputChange={() =>
+                                    (formattedSelectedDateDisable = formatDate(
+                                        selectedDateDisable,
+                                        dateFormat
+                                    ))}
                             />
                             <div class="absolute top-9 right-1 z-10">
                                 <Icon
@@ -390,11 +442,7 @@
                         ariaLabelNextYear="Next Year"
                         alwaysShow={false}
                         align="right"
-                        enabledDates={[
-                            formatDate(today, dateFormat), // today
-                            formatDate(new Date(today.getTime() - MS_PER_DAY), dateFormat), // yesterday
-                            formatDate(new Date(today.getTime() + MS_PER_DAY), dateFormat) // tomorrow
-                        ]}
+                        {enabledDates}
                     >
                         <div class="relative">
                             <Input
@@ -402,8 +450,16 @@
                                 showError={false}
                                 labelName="Specific Dates Enabled"
                                 bind:inputValue={formattedSelectedDateEnable}
-                                on:onInputChanges={() =>
-                                    (selectedDateEnable = new Date(formattedSelectedDateEnable))}
+                                onInput={(event) =>
+                                    (selectedDateEnable =
+                                        parseTypedDate(event, dateFormat, (date) =>
+                                            enabledDates.includes(formatDate(date, dateFormat))
+                                        ) ?? selectedDateEnable)}
+                                onInputChange={() =>
+                                    (formattedSelectedDateEnable = formatDate(
+                                        selectedDateEnable,
+                                        dateFormat
+                                    ))}
                             />
                             <div class="absolute top-9 right-1 z-10">
                                 <Icon
