@@ -48,9 +48,9 @@
         children?: Snippet;
     } = $props();
 
-    let tag: string = href ? 'a' : 'div';
+    let tag: string = $derived(href ? 'a' : 'div');
 
-    let divClass: string = $state(
+    let divClass: string = $derived(
         twMerge(
             bgColor,
             textColor,

@@ -373,4 +373,110 @@ describe('Popover component', () => {
 
 		vi.useRealTimers();
 	});
+
+	test('stays open on mouseleave while the tooltip is hovered when activeContent is true', async () => {
+		renderPopup({ trigger: 'hover', activeContent: true });
+
+		await fireEvent.mouseEnter(triggerEl);
+		const tooltip = await screen.findByRole('tooltip');
+
+		// jsdom has no real hover state, so report the tooltip as hovered
+		const matchesSpy = vi.spyOn(Element.prototype, 'matches').mockImplementation(function (
+			this: Element,
+			selector: string
+		) {
+			return selector === ':hover' && this === tooltip;
+		});
+		vi.useFakeTimers();
+
+		await fireEvent.mouseLeave(triggerEl);
+		vi.advanceTimersByTime(150);
+
+		expect(screen.getByRole('tooltip')).toBeInTheDocument();
+
+		vi.useRealTimers();
+		matchesSpy.mockRestore();
+	});
+
+	test('stays open on focusout while focus is inside the tooltip when activeContent is true', async () => {
+		renderPopup({ trigger: 'hover', activeContent: true });
+
+		await fireEvent.focusIn(triggerEl);
+		const tooltip = await screen.findByRole('tooltip');
+		tooltip.focus();
+		vi.useFakeTimers();
+
+		await fireEvent.focusOut(triggerEl);
+		vi.advanceTimersByTime(150);
+
+		expect(screen.getByRole('tooltip')).toBeInTheDocument();
+
+		vi.useRealTimers();
+	});
+
+	test('is shown on mount and reports it when open is true', async () => {
+		const { onShow } = renderPopup({ open: true });
+
+		expect(onShow).toHaveBeenCalledWith(true);
+		expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+	});
+
+	test('positions against the reference element and hides on its mouseleave', async () => {
+		const { computePosition } = await import('@floating-ui/dom');
+		const ref = document.createElement('div');
+		ref.className = 'popup-ref';
+		document.body.appendChild(ref);
+
+		renderPopup({ trigger: 'hover', reference: '.popup-ref' });
+
+		await fireEvent.mouseEnter(triggerEl);
+		await screen.findByRole('tooltip');
+		expect(vi.mocked(computePosition).mock.lastCall?.[0]).toBe(ref);
+
+		await fireEvent.mouseLeave(ref);
+		await waitFor(() => {
+			expect(screen.queryByRole('tooltip')).toBeNull();
+		});
+	});
+
+	test('moves to the hovered trigger when there are several triggers', async () => {
+		const { autoUpdate } = await import('@floating-ui/dom');
+		const secondTrigger = document.createElement('button');
+		secondTrigger.className = 'popup-trigger';
+		document.body.appendChild(secondTrigger);
+
+		renderPopup({ trigger: 'hover' });
+
+		await fireEvent.mouseEnter(triggerEl);
+		await screen.findByRole('tooltip');
+		vi.mocked(autoUpdate).mockClear();
+
+		await fireEvent.mouseEnter(secondTrigger);
+		await waitFor(() => {
+			expect(vi.mocked(autoUpdate).mock.lastCall?.[0]).toBe(secondTrigger);
+		});
+		expect(screen.getByRole('tooltip')).toBeInTheDocument();
+	});
+
+	test('applies the positioning strategy returned by floating-ui', async () => {
+		const { computePosition } = await import('@floating-ui/dom');
+		vi.mocked(computePosition).mockResolvedValueOnce({
+			x: 5,
+			y: 6,
+			middlewareData: {},
+			placement: 'top',
+			strategy: 'fixed'
+		});
+
+		renderPopup({ trigger: 'hover', strategy: 'fixed' });
+
+		await fireEvent.mouseEnter(triggerEl);
+		const tooltip = await screen.findByRole('tooltip');
+
+		await waitFor(() => {
+			expect(tooltip.style.position).toBe('fixed');
+		});
+		expect(tooltip.style.left).toBe('5px');
+		expect(vi.mocked(computePosition).mock.lastCall?.[2]).toMatchObject({ strategy: 'fixed' });
+	});
 });

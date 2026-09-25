@@ -6,7 +6,7 @@
         CHEVRON_RIGHT_SVG
     } from '$lib/config/constants';
     import { clickOutside } from '$lib/utils/clickOutside';
-    import type { Snippet } from 'svelte';
+    import { untrack, type Snippet } from 'svelte';
     import {
         calendarize,
         createTimestamp,
@@ -88,11 +88,19 @@
         }
         isOpen = false;
     };
-    let selectedDateYear = $state(Number(defaultYear));
-    let selectedDateMonth = $state(Number(defaultMonth));
+    let selectedDateYear = $state(untrack(() => Number(defaultYear)));
+    let selectedDateMonth = $state(untrack(() => Number(defaultMonth)));
     let selectedDateCalendar = $derived(
         calendarize(new Date(selectedDateYear, selectedDateMonth), 1)
     );
+    // Show the month of selectedDate when it changes from outside (e.g. typed in the input)
+    $effect(() => {
+        const date = new Date(selectedDate);
+        if (selectedDate && !isNaN(date.getTime())) {
+            selectedDateYear = date.getFullYear();
+            selectedDateMonth = date.getMonth();
+        }
+    });
     const goToPreviousMonth = () => {
         [selectedDateCalendar, next] = [prev, selectedDateCalendar];
         if (--selectedDateMonth < 0) {

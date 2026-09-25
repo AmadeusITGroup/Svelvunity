@@ -2,7 +2,7 @@
     import { Frame } from '$lib';
     import type { ComputePositionReturn, Middleware, Placement, Side } from '@floating-ui/dom';
     import * as dom from '@floating-ui/dom';
-    import { onMount, type Snippet } from 'svelte';
+    import { onMount, untrack, type Snippet } from 'svelte';
     import { twJoin } from 'tailwind-merge';
 
     let {
@@ -45,15 +45,15 @@
     let middlewares: Middleware[] = [dom.flip(), dom.shift()];
 
     let clickable: boolean = $derived(trigger === 'click');
-    let isOpen = $state(open);
-    onShow(isOpen);
+    let isOpen = $state(untrack(() => open));
+    untrack(() => onShow(isOpen));
 
     let referenceEl: Element | undefined = $state();
-    let hasArrow: boolean = $state(arrow);
+    let hasArrow: boolean = $derived(arrow);
 
     let floatingEl: HTMLElement;
     let arrowEl: HTMLElement | null = $state(null);
-    let contentEl: HTMLElement;
+    let contentEl: HTMLElement | undefined = $state();
     let triggerEls: HTMLElement[] = [];
 
     let middleware = $derived([
@@ -148,7 +148,7 @@
 
         if (triggeredBy) triggerEls = [...document.querySelectorAll<HTMLElement>(triggeredBy)];
         else
-            triggerEls = contentEl.previousElementSibling
+            triggerEls = contentEl?.previousElementSibling
                 ? [contentEl.previousElementSibling as HTMLElement]
                 : [];
 
@@ -193,7 +193,7 @@
         return pred ? func : () => undefined;
     }
 
-    let arrowClass: string = $state(
+    let arrowClass: string = $derived(
         twJoin(
             'absolute pointer-events-none block w-[10px] h-[10px] rotate-45 bg-inherit border-inherit',
             border && arrowSide === 'bottom' && 'border-b border-e',
@@ -214,7 +214,7 @@
 </script>
 
 {#if !referenceEl}
-    <div bind:this={contentEl} />
+    <div bind:this={contentEl}></div>
 {/if}
 
 {#if isOpen && referenceEl}
@@ -233,6 +233,6 @@
         onmouseleave={optional(activeContent && !clickable, hideHandler)}
     >
         {@render children?.()}
-        {#if hasArrow}<div use:initArrow class={arrowClass} />{/if}
+        {#if hasArrow}<div use:initArrow class={arrowClass}></div>{/if}
     </Frame>
 {/if}

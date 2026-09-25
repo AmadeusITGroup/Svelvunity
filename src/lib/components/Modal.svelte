@@ -303,10 +303,6 @@
         width: 100%;
     }
 
-    .modal-frame > * + * {
-        border-top: 1px solid #e5e7eb;
-    }
-
     .modal-dialog {
         position: fixed;
         inset: 0;

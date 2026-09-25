@@ -53,7 +53,7 @@
         onInputBlur,
         onInputChange
     }: Props = $props();
-    const isTypeNumber: boolean = type === InputTypes.Number;
+    const isTypeNumber: boolean = $derived(type === InputTypes.Number);
 
     function typeAction(node: any) {
         node.type = type;

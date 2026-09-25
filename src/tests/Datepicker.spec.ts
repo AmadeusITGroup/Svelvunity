@@ -252,6 +252,55 @@ describe('Datepicker.svelte — full behaviour', () => {
 		await fireEvent.mouseLeave(btn2 as Element);
 	});
 
+	test('opens on the month of selectedDate instead of the default month', () => {
+		render(Datepicker, {
+			props: {
+				today: baseToday,
+				defaultYear: 2024,
+				defaultMonth: 5,
+				isOpen: true,
+				selectedDate: new Date(2023, 1, 10)
+			}
+		});
+
+		expect(screen.getByText('February 2023')).toBeInTheDocument();
+		expect(findDateButtonByDay(10)!.classList.contains('start')).toBe(true);
+	});
+
+	test('visible month follows selectedDate when it is changed from outside', async () => {
+		const { rerender } = render(Datepicker, {
+			props: { today: baseToday, defaultYear: 2024, defaultMonth: 5, isOpen: true }
+		});
+		expect(screen.getByText('June 2024')).toBeInTheDocument();
+
+		await rerender({ selectedDate: new Date(2025, 11, 25) });
+		expect(screen.getByText('December 2025')).toBeInTheDocument();
+		expect(findDateButtonByDay(25)!.classList.contains('start')).toBe(true);
+
+		// invalid or empty values keep the current month
+		await rerender({ selectedDate: 'not a date' });
+		expect(screen.getByText('December 2025')).toBeInTheDocument();
+		await rerender({ selectedDate: null });
+		expect(screen.getByText('December 2025')).toBeInTheDocument();
+	});
+
+	test('visible month returns to selectedDate after navigating away', async () => {
+		const { container, rerender } = render(Datepicker, {
+			props: {
+				today: baseToday,
+				isOpen: true,
+				selectedDate: new Date(2024, 5, 15)
+			}
+		});
+
+		const next = container.getElementsByClassName('icon-next-month')[0] as HTMLElement;
+		await fireEvent.click(next);
+		expect(screen.getByText('July 2024')).toBeInTheDocument();
+
+		await rerender({ selectedDate: new Date(2024, 2, 3) });
+		expect(screen.getByText('March 2024')).toBeInTheDocument();
+	});
+
 	test('clickOutside closes the calendar', async () => {
 		render(Datepicker, {
 			props: {
