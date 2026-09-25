@@ -133,6 +133,7 @@
     let inlineEditValueDisabled = $state('George Costanza');
 
     let switchValue = $state(false);
+    let switchValueCustom = $state(false);
     let switchValueTrue = $state(true);
     let switchValueDisable = $state(false);
 
@@ -1033,9 +1034,9 @@
                         label="Switch"
                         fontSize={15}
                         toggle={(state) => {
-                            switchValue = state;
+                            switchValueCustom = state;
                         }}
-                        bind:value={switchValue}
+                        bind:value={switchValueCustom}
                         testId="switch-component"
                         disabled={false}
                     />
