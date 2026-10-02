@@ -182,7 +182,7 @@
                 {/each}
             </div>
         </Sidebar>
-        <main class="content">
+        <main class="content w-60" >
             <div in:slide|global={{ duration: 200 }} out:slide={{ duration: 200 }}>
                 {#each items as item}
                     {#if activeTabValue === item.value}
