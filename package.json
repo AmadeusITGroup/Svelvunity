@@ -48,7 +48,7 @@
 		"htm": "^3.1.1",
 		"svelte-preprocess": "^6.0.5",
 		"tailwind-merge": "^3.3.1",
-		"typescript-eslint": "^8.64.0"
+		"typescript-eslint": "^8.71.0"
 	},
 	"overrides": {
 		"cookie": "^0.7.0",
@@ -61,19 +61,19 @@
 		"@sveltejs/package": "^2.5.8",
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
 		"@tailwindcss/vite": "^4.3.3",
-		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/jest-dom": "^7.0.1",
 		"@testing-library/svelte": "^5.2.8",
-		"@testing-library/user-event": "14.6.1",
-		"@typescript-eslint/eslint-plugin": "^8.63.0",
-		"@typescript-eslint/parser": "^8.64.0",
-		"@vitest/coverage-v8": "^4.1.10",
-		"@vitest/ui": "^4.1.0",
+		"@testing-library/user-event": "14.6.7",
+		"@typescript-eslint/eslint-plugin": "^8.71.0",
+		"@typescript-eslint/parser": "^8.71.0",
+		"@vitest/coverage-v8": "^5.0.3",
+		"@vitest/ui": "^5.0.3",
 		"autoprefixer": "^10.5.2",
 		"@eslint/js": "^10.0.0",
 		"eslint": "^10.1.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.20.0",
-		"globals": "^17.6.0",
+		"globals": "^17.13.0",
 		"jsdom": "^29.0.1",
 		"postcss": "^8.5.25",
 		"postcss-load-config": "^6.0.1",
@@ -85,8 +85,8 @@
 		"tailwindcss": "^4.3.0",
 		"tslib": "^2.8.1",
 		"typescript": "^6.0.0",
-		"vite": "^8.1.5",
-		"vitest": "^4.1.11"
+		"vite": "^8.3.5",
+		"vitest": "^5.0.3"
 	},
 	"scripts": {
 		"dev": "svelte-kit sync && vite dev",
@@ -102,5 +102,9 @@
 		"coverage": "vitest run --coverage"
 	},
 	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts"
+	"types": "./dist/index.d.ts",
+	"allowScripts": {
+		"svelte-preprocess@6.0.5": true,
+		"fsevents@2.3.3": true
+	}
 }
