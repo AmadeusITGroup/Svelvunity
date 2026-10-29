@@ -1,4 +1,4 @@
-import { PageTransition } from '$lib';
+import { PageTransition } from '#lib';
 import { render } from '@testing-library/svelte';
 
 describe('PageTransition Component', () => {

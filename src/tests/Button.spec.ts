@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/svelte';
-import { ButtonType } from '$lib/enums/buttontype.enum';
-import { Size } from '$lib/enums/size.enum';
-import Button from '$lib/components/Button.svelte';
+import { ButtonType } from '#lib/enums/buttontype.enum.js';
+import { Size } from '#lib/enums/size.enum.js';
+import Button from '#lib/components/Button.svelte';
 import { type ComponentProps } from 'svelte';
 
 const buttonOptions: ComponentProps<typeof Button> = getButtonOptions();

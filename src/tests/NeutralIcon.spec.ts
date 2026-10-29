@@ -1,8 +1,8 @@
 import { render } from '@testing-library/svelte';
 
-import { Direction } from '$lib/enums/direction.enum';
-import { FILTER_SVG } from '$lib/config/constants';
-import { SymbolIcon } from '$lib';
+import { Direction } from '#lib/enums/direction.enum.js';
+import { FILTER_SVG } from '#lib/config/constants.js';
+import { SymbolIcon } from '#lib';
 
 describe('SymbolIcon Component', () => {
 	const baseProps = {

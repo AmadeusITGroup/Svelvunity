@@ -4,8 +4,8 @@
         ANGLE_UP_SVG,
         CHEVRON_LEFT_SVG,
         CHEVRON_RIGHT_SVG
-    } from '$lib/config/constants';
-    import { clickOutside } from '$lib/utils/clickOutside';
+    } from '#lib/config/constants.js';
+    import { clickOutside } from '#lib/utils/clickOutside.js';
     import { untrack, type Snippet } from 'svelte';
     import {
         calendarize,

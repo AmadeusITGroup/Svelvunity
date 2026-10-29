@@ -1,6 +1,6 @@
 import { render, fireEvent } from '@testing-library/svelte';
 import { createRawSnippet, type ComponentProps } from 'svelte';
-import Frame from '$lib/components/Frame.svelte';
+import Frame from '#lib/components/Frame.svelte';
 
 const content = createRawSnippet(() => ({ render: () => '<span>Frame content</span>' }));
 

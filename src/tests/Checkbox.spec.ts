@@ -1,4 +1,4 @@
-import { Checkbox } from '$lib';
+import { Checkbox } from '#lib';
 import { render, fireEvent, screen } from '@testing-library/svelte';
 import { tick, type ComponentProps } from 'svelte';
 

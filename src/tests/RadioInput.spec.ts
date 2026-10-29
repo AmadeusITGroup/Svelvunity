@@ -1,4 +1,4 @@
-import { RadioInput } from '$lib';
+import { RadioInput } from '#lib';
 import { fireEvent, render } from '@testing-library/svelte';
 import { tick } from 'svelte';
 

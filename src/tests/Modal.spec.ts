@@ -1,8 +1,8 @@
 import { render, fireEvent, createEvent } from '@testing-library/svelte';
 import { createRawSnippet } from 'svelte';
-import Modal from '$lib/components/Modal.svelte';
-import { Position } from '$lib/enums/position.enum';
-import { Size } from '$lib/enums/size.enum';
+import Modal from '#lib/components/Modal.svelte';
+import { Position } from '#lib/enums/position.enum.js';
+import { Size } from '#lib/enums/size.enum.js';
 
 describe('Modal', () => {
 	test('renders when open is true', () => {

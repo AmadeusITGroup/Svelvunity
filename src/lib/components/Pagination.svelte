@@ -4,7 +4,7 @@
         CHEVRON_LEFT_SVG,
         CHEVRON_RIGHT_SVG,
         FORWARD_STEP_SVG
-    } from '$lib/config/constants';
+    } from '#lib/config/constants.js';
     import SymbolIcon from './SymbolIcon.svelte';
 
     interface Props {

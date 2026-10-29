@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/svelte';
-import SvelteToast from '$lib/components/Toast/SvelteToast.svelte';
+import SvelteToast from '#lib/components/Toast/SvelteToast.svelte';
 import type { ComponentProps } from 'svelte';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
@@ -42,7 +42,7 @@ const { subscribe, setItems, mockInit } = vi.hoisted(() => {
 	};
 });
 
-vi.mock('$lib/components/Toast/stores', () => {
+vi.mock('#lib/components/Toast/stores.js', () => {
 	return {
 		toast: {
 			subscribe,

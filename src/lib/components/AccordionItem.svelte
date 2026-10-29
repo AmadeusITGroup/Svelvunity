@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { CHEVRON_SVG } from '$lib/config/constants';
-    import { Direction } from '$lib/enums/direction.enum';
+    import { CHEVRON_SVG } from '#lib/config/constants.js';
+    import { Direction } from '#lib/enums/direction.enum.js';
     import { slide } from 'svelte/transition';
     import SymbolIcon from './SymbolIcon.svelte';
     import { type Snippet } from 'svelte';

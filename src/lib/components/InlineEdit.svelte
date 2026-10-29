@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Icon } from '$lib';
-    import { PEN_SVG, RESTORE_ICON, SAVE_ICON } from '$lib/config/constants';
+    import { Icon } from '#lib';
+    import { PEN_SVG, RESTORE_ICON, SAVE_ICON } from '#lib/config/constants.js';
 
     interface Props {
         value?: string;

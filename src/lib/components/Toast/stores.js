@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { CHECK_SVG, MINUS_ERROR_SVG, INFO_SVG, TRIANGLE_SVG } from '$lib/config/constants';
+import { CHECK_SVG, MINUS_ERROR_SVG, INFO_SVG, TRIANGLE_SVG } from '#lib/config/constants.js';
 import { writable } from 'svelte/store';
 
 /**

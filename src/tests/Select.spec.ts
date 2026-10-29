@@ -1,6 +1,6 @@
 import { render, fireEvent } from '@testing-library/svelte';
 import { describe, expect, vi } from 'vitest';
-import Select from '$lib/components/Select.svelte';
+import Select from '#lib/components/Select.svelte';
 import type { ComponentProps } from 'svelte';
 
 let selectOptions: ComponentProps<typeof Select> = getSelectOptions();

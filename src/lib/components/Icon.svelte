@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Direction } from '$lib/enums/direction.enum';
+    import { Direction } from '#lib/enums/direction.enum.js';
     import SymbolIcon from './SymbolIcon.svelte';
 
     interface Props {

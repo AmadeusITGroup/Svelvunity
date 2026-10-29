@@ -1,6 +1,6 @@
 <script lang="ts">
-    import spinner from '$lib/assets/images/spinner.svg';
-    import { LOADING_ANIMATION_DELAY_AND_DURATION } from '$lib/config/constants';
+    import spinner from '#lib/assets/images/spinner.svg';
+    import { LOADING_ANIMATION_DELAY_AND_DURATION } from '#lib/config/constants.js';
     import { fade } from 'svelte/transition';
 
     interface Props {

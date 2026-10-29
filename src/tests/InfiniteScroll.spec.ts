@@ -1,6 +1,6 @@
 import { render, fireEvent, waitFor } from '@testing-library/svelte';
 import { vi, describe, expect, beforeEach } from 'vitest';
-import { InfiniteScroll } from '$lib';
+import { InfiniteScroll } from '#lib';
 
 describe('InfiniteScroll Component', () => {
 	let onLoadMoreMock: ReturnType<typeof vi.fn>;

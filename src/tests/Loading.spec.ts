@@ -1,4 +1,4 @@
-import { Loading } from '$lib';
+import { Loading } from '#lib';
 import { render, screen, waitFor } from '@testing-library/svelte';
 
 describe('Loading Component', () => {

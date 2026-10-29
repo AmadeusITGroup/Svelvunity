@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import { tick } from 'svelte';
 
 import { InputTypes } from '../lib/enums/inputtypes.enum';
-import { Input } from '$lib';
+import { Input } from '#lib';
 
 describe('Input Component', () => {
 	let inputProps = {
