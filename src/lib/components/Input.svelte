@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { InputTypes } from '$lib/enums/inputtypes.enum';
-    import { removeLeadingZero } from '$lib/utils/helpers';
+    import { InputTypes } from '#lib/enums/inputtypes.enum.js';
+    import { removeLeadingZero } from '#lib/utils/helpers.js';
 
     interface Props {
         classes?: string;

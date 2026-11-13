@@ -1,4 +1,4 @@
-import { ErrorPage } from '$lib';
+import { ErrorPage } from '#lib';
 import { render, screen } from '@testing-library/svelte';
 
 describe('ErrorPage Component', () => {

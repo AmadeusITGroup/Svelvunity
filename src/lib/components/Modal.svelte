@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { trapFocus } from '$lib/utils/actions.svelte';
+    import { trapFocus } from '#lib/utils/actions.svelte.js';
     import type { Snippet } from 'svelte';
-    import { CLOSE_SVG, Frame, Icon, Size } from '$lib';
-    import { Position } from '$lib/enums/position.enum';
+    import { CLOSE_SVG, Frame, Icon, Size } from '#lib';
+    import { Position } from '#lib/enums/position.enum.js';
 
     let sizes = {
         [Size.XSmall]: 'modal-xs',

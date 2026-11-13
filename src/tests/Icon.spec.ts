@@ -1,8 +1,8 @@
 import { fireEvent, render } from '@testing-library/svelte';
 
-import { Direction } from '$lib/enums/direction.enum';
-import { FILTER_SVG } from '$lib/config/constants';
-import { Icon } from '$lib';
+import { Direction } from '#lib/enums/direction.enum.js';
+import { FILTER_SVG } from '#lib/config/constants.js';
+import { Icon } from '#lib';
 
 describe('Icon Component', () => {
 	const iconProps = {

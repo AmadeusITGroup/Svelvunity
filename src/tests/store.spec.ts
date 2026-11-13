@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { toast } from '$lib/components/Toast/stores.js';
+import { toast } from '#lib/components/Toast/stores.js';
 
 describe('Toast Store', () => {
 	test('toast store is initialized correctly', () => {

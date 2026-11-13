@@ -2,9 +2,9 @@
     // @ts-nocheck
 
     import Loading from './Loading.svelte';
-    import { ButtonType } from '$lib/enums/buttontype.enum';
-    import { Size } from '$lib/enums/size.enum';
-    import { TEST_IDS } from '$lib/enums/testconstants.enum';
+    import { ButtonType } from '#lib/enums/buttontype.enum.js';
+    import { Size } from '#lib/enums/size.enum.js';
+    import { TEST_IDS } from '#lib/enums/testconstants.enum.js';
 
     interface Props {
         clickLogic?: null | ((...args: unknown[]) => unknown);

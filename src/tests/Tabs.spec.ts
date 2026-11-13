@@ -1,4 +1,4 @@
-import { Button, Tabs } from '$lib';
+import { Button, Tabs } from '#lib';
 import { render, screen, fireEvent } from '@testing-library/svelte';
 
 describe('Tabs Component', () => {

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { CHEVRON_SVG, Direction } from '$lib';
-    import { USER_SVG, USER_LOGOUT_SVG } from '$lib/config/constants';
-    import { clickOutside } from '$lib/utils/clickOutside';
+    import { CHEVRON_SVG, Direction } from '#lib';
+    import { USER_SVG, USER_LOGOUT_SVG } from '#lib/config/constants.js';
+    import { clickOutside } from '#lib/utils/clickOutside.js';
     import SymbolIcon from './SymbolIcon.svelte';
 
     interface Props {

@@ -1,4 +1,4 @@
-import { UserProfileMenu } from '$lib';
+import { UserProfileMenu } from '#lib';
 import { fireEvent, render } from '@testing-library/svelte';
 
 describe('UserProfileMenu Component', () => {

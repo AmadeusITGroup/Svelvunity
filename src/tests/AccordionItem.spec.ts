@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
-import AccordionItem from '$lib/components/AccordionItem.svelte';
+import AccordionItem from '#lib/components/AccordionItem.svelte';
 import { createRawSnippet, type ComponentProps } from 'svelte';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { waitFor } from '@testing-library/svelte';

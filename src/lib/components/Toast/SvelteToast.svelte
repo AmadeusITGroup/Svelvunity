@@ -1,8 +1,8 @@
 <script>
     import { fade, fly } from 'svelte/transition';
     import { flip } from 'svelte/animate';
-    import { toast } from '$lib/components/Toast/stores';
-    import ToastItem from '$lib/components/Toast/ToastItem.svelte';
+    import { toast } from '#lib/components/Toast/stores.js';
+    import ToastItem from '#lib/components/Toast/ToastItem.svelte';
     import { onMount } from 'svelte';
 
     /** @type {{options?: import('./stores').SvelteToastOptions, target?: (string|'default')}} */

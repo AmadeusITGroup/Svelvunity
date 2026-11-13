@@ -1,5 +1,5 @@
 import { describe, expect, afterEach } from 'vitest';
-import { trapFocus } from '$lib/utils/actions.svelte';
+import { trapFocus } from '#lib/utils/actions.svelte.js';
 
 function createContainerWithFocusable(count = 3) {
 	const container = document.createElement('div');

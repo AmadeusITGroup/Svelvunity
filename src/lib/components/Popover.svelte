@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Frame } from '$lib';
+    import { Frame } from '#lib';
     import type { ComputePositionReturn, Middleware, Placement, Side } from '@floating-ui/dom';
     import * as dom from '@floating-ui/dom';
     import { onMount, untrack, type Snippet } from 'svelte';

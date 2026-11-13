@@ -1,4 +1,4 @@
-import { Tooltip } from '$lib';
+import { Tooltip } from '#lib';
 import { render, screen, fireEvent } from '@testing-library/svelte';
 import { tick, createRawSnippet, type ComponentProps } from 'svelte';
 

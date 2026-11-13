@@ -2,8 +2,8 @@
     // @ts-nocheck
 
     import { onMount, onDestroy } from 'svelte';
-    import { formatVariableKey, getMinWidth, isInViewport } from '$lib/utils/helpers';
-    import { INVERSE } from '$lib//config/constants';
+    import { formatVariableKey, getMinWidth, isInViewport } from '#lib/utils/helpers.js';
+    import { INVERSE } from '#lib/config/constants.js';
 
     let {
         content = '',

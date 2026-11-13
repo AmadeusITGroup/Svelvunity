@@ -2,7 +2,7 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/svelte';
 import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest';
 import type { ComponentProps } from 'svelte';
 
-import Popover from '$lib/components/Popover.svelte';
+import Popover from '#lib/components/Popover.svelte';
 
 vi.mock('@floating-ui/dom', () => {
 	const computePosition = vi.fn(async () => ({

@@ -1,7 +1,7 @@
 <script lang="ts">
     import SymbolIcon from './SymbolIcon.svelte';
-    import { CROSS_SVG } from '$lib';
-    import { SEARCH_SVG } from '$lib';
+    import { CROSS_SVG } from '#lib';
+    import { SEARCH_SVG } from '#lib';
     import Icon from './Icon.svelte';
     import Input from './Input.svelte';
 

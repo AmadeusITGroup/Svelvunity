@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/svelte';
-import ToastItem from '$lib/components/Toast/ToastItem.svelte';
+import ToastItem from '#lib/components/Toast/ToastItem.svelte';
 import type { ComponentProps } from 'svelte';
 import { describe, test, expect, beforeEach, vi } from 'vitest';
 
@@ -7,7 +7,7 @@ const { mockPop } = vi.hoisted(() => ({
 	mockPop: vi.fn()
 }));
 
-vi.mock('$lib/components/Toast/stores', () => {
+vi.mock('#lib/components/Toast/stores.js', () => {
 	return {
 		toast: {
 			pop: mockPop

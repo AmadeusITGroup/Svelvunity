@@ -1,6 +1,6 @@
 import { render } from '@testing-library/svelte';
 import { describe, test, expect } from 'vitest';
-import { ProgressBar } from '$lib';
+import { ProgressBar } from '#lib';
 describe('ProgressBar Component', () => {
 	test('renders progress bar with initial value', () => {
 		const { getByRole } = render(ProgressBar, {
